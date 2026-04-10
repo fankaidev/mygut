@@ -8,9 +8,9 @@ function App({ children }: PropsWithChildren<any>) {
     console.log("App launched.");
 
     // 初始化云开发
-    if (process.env.TARO_ENV === "weapp") {
+    if (process.env.TARO_ENV === "weapp" && process.env.TARO_APP_CLOUD_ENV) {
       Taro.cloud.init({
-        env: "mygut-0gxnkkl73742f6f9",
+        env: process.env.TARO_APP_CLOUD_ENV,
         traceUser: true,
       });
     }
