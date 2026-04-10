@@ -1,0 +1,181 @@
+.add-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 120px;
+}
+
+.section {
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 28px 32px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.section-header .section-title {
+  margin-bottom: 0;
+}
+
+/* 时间选择 */
+.time-row {
+  display: flex;
+  gap: 24px;
+}
+
+.picker-value {
+  padding: 20px 32px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  font-size: 30px;
+  color: #333;
+}
+
+/* 整体感受 */
+.feeling-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.feeling-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.feeling-item.active {
+  background-color: #e6f7ff;
+  border-color: #1890ff;
+}
+
+.feeling-emoji {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.feeling-label {
+  font-size: 24px;
+  color: #666;
+}
+
+.feeling-item.active .feeling-label {
+  color: #1890ff;
+}
+
+/* 症状 */
+.add-symptom-btn {
+  font-size: 28px;
+  color: #07c160;
+}
+
+.empty-symptoms {
+  padding: 40px;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 28px;
+  color: #999;
+}
+
+.symptom-list {
+  margin-top: 24px;
+}
+
+.symptom-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.symptom-item:last-child {
+  border-bottom: none;
+}
+
+.symptom-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.symptom-name {
+  font-size: 30px;
+  color: #333;
+}
+
+.symptom-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.severity-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 24px;
+  color: #fff;
+}
+
+.location-btn {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  font-size: 24px;
+  color: #666;
+}
+
+.remove-btn {
+  font-size: 24px;
+  color: #ff4d4f;
+}
+
+/* 备注 */
+.note-input {
+  width: 100%;
+  min-height: 160px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  font-size: 28px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+/* 提交按钮 */
+.submit-section {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 32px;
+  background-color: #fff;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 28px;
+  background-color: #07c160;
+  color: #fff;
+  font-size: 32px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.submit-btn.disabled {
+  background-color: #ccc;
+}
