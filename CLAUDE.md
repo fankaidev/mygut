@@ -29,7 +29,7 @@ After creating a PR, monitor its CI status. If CI fails, investigate and fix pro
 
 ## E2E Testing
 
-E2E tests require WeChat DevTools and cannot run in CI. After creating a PR, run E2E tests locally:
+E2E tests require WeChat DevTools and cannot run in CI. After creating or updating a PR, run E2E tests locally:
 
 ```bash
 pnpm test:e2e
