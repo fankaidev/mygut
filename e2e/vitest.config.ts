@@ -8,5 +8,6 @@ export default defineConfig({
     testTimeout: 60000,
     hookTimeout: 60000,
     setupFiles: [path.resolve(__dirname, "setup.ts")],
+    fileParallelism: false, // Run E2E test files sequentially to avoid port conflicts
   },
 });

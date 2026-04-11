@@ -1,5 +1,9 @@
 # Project Guidelines
 
+## Design Documentation
+
+Do not create local design/spec files. All design documents should be written directly in the GitHub issue.
+
 ## Package Manager
 
 Always use `pnpm` instead of `npm` or `yarn`.
