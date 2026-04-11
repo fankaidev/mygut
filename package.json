@@ -7,12 +7,13 @@
     "prepare": "lefthook install",
     "postinstall": "lefthook install",
     "build": "taro build --type weapp",
+    "build:test": "TARO_APP_ENV=test taro build --type weapp",
     "dev": "taro build --type weapp --watch",
     "lint": "oxlint src",
     "knip": "knip",
     "format": "oxfmt src --write",
     "format:check": "oxfmt src",
-    "test:e2e": "pnpm build && vitest run --config e2e/vitest.config.ts"
+    "test:e2e": "pnpm build:test && vitest run --config e2e/vitest.config.ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.24.4",
