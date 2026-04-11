@@ -25,7 +25,7 @@ describe('health service', () => {
       });
 
       expect(id).toBeDefined();
-      expect(id).toMatch(/^mock_/);
+      expect(id).toMatch(/^fake_/);
     });
 
     it('should add record with note', async () => {

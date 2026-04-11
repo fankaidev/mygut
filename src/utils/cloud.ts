@@ -61,7 +61,7 @@ function createMemoryCollection(data: Record<string, unknown>[]) {
       return { data: result };
     },
     async add({ data: doc }: { data: Record<string, unknown> }) {
-      const _id = `mock_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      const _id = `fake_${Date.now()}_${Math.random().toString(36).slice(2)}`;
       data.push({ _id, ...doc });
       return { _id };
     },

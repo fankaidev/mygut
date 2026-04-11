@@ -48,7 +48,7 @@ Prerequisites:
 
 ### Integration Tests
 
-Integration tests verify service layer logic using the in-memory database mock. They can run in CI.
+Integration tests verify service layer logic using the in-memory fake database. They can run in CI.
 
 ```bash
 pnpm test
@@ -58,4 +58,4 @@ Test files: `src/services/**/*.test.ts`
 
 ### Database Mock
 
-Both E2E and integration tests use the in-memory database (`TARO_APP_ENV=test`) to avoid polluting production data. The mock supports: `add`, `where`, `orderBy`, `limit`, `get`, `doc`, `remove`, `update`.
+Both E2E and integration tests use the in-memory fake database (`TARO_APP_ENV=test`) to avoid polluting production data. The fake database supports: `add`, `where`, `orderBy`, `limit`, `get`, `doc`, `remove`, `update`.
