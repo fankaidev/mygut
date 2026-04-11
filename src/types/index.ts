@@ -68,7 +68,10 @@ export interface MedicalRecord {
   _id?: string;
   userId: string;
   date: string;
-  images: string[]; // 云存储 fileID
+  type: "blood" | "stool" | "colonoscopy" | "gastroscopy" | "ct" | "ultrasound" | "other";
+  hospital?: string;
+  result?: string;
+  images?: string[];
   note?: string;
   createdAt: Date;
 }
