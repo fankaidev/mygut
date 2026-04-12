@@ -1,7 +1,7 @@
 // 此文件由 scripts/generate-lab-indicators.ts 自动生成
 // 请勿手动编辑，修改请编辑 src/data/lab-indicators.csv
 
-import type { StandardIndicator } from "../services/lab-standards";
+import type { StandardIndicator } from "../services/lab-indicators";
 
 export const STANDARD_INDICATORS: StandardIndicator[] = [
   {

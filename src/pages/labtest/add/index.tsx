@@ -3,7 +3,7 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect, useRef } from "react";
 import { labTestService } from "../../../services/labtest";
 import { recognizeLabTestImage } from "../../../services/ai";
-import { normalizeIndicators } from "../../../services/lab-standards";
+import { normalizeIndicators } from "../../../services/lab-indicators";
 import { chooseImage, uploadImage, deleteCloudFile } from "../../../utils/upload";
 import { formatDate, formatTime } from "../../../utils/date";
 import type { LabTestIndicator } from "../../../types";
