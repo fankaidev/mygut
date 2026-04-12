@@ -39,3 +39,24 @@ export function validateFood(value: string): string | null {
 
   return null;
 }
+
+// Pattern: Chinese and English only
+const SYMPTOM_PATTERN = /^[\u4e00-\u9fa5a-zA-Z]+$/;
+
+export function validateSymptom(value: string): string | null {
+  const trimmed = value.trim();
+
+  if (trimmed.length === 0) {
+    return "症状名称不能为空";
+  }
+
+  if (trimmed.length > 20) {
+    return "症状名称不能超过20字符";
+  }
+
+  if (!SYMPTOM_PATTERN.test(trimmed)) {
+    return "症状名称只能包含中英文";
+  }
+
+  return null;
+}

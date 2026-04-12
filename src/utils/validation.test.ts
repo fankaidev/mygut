@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { validateNickname, validateFood } from "./validation";
+import { validateNickname, validateFood, validateSymptom } from "./validation";
 
 describe("validateNickname", () => {
   it("returns null for valid nickname", () => {
@@ -44,5 +44,27 @@ describe("validateFood", () => {
   it("returns error for invalid characters", () => {
     expect(validateFood("食物@名")).toBe("食物名称包含无效字符");
     expect(validateFood("food#1")).toBe("食物名称包含无效字符");
+  });
+});
+
+describe("validateSymptom", () => {
+  it("returns null for valid symptom name", () => {
+    expect(validateSymptom("腹痛")).toBeNull();
+    expect(validateSymptom("headache")).toBeNull();
+    expect(validateSymptom("胃胀气")).toBeNull();
+  });
+
+  it("returns error for empty symptom name", () => {
+    expect(validateSymptom("")).toBe("症状名称不能为空");
+    expect(validateSymptom("   ")).toBe("症状名称不能为空");
+  });
+
+  it("returns error for symptom name exceeding 20 characters", () => {
+    expect(validateSymptom("a".repeat(21))).toBe("症状名称不能超过20字符");
+  });
+
+  it("returns error for invalid characters", () => {
+    expect(validateSymptom("症状123")).toBe("症状名称只能包含中英文");
+    expect(validateSymptom("pain@stomach")).toBe("症状名称只能包含中英文");
   });
 });
