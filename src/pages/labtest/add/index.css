@@ -151,37 +151,41 @@
 
 .indicator-col-name {
   flex: 3;
-  font-size: 26px;
+  font-size: 24px;
   color: #333;
 }
 
 .indicator-col-value {
   flex: 2;
-  font-size: 26px;
+  font-size: 24px;
   color: #1890ff;
   text-align: center;
 }
 
-.indicator-col-value.abnormal {
+.abnormal-flag {
+  margin-left: 4px;
+  font-size: 22px;
+}
+
+.abnormal-flag.high {
   color: #f5222d;
 }
 
-.abnormal-flag {
-  margin-left: 4px;
-  font-size: 24px;
-}
-
-.indicator-col-unit {
-  flex: 2;
-  font-size: 26px;
-  color: #666;
-  text-align: center;
+.abnormal-flag.low {
+  color: #52c41a;
 }
 
 .indicator-col-ref {
   flex: 2;
-  font-size: 26px;
+  font-size: 24px;
   color: #999;
+  text-align: center;
+}
+
+.indicator-col-unit {
+  flex: 2;
+  font-size: 24px;
+  color: #666;
   text-align: right;
 }
 
@@ -189,7 +193,7 @@
 .indicator-table-header .indicator-col-value,
 .indicator-table-header .indicator-col-unit,
 .indicator-table-header .indicator-col-ref {
-  font-size: 24px;
+  font-size: 22px;
   color: #666;
   font-weight: 500;
 }

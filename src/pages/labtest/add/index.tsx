@@ -368,24 +368,26 @@ export default function LabTestAdd() {
                       <View className="indicator-table-header">
                         <Text className="indicator-col-name">指标</Text>
                         <Text className="indicator-col-value">结果</Text>
-                        <Text className="indicator-col-unit">单位</Text>
                         <Text className="indicator-col-ref">参考</Text>
+                        <Text className="indicator-col-unit">单位</Text>
                       </View>
                       {items.map((ind, idx) => {
                         const abnormalFlag = getAbnormalFlag(ind);
                         return (
                           <View key={idx} className="indicator-table-row">
                             <Text className="indicator-col-name">{ind.name}</Text>
-                            <Text
-                              className={`indicator-col-value ${abnormalFlag ? "abnormal" : ""}`}
-                            >
+                            <Text className="indicator-col-value">
                               {ind.value}
                               {abnormalFlag && (
-                                <Text className="abnormal-flag">{abnormalFlag}</Text>
+                                <Text
+                                  className={`abnormal-flag ${abnormalFlag === "↑" ? "high" : "low"}`}
+                                >
+                                  {abnormalFlag}
+                                </Text>
                               )}
                             </Text>
-                            <Text className="indicator-col-unit">{ind.unit || "-"}</Text>
                             <Text className="indicator-col-ref">{getRefText(ind)}</Text>
+                            <Text className="indicator-col-unit">{ind.unit || "-"}</Text>
                           </View>
                         );
                       })}
