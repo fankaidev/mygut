@@ -24,7 +24,7 @@ export const NOTE_SHORTCUTS = [
   "恶臭",
   "未消化食物",
   "费劲",
-  "时间长",
+  "便秘",
   "急迫感",
   "排不净",
 ] as const;
