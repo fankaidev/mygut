@@ -28,6 +28,7 @@ export const FOOD_CATEGORIES = [
     name: "肉蛋奶",
     items: [
       { name: "鸡蛋", emoji: "🥚" },
+      { name: "煎蛋", emoji: "🍳" },
       { name: "牛奶", emoji: "🥛" },
       { name: "酸奶", emoji: "🫗" },
       { name: "豆浆", emoji: "🥛" },
@@ -37,8 +38,12 @@ export const FOOD_CATEGORIES = [
       { name: "猪肉", emoji: "🐷" },
       { name: "牛肉", emoji: "🐮" },
       { name: "羊肉", emoji: "🐑" },
+      { name: "排骨", emoji: "🍖" },
+      { name: "培根", emoji: "🥓" },
       { name: "鱼", emoji: "🐟" },
       { name: "虾", emoji: "🦐" },
+      { name: "螃蟹", emoji: "🦀" },
+      { name: "龙虾", emoji: "🦞" },
     ],
   },
   {
