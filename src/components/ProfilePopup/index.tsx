@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { View, Text, Image, Input, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { updateUserSettings, uploadAvatar } from "../../services/user";
+import { validateNickname } from "../../utils/validation";
 import "./index.css";
 
 interface ProfilePopupProps {
@@ -51,6 +52,13 @@ export default function ProfilePopup({
 
   const handleSave = async () => {
     if (saving) return;
+
+    const nicknameError = validateNickname(currentNickname);
+    if (nicknameError) {
+      Taro.showToast({ title: nicknameError, icon: "none" });
+      return;
+    }
+
     setSaving(true);
 
     try {
@@ -63,12 +71,12 @@ export default function ProfilePopup({
 
       // 更新用户设置
       await updateUserSettings({
-        nickname: currentNickname,
+        nickname: currentNickname.trim(),
         avatar: avatarFileId,
       });
 
       onSave({
-        nickname: currentNickname,
+        nickname: currentNickname.trim(),
         avatar: avatarFileId,
       });
 
