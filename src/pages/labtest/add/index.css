@@ -125,11 +125,6 @@
   border-radius: 8px;
 }
 
-.indicator-item.abnormal {
-  background-color: #fff2f0;
-  border: 1px solid #ffccc7;
-}
-
 .indicator-name {
   font-size: 28px;
   color: #333;
@@ -139,10 +134,6 @@
 .indicator-value {
   font-size: 28px;
   color: #1890ff;
-}
-
-.indicator-item.abnormal .indicator-value {
-  color: #f5222d;
 }
 
 .no-indicators {

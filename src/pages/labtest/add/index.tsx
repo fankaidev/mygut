@@ -300,10 +300,7 @@ export default function LabTestAdd() {
           {indicators.length > 0 ? (
             <View className="indicators-list">
               {indicators.map((indicator, index) => (
-                <View
-                  key={index}
-                  className={`indicator-item ${indicator.abnormal ? "abnormal" : ""}`}
-                >
+                <View key={index} className="indicator-item">
                   <Text className="indicator-name">{indicator.name}</Text>
                   <Text className="indicator-value">
                     {indicator.value} {indicator.unit || ""}

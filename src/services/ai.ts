@@ -4,11 +4,11 @@ const MODEL = "Qwen/Qwen3-VL-32B-Instruct";
 
 const SYSTEM_PROMPT = `识别化验单图片中的指标，返回CSV格式（无表头）。
 
-列：名称,数值,单位,异常(1或0,根据↑↓标记判断)
+列：名称,数值,单位
 
 示例：
-白细胞,6.5,10^9/L,0
-红细胞,3.2,10^12/L,1
+白细胞,6.5,10^9/L
+红细胞,3.2,10^12/L
 
 只返回CSV，无其他文字。`;
 
@@ -118,7 +118,6 @@ export async function recognizeLabTestImage(imageFilePath: string): Promise<LabT
           name: parts[0]?.trim() || "",
           value: parts[1]?.trim() || "",
           unit: parts[2]?.trim() || undefined,
-          abnormal: parts[3]?.trim() === "1",
         });
       }
     }
