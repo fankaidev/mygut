@@ -743,6 +743,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMin": 24,
     "refMax": 195,
     "aliases": [
+      "肌酸激酶",
       "肌酸激酶"
     ]
   },
@@ -755,7 +756,8 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 5,
     "aliases": [
       "肌酸激酶MB",
-      "CK-MB质量"
+      "CK-MB质量",
+      "肌酸激酶MB质量"
     ]
   },
   {
@@ -779,5 +781,62 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "abbr": "MYO",
     "unit": "μg/L",
     "refMax": 110
+  },
+  {
+    "specimen": "血液",
+    "category": "心肌标志物",
+    "nameZh": "N末端B型钠尿肽原",
+    "abbr": "NT-proBNP",
+    "unit": "pg/ml",
+    "refMax": 125,
+    "aliases": [
+      "NT-proBNP",
+      "BNP",
+      "脑钠肽"
+    ]
+  },
+  {
+    "specimen": "血液",
+    "category": "凝血功能",
+    "nameZh": "凝血酶原时间",
+    "abbr": "PT",
+    "unit": "s",
+    "refMin": 9,
+    "refMax": 13
+  },
+  {
+    "specimen": "血液",
+    "category": "凝血功能",
+    "nameZh": "凝血酶原活动度",
+    "abbr": "PTA",
+    "unit": "%",
+    "refMin": 70,
+    "refMax": 130
+  },
+  {
+    "specimen": "血液",
+    "category": "凝血功能",
+    "nameZh": "国际标准化比值",
+    "abbr": "INR",
+    "refMin": 0.8,
+    "refMax": 1.2
+  },
+  {
+    "specimen": "血液",
+    "category": "凝血功能",
+    "nameZh": "纤维蛋白原",
+    "abbr": "FIB",
+    "unit": "g/L",
+    "refMin": 2,
+    "refMax": 4
+  },
+  {
+    "specimen": "血液",
+    "category": "凝血功能",
+    "nameZh": "活化部分凝血活酶时间",
+    "abbr": "APTT",
+    "unit": "s",
+    "refMin": 20,
+    "refMax": 40
   }
 ];
