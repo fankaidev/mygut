@@ -126,15 +126,15 @@ export default function ImagingAdd() {
       // 识别第一张本地图片
       if (localImages.length > 0) {
         const result = await recognizeImagingReport(localImages[0]);
-        setConclusion(result);
+        if (result.date) {
+          setExamDate(result.date);
+        }
+        if (result.conclusion) {
+          setConclusion(result.conclusion);
+        }
       }
       Taro.hideLoading();
-
-      if (conclusion) {
-        Taro.showToast({ title: "识别完成", icon: "success" });
-      } else {
-        Taro.showToast({ title: "未识别到结论", icon: "none" });
-      }
+      Taro.showToast({ title: "识别完成", icon: "success" });
     } catch (error) {
       console.error("识别失败:", error);
       Taro.hideLoading();
