@@ -224,11 +224,9 @@ export default function MealAdd() {
         ) : (
           <View className="selected-foods">
             {selectedFoods.map((food) => (
-              <View key={food} className="selected-food-tag">
+              <View key={food} className="selected-food-tag" onClick={() => handleRemoveFood(food)}>
                 <Text className="selected-food-name">{food}</Text>
-                <Text className="remove-food-btn" onClick={() => handleRemoveFood(food)}>
-                  x
-                </Text>
+                <Text className="remove-food-btn">×</Text>
               </View>
             ))}
           </View>
