@@ -176,13 +176,13 @@
 
 .indicator-col-ref {
   flex: 2;
-  font-size: 24px;
+  font-size: 22px;
   color: #999;
 }
 
 .indicator-col-unit {
   flex: 2;
-  font-size: 24px;
+  font-size: 22px;
   color: #666;
 }
 
