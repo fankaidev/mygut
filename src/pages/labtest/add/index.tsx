@@ -302,33 +302,50 @@ export default function LabTestAdd() {
           </View>
           {indicators.length > 0 ? (
             <View className="indicators-list">
-              {indicators.map((indicator, index) => {
-                const refText =
-                  indicator.refValue ||
-                  (indicator.refMin !== undefined && indicator.refMax !== undefined
-                    ? `${indicator.refMin}-${indicator.refMax}`
-                    : indicator.refMin !== undefined
-                      ? `≥${indicator.refMin}`
-                      : indicator.refMax !== undefined
-                        ? `≤${indicator.refMax}`
-                        : "");
-                return (
-                  <View key={index} className="indicator-item">
-                    <View className="indicator-header">
-                      {indicator.category && (
-                        <Text className="indicator-category">{indicator.category}</Text>
-                      )}
-                      <Text className="indicator-name">{indicator.name}</Text>
-                    </View>
-                    <View className="indicator-details">
-                      <Text className="indicator-value">
-                        {indicator.value} {indicator.unit || ""}
-                      </Text>
-                      {refText && <Text className="indicator-ref">参考: {refText}</Text>}
+              {(() => {
+                // 按类别分组
+                const groups = indicators.reduce(
+                  (acc, ind) => {
+                    const cat = ind.category || "其他";
+                    if (!acc[cat]) acc[cat] = [];
+                    acc[cat].push(ind);
+                    return acc;
+                  },
+                  {} as Record<string, typeof indicators>,
+                );
+
+                const getRefText = (ind: (typeof indicators)[0]) =>
+                  ind.refValue ||
+                  (ind.refMin !== undefined && ind.refMax !== undefined
+                    ? `${ind.refMin}-${ind.refMax}`
+                    : ind.refMin !== undefined
+                      ? `≥${ind.refMin}`
+                      : ind.refMax !== undefined
+                        ? `≤${ind.refMax}`
+                        : "-");
+
+                return Object.entries(groups).map(([category, items]) => (
+                  <View key={category} className="indicator-group">
+                    <Text className="indicator-group-title">{category}</Text>
+                    <View className="indicator-table">
+                      <View className="indicator-table-header">
+                        <Text className="indicator-col-name">指标</Text>
+                        <Text className="indicator-col-value">结果</Text>
+                        <Text className="indicator-col-ref">参考范围</Text>
+                      </View>
+                      {items.map((ind, idx) => (
+                        <View key={idx} className="indicator-table-row">
+                          <Text className="indicator-col-name">{ind.name}</Text>
+                          <Text className="indicator-col-value">
+                            {ind.value} {ind.unit || ""}
+                          </Text>
+                          <Text className="indicator-col-ref">{getRefText(ind)}</Text>
+                        </View>
+                      ))}
                     </View>
                   </View>
-                );
-              })}
+                ));
+              })()}
             </View>
           ) : (
             <Text className="no-indicators">点击"AI 识别"按钮识别化验指标</Text>
