@@ -3,6 +3,9 @@ import { defineConfig, type UserConfigExport } from "@tarojs/cli";
 import devConfig from "./dev";
 import prodConfig from "./prod";
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const pkg = require("../package.json");
+
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig<"vite">(async (merge, { command, mode }) => {
   const baseConfig: UserConfigExport<"vite"> = {
@@ -21,6 +24,8 @@ export default defineConfig<"vite">(async (merge, { command, mode }) => {
     defineConstants: {
       IS_TEST_ENV: JSON.stringify(process.env.TARO_APP_ENV === "test"),
       IS_E2E_ENV: JSON.stringify(process.env.TARO_APP_ENV === "e2e"),
+      APP_VERSION: JSON.stringify(pkg.version),
+      APP_NAME: JSON.stringify(pkg.description),
     },
     copy: {
       patterns: [],
