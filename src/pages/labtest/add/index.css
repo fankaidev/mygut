@@ -151,19 +151,19 @@
 
 .indicator-col-name {
   flex: 4;
-  font-size: 24px;
+  font-size: 22px;
   color: #333;
 }
 
 .indicator-col-value {
   flex: 1.5;
-  font-size: 24px;
+  font-size: 22px;
   color: #1890ff;
 }
 
 .abnormal-flag {
   margin-left: 4px;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .abnormal-flag.high {
