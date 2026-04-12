@@ -65,7 +65,7 @@ export default function SymptomIndex() {
   return (
     <View className="health-page">
       <View className="header">
-        <Text className="title">身体状态记录</Text>
+        <Text className="title">体感记录</Text>
         <View className="add-btn" onClick={handleAdd}>
           + 添加
         </View>
@@ -76,7 +76,7 @@ export default function SymptomIndex() {
       ) : records.length === 0 ? (
         <View className="empty">
           <Text className="empty-text">暂无记录</Text>
-          <Text className="empty-hint">点击右上角添加身体状态</Text>
+          <Text className="empty-hint">点击右上角添加记录</Text>
         </View>
       ) : (
         <View className="record-list">

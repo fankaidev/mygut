@@ -1,6 +1,8 @@
 export default defineAppConfig({
   pages: [
     "pages/index/index",
+    "pages/records/index",
+    "pages/settings/index",
     "pages/symptom/index/index",
     "pages/symptom/add/index",
     "pages/meal/index/index",
@@ -15,6 +17,26 @@ export default defineAppConfig({
     navigationBarBackgroundColor: "#fff",
     navigationBarTitleText: "MyGut",
     navigationBarTextStyle: "black",
+  },
+  tabBar: {
+    color: "#999",
+    selectedColor: "#07c160",
+    backgroundColor: "#fff",
+    borderStyle: "black",
+    list: [
+      {
+        pagePath: "pages/index/index",
+        text: "🏠 首页",
+      },
+      {
+        pagePath: "pages/records/index",
+        text: "📋 记录",
+      },
+      {
+        pagePath: "pages/settings/index",
+        text: "⚙️ 设置",
+      },
+    ],
   },
   cloud: true,
 });

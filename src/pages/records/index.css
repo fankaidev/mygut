@@ -1,0 +1,129 @@
+.records-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 40px;
+}
+
+/* 日期选择器 */
+.date-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 32px;
+  background-color: #fff;
+  gap: 24px;
+}
+
+.date-arrow {
+  font-size: 36px;
+  color: #07c160;
+  padding: 16px;
+}
+
+.date-arrow.disabled {
+  color: #ccc;
+}
+
+.date-text {
+  font-size: 36px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px;
+  color: #999;
+  font-size: 28px;
+}
+
+/* 记录容器 */
+.records-container {
+  padding: 20px 24px;
+}
+
+/* 记录卡片 */
+.record-card {
+  background-color: #fff;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-icon {
+  font-size: 36px;
+}
+
+.card-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-count {
+  font-size: 24px;
+  color: #999;
+}
+
+.card-add-btn {
+  font-size: 40px;
+  color: #07c160;
+  padding: 8px 16px;
+}
+
+.card-content {
+  padding: 20px 28px;
+  min-height: 60px;
+}
+
+.empty-hint {
+  font-size: 26px;
+  color: #ccc;
+  text-align: center;
+  display: block;
+  padding: 20px 0;
+}
+
+.record-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  gap: 16px;
+}
+
+.record-time {
+  font-size: 26px;
+  color: #999;
+  min-width: 90px;
+}
+
+.record-feeling {
+  font-size: 28px;
+  margin-right: 8px;
+}
+
+.record-desc {
+  font-size: 28px;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

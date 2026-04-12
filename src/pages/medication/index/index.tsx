@@ -63,7 +63,7 @@ export default function MedicationIndex() {
       ) : records.length === 0 ? (
         <View className="empty">
           <Text className="empty-text">暂无记录</Text>
-          <Text className="empty-hint">点击右上角添加用药记录</Text>
+          <Text className="empty-hint">点击右上角添加记录</Text>
         </View>
       ) : (
         <View className="record-list">

@@ -125,7 +125,7 @@ export default function SymptomAdd() {
 
         {symptoms.length === 0 ? (
           <View className="empty-symptoms">
-            <Text className="empty-text">无症状，身体状态良好</Text>
+            <Text className="empty-text">无症状</Text>
           </View>
         ) : (
           <View className="symptom-list">

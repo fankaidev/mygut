@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: "记录身体状态",
+  navigationBarTitleText: "记录体感",
 });

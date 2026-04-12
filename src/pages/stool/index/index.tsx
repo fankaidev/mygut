@@ -76,7 +76,7 @@ export default function StoolIndex() {
       ) : records.length === 0 ? (
         <View className="empty">
           <Text className="empty-text">暂无记录</Text>
-          <Text className="empty-hint">点击右上角添加排便记录</Text>
+          <Text className="empty-hint">点击右上角添加记录</Text>
         </View>
       ) : (
         <View className="record-list">
