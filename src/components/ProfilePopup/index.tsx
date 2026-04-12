@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, Image, Input, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { updateUserSettings, uploadAvatar } from "../../services/user";
@@ -24,10 +24,23 @@ export default function ProfilePopup({
   const [tempAvatarPath, setTempAvatarPath] = useState<string>();
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    if (visible) {
+      setCurrentNickname(nickname);
+      setCurrentAvatar(avatar);
+      setTempAvatarPath(undefined);
+    }
+  }, [visible, nickname, avatar]);
+
   if (!visible) return null;
 
-  const handleChooseAvatar = (e: any) => {
-    const tempPath = e.detail.avatarUrl;
+  const handleChooseAvatar = async () => {
+    const res = await Taro.chooseImage({
+      count: 1,
+      sizeType: ["compressed"],
+      sourceType: ["album", "camera"],
+    });
+    const tempPath = res.tempFilePaths[0];
     setTempAvatarPath(tempPath);
     setCurrentAvatar(tempPath);
   };
@@ -80,17 +93,13 @@ export default function ProfilePopup({
 
         <View className="popup-body">
           <View className="avatar-section">
-            <Button
-              className="avatar-button"
-              openType="chooseAvatar"
-              onChooseAvatar={handleChooseAvatar}
-            >
+            <View className="avatar-button" onClick={handleChooseAvatar}>
               {currentAvatar ? (
                 <Image className="avatar-image" src={currentAvatar} mode="aspectFill" />
               ) : (
                 <View className="avatar-placeholder" />
               )}
-            </Button>
+            </View>
             <Text className="avatar-hint">点击更换头像</Text>
           </View>
 
@@ -98,7 +107,7 @@ export default function ProfilePopup({
             <Text className="nickname-label">昵称</Text>
             <Input
               className="nickname-input"
-              type="nickname"
+              type="text"
               value={currentNickname}
               onInput={handleNicknameInput}
               placeholder="请输入昵称"
