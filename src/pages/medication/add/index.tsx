@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { medicationService } from "../../../services/medication";
 import { MEDICATION_CATEGORIES } from "../../../constants/medication";
 import { formatDate, formatTime } from "../../../utils/date";
+import { validateMedication } from "../../../utils/validation";
 import "./index.css";
 
 const CUSTOM_MEDICATIONS_KEY = "custom_medications";
@@ -91,6 +92,13 @@ export default function MedicationAdd() {
       Taro.showToast({ title: "请输入药物名称", icon: "none" });
       return;
     }
+
+    const error = validateMedication(medication);
+    if (error) {
+      Taro.showToast({ title: error, icon: "none" });
+      return;
+    }
+
     setSelectedMedication(medication);
     setManualInput("");
     if (!ALL_PRESET_MEDICATIONS.has(medication)) {
