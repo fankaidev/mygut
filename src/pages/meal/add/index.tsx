@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { mealService } from "../../../services/meal";
 import { FOOD_CATEGORIES, AMOUNT_OPTIONS } from "../../../constants/meal";
 import { formatDate, formatTime } from "../../../utils/date";
+import { validateFood } from "../../../utils/validation";
 import "./index.css";
 
 const CUSTOM_FOODS_KEY = "custom_foods";
@@ -100,6 +101,13 @@ export default function MealAdd() {
       Taro.showToast({ title: "请输入食物名称", icon: "none" });
       return;
     }
+
+    const error = validateFood(food);
+    if (error) {
+      Taro.showToast({ title: error, icon: "none" });
+      return;
+    }
+
     if (selectedFoods.includes(food)) {
       Taro.showToast({ title: "已添加该食物", icon: "none" });
       return;
