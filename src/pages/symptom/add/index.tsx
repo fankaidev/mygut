@@ -110,6 +110,27 @@ export default function SymptomAdd() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!editId) return;
+
+    const res = await Taro.showModal({
+      title: "确认删除",
+      content: "确定要删除这条记录吗？",
+    });
+
+    if (res.confirm) {
+      try {
+        await symptomService.delete(editId);
+        Taro.showToast({ title: "已删除", icon: "success" });
+        setTimeout(() => {
+          Taro.navigateBack();
+        }, 1500);
+      } catch {
+        Taro.showToast({ title: "删除失败", icon: "none" });
+      }
+    }
+  };
+
   const handleSubmit = async () => {
     if (submitting) return;
 
@@ -261,6 +282,11 @@ export default function SymptomAdd() {
         <View className={`submit-btn ${submitting ? "disabled" : ""}`} onClick={handleSubmit}>
           {submitting ? "保存中..." : isEdit ? "更新记录" : "保存记录"}
         </View>
+        {isEdit && (
+          <View className="delete-btn" onClick={handleDelete}>
+            删除记录
+          </View>
+        )}
       </View>
     </View>
   );

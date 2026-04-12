@@ -70,3 +70,15 @@
 .submit-btn.disabled {
   background-color: #ccc;
 }
+
+.submit-section .delete-btn {
+  width: 100%;
+  padding: 28px;
+  margin-top: 16px;
+  background-color: #fff;
+  color: #f5222d;
+  font-size: 32px;
+  text-align: center;
+  border-radius: 12px;
+  border: 1px solid #f5222d;
+}
