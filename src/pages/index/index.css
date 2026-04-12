@@ -4,14 +4,41 @@
   padding-bottom: 40px;
 }
 
+/* 顶部栏 */
+.top-header {
+  display: flex;
+  align-items: center;
+  padding: 24px 32px;
+  background-color: #fff;
+  gap: 24px;
+}
+
+.header-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 36px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-default {
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+}
+
 /* 日期选择器 */
-.date-header {
+.date-selector {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 32px;
-  background-color: #fff;
-  gap: 32px;
+  flex: 1;
+  gap: 24px;
 }
 
 .date-arrow {
