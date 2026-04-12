@@ -16,11 +16,5 @@ export const STOOL_AMOUNTS = [
   { value: 3, label: "大量" },
 ] as const;
 
-// 颜色选项
-export const STOOL_COLORS = [
-  { value: "normal", label: "正常" },
-  { value: "dark", label: "深色" },
-  { value: "light", label: "浅色" },
-  { value: "red", label: "带红" },
-  { value: "black", label: "黑色" },
-] as const;
+// 备注快捷输入
+export const NOTE_SHORTCUTS = ["带血", "带粘液", "黑便", "恶臭", "未消化食物"] as const;
