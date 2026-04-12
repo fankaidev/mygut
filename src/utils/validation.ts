@@ -81,3 +81,13 @@ export function validateMedication(value: string): string | null {
 
   return null;
 }
+
+export function validateNote(value: string): string | null {
+  const trimmed = value.trim();
+
+  if (trimmed.length > 500) {
+    return "备注不能超过500字符";
+  }
+
+  return null;
+}

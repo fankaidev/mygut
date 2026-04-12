@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { validateNickname, validateFood, validateSymptom, validateMedication } from "./validation";
+import {
+  validateNickname,
+  validateFood,
+  validateSymptom,
+  validateMedication,
+  validateNote,
+} from "./validation";
 
 describe("validateNickname", () => {
   it("returns null for valid nickname", () => {
@@ -89,5 +95,22 @@ describe("validateMedication", () => {
   it("returns error for invalid characters", () => {
     expect(validateMedication("药物@名")).toBe("药物名称包含无效字符");
     expect(validateMedication("med#1")).toBe("药物名称包含无效字符");
+  });
+});
+
+describe("validateNote", () => {
+  it("returns null for valid note", () => {
+    expect(validateNote("这是一条备注")).toBeNull();
+    expect(validateNote("Note with symbols: @#$%")).toBeNull();
+    expect(validateNote("")).toBeNull(); // empty is allowed
+    expect(validateNote("   ")).toBeNull(); // whitespace-only is allowed (trims to empty)
+  });
+
+  it("returns error for note exceeding 500 characters", () => {
+    expect(validateNote("a".repeat(501))).toBe("备注不能超过500字符");
+  });
+
+  it("returns null for note at exactly 500 characters", () => {
+    expect(validateNote("a".repeat(500))).toBeNull();
   });
 });
