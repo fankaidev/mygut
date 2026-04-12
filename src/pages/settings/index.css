@@ -112,6 +112,12 @@
   color: #ccc;
 }
 
+.data-hint {
+  font-size: 24px;
+  color: #999;
+  margin-top: 12px;
+}
+
 /* 联系客服 */
 .contact-section {
   padding: 40px 32px;
