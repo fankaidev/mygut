@@ -1,8 +1,12 @@
 import type { LabTestIndicator } from "../types";
 import { STANDARD_INDICATORS } from "../data/labtest-indicators";
 
+// 标本类型
+export type SpecimenType = "血液" | "尿液" | "粪便" | "其他";
+
 // 标准指标定义
 export interface StandardIndicator {
+  specimen: SpecimenType;
   category: string;
   nameZh: string;
   abbr: string;
@@ -15,22 +19,31 @@ export interface StandardIndicator {
 
 /**
  * 查找标准指标
+ * @param name 指标名称
+ * @param specimen 标本类型，用于过滤
  */
-export function findStandardIndicator(name: string): StandardIndicator | undefined {
+export function findStandardIndicator(
+  name: string,
+  specimen?: SpecimenType,
+): StandardIndicator | undefined {
+  const candidates = specimen
+    ? STANDARD_INDICATORS.filter((ind) => ind.specimen === specimen)
+    : STANDARD_INDICATORS;
+
   // 精确匹配：名称或缩写
-  let found = STANDARD_INDICATORS.find((ind) => ind.nameZh === name || ind.abbr === name);
+  let found = candidates.find((ind) => ind.nameZh === name || ind.abbr === name);
   if (found) return found;
 
   // 别名匹配
-  found = STANDARD_INDICATORS.find((ind) => ind.aliases?.some((alias) => alias === name));
+  found = candidates.find((ind) => ind.aliases?.some((alias) => alias === name));
   if (found) return found;
 
   // 模糊匹配：包含关系
-  found = STANDARD_INDICATORS.find((ind) => name.includes(ind.nameZh) || ind.nameZh.includes(name));
+  found = candidates.find((ind) => name.includes(ind.nameZh) || ind.nameZh.includes(name));
   if (found) return found;
 
   // 别名模糊匹配
-  found = STANDARD_INDICATORS.find((ind) =>
+  found = candidates.find((ind) =>
     ind.aliases?.some((alias) => name.includes(alias) || alias.includes(name)),
   );
   if (found) return found;
@@ -41,14 +54,17 @@ export function findStandardIndicator(name: string): StandardIndicator | undefin
 /**
  * 归一化指标
  */
-export function normalizeIndicator(indicator: LabTestIndicator): LabTestIndicator & {
+export function normalizeIndicator(
+  indicator: LabTestIndicator,
+  specimen?: SpecimenType,
+): LabTestIndicator & {
   standardName?: string;
   category?: string;
   refMin?: number;
   refMax?: number;
   refValue?: string;
 } {
-  const standard = findStandardIndicator(indicator.name);
+  const standard = findStandardIndicator(indicator.name, specimen);
 
   if (!standard) {
     return indicator;
@@ -67,6 +83,6 @@ export function normalizeIndicator(indicator: LabTestIndicator): LabTestIndicato
 /**
  * 批量归一化指标
  */
-export function normalizeIndicators(indicators: LabTestIndicator[]) {
-  return indicators.map(normalizeIndicator);
+export function normalizeIndicators(indicators: LabTestIndicator[], specimen?: SpecimenType) {
+  return indicators.map((ind) => normalizeIndicator(ind, specimen));
 }

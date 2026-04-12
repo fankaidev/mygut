@@ -3,11 +3,18 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect, useRef } from "react";
 import { labTestService } from "../../../services/labtest";
 import { recognizeLabTestImage } from "../../../services/ai";
-import { normalizeIndicators } from "../../../services/labtest-standards";
+import { normalizeIndicators, type SpecimenType } from "../../../services/labtest-standards";
 import { chooseImage, uploadImage, deleteCloudFile } from "../../../utils/upload";
 import { formatDate, formatTime } from "../../../utils/date";
 import type { LabTestIndicator } from "../../../types";
 import "./index.css";
+
+const SPECIMEN_OPTIONS: { value: SpecimenType; label: string }[] = [
+  { value: "血液", label: "血液" },
+  { value: "尿液", label: "尿液" },
+  { value: "粪便", label: "粪便" },
+  { value: "其他", label: "其他" },
+];
 
 export default function LabTestAdd() {
   const router = useRouter();
@@ -16,6 +23,7 @@ export default function LabTestAdd() {
 
   const [date, setDate] = useState(formatDate());
   const [time, setTime] = useState(formatTime());
+  const [specimen, setSpecimen] = useState<SpecimenType>("血液");
   // 本地待上传的图片路径
   const [localImages, setLocalImages] = useState<string[]>([]);
   // 已上传到云存储的 fileId（编辑模式）
@@ -51,6 +59,7 @@ export default function LabTestAdd() {
       if (record) {
         setDate(record.date);
         setTime(record.time || formatTime());
+        setSpecimen(record.specimen || "血液");
         setUploadedImages(record.imageFileIds || []);
         setIndicators(record.indicators || []);
       }
@@ -128,8 +137,8 @@ export default function LabTestAdd() {
       const recognitionPromises = localImages.map((path) => recognizeLabTestImage(path));
       const recognitionResults = await Promise.all(recognitionPromises);
       const rawIndicators = recognitionResults.flat();
-      // 归一化指标
-      const newIndicators = normalizeIndicators(rawIndicators);
+      // 归一化指标（按标本类型过滤）
+      const newIndicators = normalizeIndicators(rawIndicators, specimen);
       setIndicators(newIndicators);
       Taro.hideLoading();
 
@@ -197,6 +206,7 @@ export default function LabTestAdd() {
       const data = {
         date,
         time,
+        specimen,
         imageFileIds,
         indicators,
       };
@@ -233,6 +243,22 @@ export default function LabTestAdd() {
 
   return (
     <View className="add-page">
+      {/* 标本类型 */}
+      <View className="section">
+        <Text className="section-title">标本类型</Text>
+        <View className="specimen-options">
+          {SPECIMEN_OPTIONS.map((opt) => (
+            <View
+              key={opt.value}
+              className={`specimen-item ${specimen === opt.value ? "active" : ""}`}
+              onClick={() => setSpecimen(opt.value)}
+            >
+              {opt.label}
+            </View>
+          ))}
+        </View>
+      </View>
+
       {/* 日期时间 */}
       <View className="section">
         <Text className="section-title">时间</Text>

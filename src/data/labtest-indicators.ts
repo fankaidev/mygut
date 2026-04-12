@@ -5,6 +5,7 @@ import type { StandardIndicator } from "../services/labtest-standards";
 
 export const STANDARD_INDICATORS: StandardIndicator[] = [
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "白细胞计数",
     "abbr": "WBC",
@@ -17,6 +18,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "红细胞计数",
     "abbr": "RBC",
@@ -29,6 +31,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "血红蛋白",
     "abbr": "HGB",
@@ -41,6 +44,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "红细胞压积",
     "abbr": "HCT",
@@ -52,6 +56,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "平均红细胞体积",
     "abbr": "MCV",
@@ -60,6 +65,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 100
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "平均血红蛋白量",
     "abbr": "MCH",
@@ -71,6 +77,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "平均血红蛋白浓度",
     "abbr": "MCHC",
@@ -82,6 +89,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "血小板计数",
     "abbr": "PLT",
@@ -93,6 +101,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "中性粒细胞百分比",
     "abbr": "NEUT%",
@@ -104,6 +113,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "中性粒细胞绝对值",
     "abbr": "NEUT#",
@@ -112,6 +122,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 7
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "淋巴细胞百分比",
     "abbr": "LYMPH%",
@@ -123,6 +134,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "淋巴细胞绝对值",
     "abbr": "LYMPH#",
@@ -134,6 +146,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "单核细胞百分比",
     "abbr": "MONO%",
@@ -145,6 +158,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "单核细胞绝对值",
     "abbr": "MONO#",
@@ -153,6 +167,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 0.8
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "嗜酸性粒细胞百分比",
     "abbr": "EO%",
@@ -164,6 +179,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "嗜酸性粒细胞绝对值",
     "abbr": "EO#",
@@ -172,6 +188,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 0.5
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "嗜碱性粒细胞百分比",
     "abbr": "BASO%",
@@ -183,6 +200,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "嗜碱性粒细胞绝对值",
     "abbr": "BASO#",
@@ -191,6 +209,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 0.1
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "红细胞分布宽度",
     "abbr": "RDW",
@@ -203,6 +222,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "红细胞分布宽度SD",
     "abbr": "RDW-SD",
@@ -211,6 +231,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 51
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "血小板分布宽度",
     "abbr": "PDW",
@@ -219,6 +240,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 17
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "血小板平均体积",
     "abbr": "MPV",
@@ -230,6 +252,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "大型血小板比率",
     "abbr": "P-LCR",
@@ -241,6 +264,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血常规",
     "nameZh": "血小板压积",
     "abbr": "PCT",
@@ -249,6 +273,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 0.3
   },
   {
+    "specimen": "血液",
     "category": "血沉",
     "nameZh": "红细胞沉降率",
     "abbr": "ESR",
@@ -260,6 +285,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "C反应蛋白",
     "nameZh": "C反应蛋白",
     "abbr": "CRP",
@@ -271,14 +297,19 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "C反应蛋白",
     "nameZh": "超敏C反应蛋白",
     "abbr": "hs-CRP",
     "unit": "mg/L",
     "refMin": 0,
-    "refMax": 3
+    "refMax": 3,
+    "aliases": [
+      "C反应蛋白(超敏)"
+    ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "丙氨酸氨基转移酶",
     "abbr": "ALT",
@@ -290,6 +321,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "天门冬氨酸氨基转移酶",
     "abbr": "AST",
@@ -302,6 +334,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "碱性磷酸酶",
     "abbr": "ALP",
@@ -310,6 +343,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 150
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "γ-谷氨酰转移酶",
     "abbr": "GGT",
@@ -322,6 +356,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "总胆红素",
     "abbr": "TBIL",
@@ -333,6 +368,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "直接胆红素",
     "abbr": "DBIL",
@@ -341,6 +377,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 7
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "间接胆红素",
     "abbr": "IBIL",
@@ -349,6 +386,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 14
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "总蛋白",
     "abbr": "TP",
@@ -360,6 +398,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "白蛋白",
     "abbr": "ALB",
@@ -368,10 +407,12 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 55,
     "aliases": [
       "白蛋白定量",
-      "白蛋白定量(溴甲酚绿)"
+      "白蛋白定量(溴甲酚绿)",
+      "白蛋白(BCG法)"
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "球蛋白",
     "abbr": "GLB",
@@ -380,6 +421,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 35
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "白球比",
     "abbr": "A/G",
@@ -390,6 +432,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "血清总胆汁酸",
     "abbr": "TBA",
@@ -401,6 +444,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肝功能",
     "nameZh": "前白蛋白",
     "abbr": "PA",
@@ -409,12 +453,13 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 400
   },
   {
+    "specimen": "血液",
     "category": "肾功能",
     "nameZh": "血尿素氮",
     "abbr": "BUN",
     "unit": "mmol/L",
     "refMin": 2.8,
-    "refMax": 7.1,
+    "refMax": 7.2,
     "aliases": [
       "尿素氮",
       "尿素氮(酶法)",
@@ -422,19 +467,22 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肾功能",
     "nameZh": "肌酐",
     "abbr": "CREA",
     "unit": "μmol/L",
-    "refMin": 44,
-    "refMax": 97,
+    "refMin": 59,
+    "refMax": 104,
     "aliases": [
       "肌酐(酶法)",
       "肌酸酐",
-      "Cr"
+      "Cr",
+      "肌酐(酶法)"
     ]
   },
   {
+    "specimen": "血液",
     "category": "肾功能",
     "nameZh": "尿酸",
     "abbr": "UA",
@@ -443,6 +491,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 428
   },
   {
+    "specimen": "血液",
     "category": "肾功能",
     "nameZh": "估算肾小球滤过率",
     "abbr": "eGFR",
@@ -450,6 +499,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMin": 90
   },
   {
+    "specimen": "血液",
     "category": "肾功能",
     "nameZh": "β2微球蛋白",
     "abbr": "β2-MG",
@@ -458,6 +508,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 3
   },
   {
+    "specimen": "血液",
     "category": "肾功能",
     "nameZh": "胱抑素C",
     "abbr": "CysC",
@@ -469,6 +520,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "肾功能",
     "nameZh": "C1q测定",
     "abbr": "C1q",
@@ -477,6 +529,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 233
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "比重",
     "abbr": "SG",
@@ -487,6 +540,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "pH值",
     "abbr": "pH",
@@ -497,6 +551,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "白细胞",
     "abbr": "LEU",
@@ -506,6 +561,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "隐血",
     "abbr": "ERY",
@@ -516,12 +572,14 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "亚硝酸盐",
     "abbr": "NIT",
     "refValue": "negative"
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "酮体",
     "abbr": "KET",
@@ -531,6 +589,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "胆红素",
     "abbr": "BIL",
@@ -540,12 +599,14 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "尿胆原",
     "abbr": "UBG",
     "refValue": "negative"
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "蛋白质",
     "abbr": "PRO",
@@ -555,6 +616,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "尿液",
     "category": "尿常规",
     "nameZh": "葡萄糖",
     "abbr": "GLU",
@@ -565,6 +627,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "电解质",
     "nameZh": "钾",
     "abbr": "K",
@@ -576,6 +639,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "电解质",
     "nameZh": "钠",
     "abbr": "Na",
@@ -587,6 +651,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "电解质",
     "nameZh": "氯",
     "abbr": "Cl",
@@ -598,6 +663,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "电解质",
     "nameZh": "钙",
     "abbr": "Ca",
@@ -609,6 +675,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "电解质",
     "nameZh": "校正钙",
     "abbr": "cCa",
@@ -617,6 +684,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 2.52
   },
   {
+    "specimen": "血液",
     "category": "电解质",
     "nameZh": "镁",
     "abbr": "Mg",
@@ -628,6 +696,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "电解质",
     "nameZh": "总二氧化碳",
     "abbr": "TCO2",
@@ -640,6 +709,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血糖",
     "nameZh": "空腹血糖",
     "abbr": "Glu-F",
@@ -652,6 +722,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "血糖",
     "nameZh": "餐后血糖",
     "abbr": "Glu-P",
@@ -664,6 +735,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "心肌标志物",
     "nameZh": "肌酸激酶",
     "abbr": "CK",
@@ -675,6 +747,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "心肌标志物",
     "nameZh": "肌酸激酶MB质量",
     "abbr": "CK-MB",
@@ -686,6 +759,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     ]
   },
   {
+    "specimen": "血液",
     "category": "心肌标志物",
     "nameZh": "高敏心肌肌钙蛋白I",
     "abbr": "hs-cTnI",
@@ -694,10 +768,12 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "aliases": [
       "心肌肌钙蛋白I",
       "肌钙蛋白I",
-      "cTnI"
+      "cTnI",
+      "高敏心肌肌钙蛋白I"
     ]
   },
   {
+    "specimen": "血液",
     "category": "心肌标志物",
     "nameZh": "肌红蛋白",
     "abbr": "MYO",
