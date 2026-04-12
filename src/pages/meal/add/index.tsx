@@ -199,19 +199,21 @@ export default function MealAdd() {
           )}
         </View>
 
-        {/* 手动输入 */}
-        <View className="manual-input-row">
-          <Input
-            className="manual-input"
-            placeholder="输入其他食物"
-            value={manualInput}
-            onInput={(e) => setManualInput(e.detail.value)}
-            onConfirm={handleManualAdd}
-          />
-          <View className="manual-add-btn" onClick={handleManualAdd}>
-            添加
+        {/* 手动输入（仅在「我的常用」分类下显示） */}
+        {selectedCategory === -1 && (
+          <View className="manual-input-row">
+            <Input
+              className="manual-input"
+              placeholder="输入其他食物"
+              value={manualInput}
+              onInput={(e) => setManualInput(e.detail.value)}
+              onConfirm={handleManualAdd}
+            />
+            <View className="manual-add-btn" onClick={handleManualAdd}>
+              添加
+            </View>
           </View>
-        </View>
+        )}
       </View>
 
       {/* 已选食物 */}
