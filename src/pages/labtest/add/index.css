@@ -56,6 +56,12 @@
   font-size: 28px;
 }
 
+/* 本地待上传图片标识 */
+.image-item-local {
+  border: 2px dashed #07c160;
+  border-radius: 10px;
+}
+
 .image-add {
   width: 200px;
   height: 200px;
