@@ -330,39 +330,6 @@ export default function Index() {
               )}
             </View>
           </View>
-          <View className="record-card">
-            <View className="card-header">
-              <View className="card-title-row">
-                <Text className="card-icon">💊</Text>
-                <Text className="card-title">用药</Text>
-                <Text className="card-count">[{medicationRecords.length}条]</Text>
-              </View>
-              <Text
-                className="card-add-btn"
-                onClick={() => handleNavigate("/pages/medication/add/index")}
-              >
-                ＋
-              </Text>
-            </View>
-            <View
-              className="card-content"
-              onClick={() => handleNavigate("/pages/medication/index/index")}
-            >
-              {medicationRecords.length === 0 ? (
-                <Text className="empty-hint">暂无记录</Text>
-              ) : (
-                medicationRecords.slice(0, 3).map((record) => (
-                  <View key={record._id} className="record-item">
-                    <Text className="record-time">{record.time}</Text>
-                    <Text className="record-desc">
-                      {record.name}
-                      {record.dosage ? ` ${record.dosage}` : ""}
-                    </Text>
-                  </View>
-                ))
-              )}
-            </View>
-          </View>
         </View>
       )}
     </View>
