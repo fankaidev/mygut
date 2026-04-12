@@ -18,3 +18,24 @@ export function formatDisplayDate(dateStr: string): string {
   const date = new Date(dateStr);
   return `${date.getMonth() + 1}月${date.getDate()}日`;
 }
+
+// 获取星期几
+const WEEKDAYS = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+export function getWeekday(dateStr: string): string {
+  const date = new Date(dateStr);
+  return WEEKDAYS[date.getDay()];
+}
+
+// 获取前一天日期
+export function getPrevDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  date.setDate(date.getDate() - 1);
+  return formatDate(date);
+}
+
+// 获取后一天日期
+export function getNextDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  date.setDate(date.getDate() + 1);
+  return formatDate(date);
+}

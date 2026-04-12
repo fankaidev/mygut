@@ -42,3 +42,17 @@ export async function deleteSymptomRecord(id: string): Promise<void> {
 
   await db.collection(COLLECTION).doc(id).remove();
 }
+
+// 获取指定日期的症状记录
+export async function getSymptomRecordsByDate(date: string): Promise<SymptomRecord[]> {
+  const db = getDatabase();
+  const userId = await getOpenId();
+
+  const res = await db
+    .collection(COLLECTION)
+    .where({ userId, date })
+    .orderBy("createdAt", "desc")
+    .get();
+
+  return res.data as SymptomRecord[];
+}

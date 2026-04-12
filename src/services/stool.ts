@@ -39,3 +39,13 @@ export async function deleteStoolRecord(id: string): Promise<void> {
 
   await db.collection(COLLECTION).doc(id).remove();
 }
+
+// 获取指定日期的排便记录
+export async function getStoolRecordsByDate(date: string): Promise<StoolRecord[]> {
+  const db = getDatabase();
+  const userId = await getOpenId();
+
+  const res = await db.collection(COLLECTION).where({ userId, date }).orderBy("time", "asc").get();
+
+  return res.data as StoolRecord[];
+}

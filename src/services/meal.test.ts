@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { addMealRecord, getRecentMealRecords, deleteMealRecord } from "./meal";
+import {
+  addMealRecord,
+  getRecentMealRecords,
+  deleteMealRecord,
+  getMealRecordsByDate,
+} from "./meal";
 
 // Mock getOpenId to return a test user
 vi.mock("../utils/cloud", async (importOriginal) => {
@@ -86,6 +91,38 @@ describe("meal service", () => {
 
       const afterRecords = await getRecentMealRecords(100);
       expect(afterRecords.length).toBe(countBefore - 1);
+    });
+  });
+
+  describe("getMealRecordsByDate", () => {
+    it("should return records for specific date", async () => {
+      await addMealRecord({
+        date: "2026-04-15",
+        time: "08:00",
+        foods: ["早餐"],
+        amount: 2,
+      });
+      await addMealRecord({
+        date: "2026-04-15",
+        time: "12:00",
+        foods: ["午餐"],
+        amount: 2,
+      });
+      await addMealRecord({
+        date: "2026-04-16",
+        time: "08:00",
+        foods: ["其他日期"],
+        amount: 2,
+      });
+
+      const records = await getMealRecordsByDate("2026-04-15");
+      expect(records.length).toBe(2);
+      expect(records.every((r) => r.date === "2026-04-15")).toBe(true);
+    });
+
+    it("should return empty array for date with no records", async () => {
+      const records = await getMealRecordsByDate("2020-01-01");
+      expect(records).toEqual([]);
     });
   });
 });

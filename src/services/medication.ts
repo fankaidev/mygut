@@ -42,3 +42,13 @@ export async function deleteMedicationRecord(id: string): Promise<void> {
 
   await db.collection(COLLECTION).doc(id).remove();
 }
+
+// 获取指定日期的用药记录
+export async function getMedicationRecordsByDate(date: string): Promise<MedicationRecord[]> {
+  const db = getDatabase();
+  const userId = await getOpenId();
+
+  const res = await db.collection(COLLECTION).where({ userId, date }).orderBy("time", "asc").get();
+
+  return res.data as MedicationRecord[];
+}
