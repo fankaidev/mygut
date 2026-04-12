@@ -7,7 +7,6 @@
     "prepare": "lefthook install",
     "postinstall": "lefthook install",
     "generate:indicators": "tsx scripts/generate-lab-indicators.ts",
-    "prebuild": "pnpm generate:indicators",
     "build": "taro build --type weapp",
     "build:test": "TARO_APP_ENV=test taro build --type weapp",
     "build:e2e": "TARO_APP_ENV=e2e taro build --type weapp",

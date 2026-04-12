@@ -1,6 +1,9 @@
 pre-commit:
   parallel: true
   commands:
+    generate-indicators:
+      glob: "src/data/lab-indicators.csv"
+      run: pnpm generate:indicators && git add src/data/lab-indicators.ts
     lint:
       glob: "*.{js,ts,jsx,tsx}"
       run: pnpm oxlint {staged_files}
