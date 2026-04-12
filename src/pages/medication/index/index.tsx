@@ -68,22 +68,23 @@ export default function MedicationIndex() {
       ) : (
         <View className="record-list">
           {records.map((record) => (
-            <View
-              key={record._id}
-              className="record-item"
-              onLongPress={() => handleDelete(record._id!)}
-            >
-              <View className="record-header">
-                <Text className="record-date">
-                  {formatDisplayDate(record.date)} {record.time}
-                </Text>
+            <View key={record._id} className="record-item">
+              <View className="record-main">
+                <View className="record-header">
+                  <Text className="record-date">
+                    {formatDisplayDate(record.date)} {record.time}
+                  </Text>
+                </View>
+
+                <Text className="medication-name">{record.name}</Text>
+
+                {record.dosage && <Text className="medication-dosage">{record.dosage}</Text>}
+
+                {record.note && <Text className="record-note">{record.note}</Text>}
               </View>
-
-              <Text className="medication-name">{record.name}</Text>
-
-              {record.dosage && <Text className="medication-dosage">{record.dosage}</Text>}
-
-              {record.note && <Text className="record-note">{record.note}</Text>}
+              <View className="delete-btn" onClick={() => handleDelete(record._id!)}>
+                删除
+              </View>
             </View>
           ))}
         </View>

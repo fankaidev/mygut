@@ -75,30 +75,31 @@ export default function MealIndex() {
           {records.map((record) => {
             const amount = getAmountInfo(record.amount);
             return (
-              <View
-                key={record._id}
-                className="record-item"
-                onLongPress={() => handleDelete(record._id!)}
-              >
-                <View className="record-header">
-                  <Text className="record-date">
-                    {formatDisplayDate(record.date)} {record.time}
-                  </Text>
-                  <View className="amount-badge">
-                    <Text className="amount-emoji">{amount?.emoji}</Text>
-                    <Text className="amount-label">{amount?.label}</Text>
-                  </View>
-                </View>
-
-                <View className="foods">
-                  {record.foods.map((food, idx) => (
-                    <Text key={idx} className="food-tag">
-                      {food}
+              <View key={record._id} className="record-item">
+                <View className="record-main">
+                  <View className="record-header">
+                    <Text className="record-date">
+                      {formatDisplayDate(record.date)} {record.time}
                     </Text>
-                  ))}
-                </View>
+                    <View className="amount-badge">
+                      <Text className="amount-emoji">{amount?.emoji}</Text>
+                      <Text className="amount-label">{amount?.label}</Text>
+                    </View>
+                  </View>
 
-                {record.note && <Text className="record-note">{record.note}</Text>}
+                  <View className="foods">
+                    {record.foods.map((food, idx) => (
+                      <Text key={idx} className="food-tag">
+                        {food}
+                      </Text>
+                    ))}
+                  </View>
+
+                  {record.note && <Text className="record-note">{record.note}</Text>}
+                </View>
+                <View className="delete-btn" onClick={() => handleDelete(record._id!)}>
+                  删除
+                </View>
               </View>
             );
           })}

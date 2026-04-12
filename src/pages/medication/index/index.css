@@ -51,10 +51,27 @@
 }
 
 .record-item {
+  display: flex;
+  align-items: stretch;
   background-color: #fff;
   border-radius: 16px;
-  padding: 28px;
   margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.record-main {
+  flex: 1;
+  padding: 28px;
+}
+
+.delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  background-color: #ff4d4f;
+  color: #fff;
+  font-size: 28px;
 }
 
 .record-header {

@@ -83,44 +83,45 @@ export default function StoolIndex() {
           {records.map((record) => {
             const bristol = getBristolInfo(record.type);
             return (
-              <View
-                key={record._id}
-                className="record-item"
-                onLongPress={() => handleDelete(record._id!)}
-              >
-                <View className="record-header">
-                  <Text className="record-date">
-                    {formatDisplayDate(record.date)} {record.time}
-                  </Text>
-                  <View className="bristol-badge">
-                    <Text className="bristol-emoji">{bristol?.emoji}</Text>
-                    <Text className="bristol-desc">{bristol?.desc}</Text>
+              <View key={record._id} className="record-item">
+                <View className="record-main">
+                  <View className="record-header">
+                    <Text className="record-date">
+                      {formatDisplayDate(record.date)} {record.time}
+                    </Text>
+                    <View className="bristol-badge">
+                      <Text className="bristol-emoji">{bristol?.emoji}</Text>
+                      <Text className="bristol-desc">{bristol?.desc}</Text>
+                    </View>
                   </View>
+
+                  <View className="record-details">
+                    <View className="detail-row">
+                      <Text className="detail-label">类型:</Text>
+                      <Text className="detail-value">{bristol?.label}</Text>
+                    </View>
+                    <View className="detail-row">
+                      <Text className="detail-label">量:</Text>
+                      <Text className="detail-value">{getAmountLabel(record.amount)}</Text>
+                    </View>
+                    <View className="detail-row">
+                      <Text className="detail-label">颜色:</Text>
+                      <Text className="detail-value">{getColorLabel(record.color)}</Text>
+                    </View>
+                  </View>
+
+                  {(record.hasBlood || record.hasMucus) && (
+                    <View className="warning-tags">
+                      {record.hasBlood && <Text className="warning-tag blood">带血</Text>}
+                      {record.hasMucus && <Text className="warning-tag mucus">带粘液</Text>}
+                    </View>
+                  )}
+
+                  {record.note && <Text className="record-note">{record.note}</Text>}
                 </View>
-
-                <View className="record-details">
-                  <View className="detail-row">
-                    <Text className="detail-label">类型:</Text>
-                    <Text className="detail-value">{bristol?.label}</Text>
-                  </View>
-                  <View className="detail-row">
-                    <Text className="detail-label">量:</Text>
-                    <Text className="detail-value">{getAmountLabel(record.amount)}</Text>
-                  </View>
-                  <View className="detail-row">
-                    <Text className="detail-label">颜色:</Text>
-                    <Text className="detail-value">{getColorLabel(record.color)}</Text>
-                  </View>
+                <View className="delete-btn" onClick={() => handleDelete(record._id!)}>
+                  删除
                 </View>
-
-                {(record.hasBlood || record.hasMucus) && (
-                  <View className="warning-tags">
-                    {record.hasBlood && <Text className="warning-tag blood">带血</Text>}
-                    {record.hasMucus && <Text className="warning-tag mucus">带粘液</Text>}
-                  </View>
-                )}
-
-                {record.note && <Text className="record-note">{record.note}</Text>}
               </View>
             );
           })}

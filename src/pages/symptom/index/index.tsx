@@ -83,40 +83,41 @@ export default function SymptomIndex() {
           {records.map((record) => {
             const feeling = getFeelingInfo(record.overallFeeling);
             return (
-              <View
-                key={record._id}
-                className="record-item"
-                onLongPress={() => handleDelete(record._id!)}
-              >
-                <View className="record-header">
-                  <Text className="record-date">
-                    {formatDisplayDate(record.date)}
-                    {record.time && ` ${record.time}`}
-                  </Text>
-                  <View className="feeling-badge">
-                    <Text className="feeling-emoji">{feeling?.emoji}</Text>
-                    <Text className="feeling-label">{feeling?.label}</Text>
+              <View key={record._id} className="record-item">
+                <View className="record-main">
+                  <View className="record-header">
+                    <Text className="record-date">
+                      {formatDisplayDate(record.date)}
+                      {record.time && ` ${record.time}`}
+                    </Text>
+                    <View className="feeling-badge">
+                      <Text className="feeling-emoji">{feeling?.emoji}</Text>
+                      <Text className="feeling-label">{feeling?.label}</Text>
+                    </View>
                   </View>
+
+                  {record.symptoms.length > 0 && (
+                    <View className="symptoms">
+                      {record.symptoms.map((symptom, idx) => {
+                        const severity = getSeverityInfo(symptom.severity);
+                        return (
+                          <View key={idx} className="symptom-tag">
+                            <Text
+                              className="severity-dot"
+                              style={{ backgroundColor: severity?.color }}
+                            />
+                            <Text className="symptom-name">{getSymptomLabel(symptom.type)}</Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  )}
+
+                  {record.note && <Text className="record-note">{record.note}</Text>}
                 </View>
-
-                {record.symptoms.length > 0 && (
-                  <View className="symptoms">
-                    {record.symptoms.map((symptom, idx) => {
-                      const severity = getSeverityInfo(symptom.severity);
-                      return (
-                        <View key={idx} className="symptom-tag">
-                          <Text
-                            className="severity-dot"
-                            style={{ backgroundColor: severity?.color }}
-                          />
-                          <Text className="symptom-name">{getSymptomLabel(symptom.type)}</Text>
-                        </View>
-                      );
-                    })}
-                  </View>
-                )}
-
-                {record.note && <Text className="record-note">{record.note}</Text>}
+                <View className="delete-btn" onClick={() => handleDelete(record._id!)}>
+                  删除
+                </View>
               </View>
             );
           })}
