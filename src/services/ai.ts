@@ -1,6 +1,6 @@
 import type { LabTestIndicator } from "../types";
 
-const MODEL = "Pro/moonshotai/Kimi-K2.5";
+const MODEL = "Qwen/Qwen3-VL-32B-Instruct";
 
 const SYSTEM_PROMPT = `识别化验单图片中的指标，返回CSV格式（无表头）。
 
