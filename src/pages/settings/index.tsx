@@ -90,9 +90,7 @@ export default function Settings() {
           <Text className="data-label">导出数据</Text>
           <Text className="data-arrow">›</Text>
         </View>
-        <Text className="data-hint">
-          导出所有历史记录（排便、症状、饮食、用药）为 JSON 文件
-        </Text>
+        <Text className="data-hint">导出所有历史记录为 JSON 文件</Text>
       </View>
 
       <View className="contact-section">
