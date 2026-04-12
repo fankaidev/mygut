@@ -298,7 +298,10 @@ export default function Records() {
           {/* 化验记录 */}
           <View className="record-card">
             <View className="card-header">
-              <View className="card-title-row">
+              <View
+                className="card-title-row"
+                onClick={() => handleNavigate("/pages/labtest/index/index")}
+              >
                 <Text className="card-icon">🧪</Text>
                 <Text className="card-title">化验</Text>
                 <Text className="card-count">[{labTestRecords.length}条]</Text>

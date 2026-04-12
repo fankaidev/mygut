@@ -11,6 +11,7 @@ export default defineAppConfig({
     "pages/stool/add/index",
     "pages/medication/index/index",
     "pages/medication/add/index",
+    "pages/labtest/index/index",
     "pages/labtest/add/index",
     "pages/labtest/mosaic/index",
     "pages/privacy/index",
