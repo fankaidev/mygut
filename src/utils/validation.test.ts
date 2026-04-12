@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { validateNickname, validateFood, validateSymptom } from "./validation";
+import { validateNickname, validateFood, validateSymptom, validateMedication } from "./validation";
 
 describe("validateNickname", () => {
   it("returns null for valid nickname", () => {
@@ -66,5 +66,28 @@ describe("validateSymptom", () => {
   it("returns error for invalid characters", () => {
     expect(validateSymptom("症状123")).toBe("症状名称只能包含中英文");
     expect(validateSymptom("pain@stomach")).toBe("症状名称只能包含中英文");
+  });
+});
+
+describe("validateMedication", () => {
+  it("returns null for valid medication name", () => {
+    expect(validateMedication("布洛芬")).toBeNull();
+    expect(validateMedication("Ibuprofen")).toBeNull();
+    expect(validateMedication("维生素B12")).toBeNull();
+    expect(validateMedication("阿莫西林(500mg)")).toBeNull();
+  });
+
+  it("returns error for empty medication name", () => {
+    expect(validateMedication("")).toBe("药物名称不能为空");
+    expect(validateMedication("   ")).toBe("药物名称不能为空");
+  });
+
+  it("returns error for medication name exceeding 50 characters", () => {
+    expect(validateMedication("a".repeat(51))).toBe("药物名称不能超过50字符");
+  });
+
+  it("returns error for invalid characters", () => {
+    expect(validateMedication("药物@名")).toBe("药物名称包含无效字符");
+    expect(validateMedication("med#1")).toBe("药物名称包含无效字符");
   });
 });
