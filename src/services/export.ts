@@ -33,64 +33,70 @@ export async function exportAllData(): Promise<ExportData> {
   };
 }
 
+// Cached file path for two-step export
+let preparedFilePath: string | null = null;
+let preparedFileName: string | null = null;
+
+async function prepareExportFile(): Promise<void> {
+  const data = await exportAllData();
+  const jsonString = JSON.stringify(data, null, 2);
+
+  const fs = Taro.getFileSystemManager();
+  const fileName = `mygut-export-${new Date().toISOString().split("T")[0]}.json`;
+  const filePath = `${Taro.env.USER_DATA_PATH}/${fileName}`;
+
+  await new Promise<void>((resolve, reject) => {
+    fs.writeFile({
+      filePath,
+      data: jsonString,
+      encoding: "utf8",
+      success: () => resolve(),
+      fail: (err) => reject(err),
+    });
+  });
+
+  preparedFilePath = filePath;
+  preparedFileName = fileName;
+}
+
+function shareFile(): void {
+  if (!preparedFilePath || !preparedFileName) return;
+
+  wx.shareFileMessage({
+    filePath: preparedFilePath,
+    fileName: preparedFileName,
+    success: () => {
+      Taro.showToast({ title: "导出成功", icon: "success" });
+    },
+    fail: (err: { errMsg?: string }) => {
+      if (!err.errMsg?.includes("cancel")) {
+        Taro.showToast({ title: "分享失败", icon: "none" });
+      }
+    },
+  });
+}
+
 export async function saveExportToFile(): Promise<void> {
-  Taro.showLoading({ title: "正在导出...", mask: true });
+  Taro.showLoading({ title: "正在准备数据...", mask: true });
 
   try {
-    const data = await exportAllData();
-    const jsonString = JSON.stringify(data, null, 2);
-
-    // Write to temp file
-    const fs = Taro.getFileSystemManager();
-    const tempPath = `${Taro.env.USER_DATA_PATH}/mygut-export.json`;
-
-    await new Promise<void>((resolve, reject) => {
-      fs.writeFile({
-        filePath: tempPath,
-        data: jsonString,
-        encoding: "utf8",
-        success: () => resolve(),
-        fail: (err) => reject(err),
-      });
-    });
-
-    // Upload to cloud storage
-    const userId = await getOpenId();
-    const timestamp = Date.now();
-    const cloudPath = `${userId}/exports/export-${timestamp}.json`;
-
-    const uploadRes = await Taro.cloud.uploadFile({
-      cloudPath,
-      filePath: tempPath,
-    });
-
-    // Download to local
-    const { tempFilePath } = await Taro.cloud.downloadFile({
-      fileID: uploadRes.fileID,
-    });
-
+    await prepareExportFile();
     Taro.hideLoading();
 
-    // Share file (user can save to chat or favorites)
-    await new Promise<void>((resolve, reject) => {
-      wx.shareFileMessage({
-        filePath: tempFilePath,
-        fileName: `mygut-export-${new Date().toISOString().split("T")[0]}.json`,
-        success: () => resolve(),
-        fail: (err: { errMsg?: string }) => reject(err),
-      });
+    // Show modal, user tap triggers shareFileMessage
+    Taro.showModal({
+      title: "数据已准备好",
+      content: "点击确定发送文件到聊天，可转发给自己或保存到收藏",
+      confirmText: "发送",
+      success: (res) => {
+        if (res.confirm) {
+          shareFile();
+        }
+      },
     });
-
-    Taro.showToast({ title: "导出成功", icon: "success" });
   } catch (error) {
     Taro.hideLoading();
     console.error("导出失败:", error);
-
-    // User cancelled save - silent handling
-    if ((error as { errMsg?: string })?.errMsg?.includes("cancel")) {
-      return;
-    }
-
     Taro.showToast({ title: "导出失败，请重试", icon: "none" });
   }
 }
