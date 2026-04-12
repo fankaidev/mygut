@@ -6,6 +6,8 @@
   "scripts": {
     "prepare": "lefthook install",
     "postinstall": "lefthook install",
+    "generate:indicators": "tsx scripts/generate-labtest-indicators.ts",
+    "prebuild": "pnpm generate:indicators",
     "build": "taro build --type weapp",
     "build:test": "TARO_APP_ENV=test taro build --type weapp",
     "build:e2e": "TARO_APP_ENV=e2e taro build --type weapp",
@@ -49,6 +51,7 @@
     "postcss": "^8.5.6",
     "stylelint": "^16.4.0",
     "stylelint-config-standard": "^38.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.4.5",
     "vite": "^4.2.0",
     "vitest": "^2.1.9"

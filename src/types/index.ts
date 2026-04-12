@@ -54,6 +54,7 @@ export interface LabTestIndicator {
 
 // 化验记录
 export interface LabTestRecord extends BaseRecord {
+  specimen: "血液" | "尿液" | "粪便" | "其他"; // 标本类型
   imageFileIds: string[]; // 原图云存储 ID 列表
   indicators: LabTestIndicator[];
   note?: string;

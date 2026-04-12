@@ -3,10 +3,18 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect, useRef } from "react";
 import { labTestService } from "../../../services/labtest";
 import { recognizeLabTestImage } from "../../../services/ai";
+import { normalizeIndicators, type SpecimenType } from "../../../services/labtest-standards";
 import { chooseImage, uploadImage, deleteCloudFile } from "../../../utils/upload";
 import { formatDate, formatTime } from "../../../utils/date";
 import type { LabTestIndicator } from "../../../types";
 import "./index.css";
+
+const SPECIMEN_OPTIONS: { value: SpecimenType; label: string }[] = [
+  { value: "血液", label: "血液" },
+  { value: "尿液", label: "尿液" },
+  { value: "粪便", label: "粪便" },
+  { value: "其他", label: "其他" },
+];
 
 export default function LabTestAdd() {
   const router = useRouter();
@@ -15,6 +23,7 @@ export default function LabTestAdd() {
 
   const [date, setDate] = useState(formatDate());
   const [time, setTime] = useState(formatTime());
+  const [specimen, setSpecimen] = useState<SpecimenType>("血液");
   // 本地待上传的图片路径
   const [localImages, setLocalImages] = useState<string[]>([]);
   // 已上传到云存储的 fileId（编辑模式）
@@ -50,8 +59,11 @@ export default function LabTestAdd() {
       if (record) {
         setDate(record.date);
         setTime(record.time || formatTime());
+        const recordSpecimen = record.specimen || "血液";
+        setSpecimen(recordSpecimen);
         setUploadedImages(record.imageFileIds || []);
-        setIndicators(record.indicators || []);
+        // 加载时实时归一化
+        setIndicators(normalizeIndicators(record.indicators || [], recordSpecimen));
       }
     } catch (error) {
       console.error("加载记录失败:", error);
@@ -126,7 +138,9 @@ export default function LabTestAdd() {
       // 识别本地图片
       const recognitionPromises = localImages.map((path) => recognizeLabTestImage(path));
       const recognitionResults = await Promise.all(recognitionPromises);
-      const newIndicators = recognitionResults.flat();
+      const rawIndicators = recognitionResults.flat();
+      // 归一化指标（按标本类型过滤）
+      const newIndicators = normalizeIndicators(rawIndicators, specimen);
       setIndicators(newIndicators);
       Taro.hideLoading();
 
@@ -194,6 +208,7 @@ export default function LabTestAdd() {
       const data = {
         date,
         time,
+        specimen,
         imageFileIds,
         indicators,
       };
@@ -230,6 +245,22 @@ export default function LabTestAdd() {
 
   return (
     <View className="add-page">
+      {/* 标本类型 */}
+      <View className="section">
+        <Text className="section-title">标本类型</Text>
+        <View className="specimen-options">
+          {SPECIMEN_OPTIONS.map((opt) => (
+            <View
+              key={opt.value}
+              className={`specimen-item ${specimen === opt.value ? "active" : ""}`}
+              onClick={() => setSpecimen(opt.value)}
+            >
+              {opt.label}
+            </View>
+          ))}
+        </View>
+      </View>
+
       {/* 日期时间 */}
       <View className="section">
         <Text className="section-title">时间</Text>
@@ -299,14 +330,71 @@ export default function LabTestAdd() {
           </View>
           {indicators.length > 0 ? (
             <View className="indicators-list">
-              {indicators.map((indicator, index) => (
-                <View key={index} className="indicator-item">
-                  <Text className="indicator-name">{indicator.name}</Text>
-                  <Text className="indicator-value">
-                    {indicator.value} {indicator.unit || ""}
-                  </Text>
-                </View>
-              ))}
+              {(() => {
+                // 按类别分组
+                const groups = indicators.reduce(
+                  (acc, ind) => {
+                    const cat = ind.category || "其他";
+                    if (!acc[cat]) acc[cat] = [];
+                    acc[cat].push(ind);
+                    return acc;
+                  },
+                  {} as Record<string, typeof indicators>,
+                );
+
+                const getRefText = (ind: (typeof indicators)[0]) =>
+                  ind.refValue ||
+                  (ind.refMin !== undefined && ind.refMax !== undefined
+                    ? `${ind.refMin}-${ind.refMax}`
+                    : ind.refMin !== undefined
+                      ? `≥${ind.refMin}`
+                      : ind.refMax !== undefined
+                        ? `≤${ind.refMax}`
+                        : "-");
+
+                // 判断值是否超出参考范围
+                const getAbnormalFlag = (ind: (typeof indicators)[0]) => {
+                  const numValue = parseFloat(ind.value);
+                  if (isNaN(numValue)) return "";
+                  if (ind.refMin !== undefined && numValue < ind.refMin) return "↓";
+                  if (ind.refMax !== undefined && numValue > ind.refMax) return "↑";
+                  return "";
+                };
+
+                return Object.entries(groups).map(([category, items]) => (
+                  <View key={category} className="indicator-group">
+                    <Text className="indicator-group-title">{category}</Text>
+                    <View className="indicator-table">
+                      <View className="indicator-table-header">
+                        <Text className="indicator-col-name">指标</Text>
+                        <Text className="indicator-col-value">结果</Text>
+                        <Text className="indicator-col-ref">参考</Text>
+                        <Text className="indicator-col-unit">单位</Text>
+                      </View>
+                      {items.map((ind, idx) => {
+                        const abnormalFlag = getAbnormalFlag(ind);
+                        return (
+                          <View key={idx} className="indicator-table-row">
+                            <Text className="indicator-col-name">{ind.name}</Text>
+                            <Text className="indicator-col-value">
+                              {ind.value}
+                              {abnormalFlag && (
+                                <Text
+                                  className={`abnormal-flag ${abnormalFlag === "↑" ? "high" : "low"}`}
+                                >
+                                  {abnormalFlag}
+                                </Text>
+                              )}
+                            </Text>
+                            <Text className="indicator-col-ref">{getRefText(ind)}</Text>
+                            <Text className="indicator-col-unit">{ind.unit || "-"}</Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  </View>
+                ));
+              })()}
             </View>
           ) : (
             <Text className="no-indicators">点击"AI 识别"按钮识别化验指标</Text>
