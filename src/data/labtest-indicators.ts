@@ -286,7 +286,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "C反应蛋白",
+    "category": "CRP",
     "nameZh": "C反应蛋白",
     "abbr": "CRP",
     "unit": "mg/L",
@@ -298,7 +298,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "C反应蛋白",
+    "category": "CRP",
     "nameZh": "超敏C反应蛋白",
     "abbr": "hs-CRP",
     "unit": "mg/L",
@@ -529,104 +529,6 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "refMax": 233
   },
   {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "比重",
-    "abbr": "SG",
-    "refMin": 1.004,
-    "refMax": 1.03,
-    "aliases": [
-      "尿比重"
-    ]
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "pH值",
-    "abbr": "pH",
-    "refMin": 4.5,
-    "refMax": 8,
-    "aliases": [
-      "酸碱度"
-    ]
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "白细胞",
-    "abbr": "LEU",
-    "refValue": "negative",
-    "aliases": [
-      "尿白细胞"
-    ]
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "隐血",
-    "abbr": "ERY",
-    "refValue": "negative",
-    "aliases": [
-      "尿隐血",
-      "尿潜血"
-    ]
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "亚硝酸盐",
-    "abbr": "NIT",
-    "refValue": "negative"
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "酮体",
-    "abbr": "KET",
-    "refValue": "negative",
-    "aliases": [
-      "尿酮体"
-    ]
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "胆红素",
-    "abbr": "BIL",
-    "refValue": "negative",
-    "aliases": [
-      "尿胆红素"
-    ]
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "尿胆原",
-    "abbr": "UBG",
-    "refValue": "negative"
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "蛋白质",
-    "abbr": "PRO",
-    "refValue": "negative",
-    "aliases": [
-      "尿蛋白"
-    ]
-  },
-  {
-    "specimen": "尿液",
-    "category": "尿常规",
-    "nameZh": "葡萄糖",
-    "abbr": "GLU",
-    "refValue": "negative",
-    "aliases": [
-      "尿糖",
-      "尿葡萄糖"
-    ]
-  },
-  {
     "specimen": "血液",
     "category": "电解质",
     "nameZh": "钾",
@@ -838,5 +740,103 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "unit": "s",
     "refMin": 20,
     "refMax": 40
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "比重",
+    "abbr": "SG",
+    "refMin": 1.004,
+    "refMax": 1.03,
+    "aliases": [
+      "尿比重"
+    ]
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "pH值",
+    "abbr": "pH",
+    "refMin": 4.5,
+    "refMax": 8,
+    "aliases": [
+      "酸碱度"
+    ]
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "白细胞",
+    "abbr": "LEU",
+    "refValue": "negative",
+    "aliases": [
+      "尿白细胞"
+    ]
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "隐血",
+    "abbr": "ERY",
+    "refValue": "negative",
+    "aliases": [
+      "尿隐血",
+      "尿潜血"
+    ]
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "亚硝酸盐",
+    "abbr": "NIT",
+    "refValue": "negative"
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "酮体",
+    "abbr": "KET",
+    "refValue": "negative",
+    "aliases": [
+      "尿酮体"
+    ]
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "胆红素",
+    "abbr": "BIL",
+    "refValue": "negative",
+    "aliases": [
+      "尿胆红素"
+    ]
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "尿胆原",
+    "abbr": "UBG",
+    "refValue": "negative"
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "蛋白质",
+    "abbr": "PRO",
+    "refValue": "negative",
+    "aliases": [
+      "尿蛋白"
+    ]
+  },
+  {
+    "specimen": "尿液",
+    "category": "尿常规",
+    "nameZh": "葡萄糖",
+    "abbr": "GLU",
+    "refValue": "negative",
+    "aliases": [
+      "尿糖",
+      "尿葡萄糖"
+    ]
   }
 ];

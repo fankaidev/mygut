@@ -59,9 +59,11 @@ export default function LabTestAdd() {
       if (record) {
         setDate(record.date);
         setTime(record.time || formatTime());
-        setSpecimen(record.specimen || "血液");
+        const recordSpecimen = record.specimen || "血液";
+        setSpecimen(recordSpecimen);
         setUploadedImages(record.imageFileIds || []);
-        setIndicators(record.indicators || []);
+        // 加载时实时归一化
+        setIndicators(normalizeIndicators(record.indicators || [], recordSpecimen));
       }
     } catch (error) {
       console.error("加载记录失败:", error);
