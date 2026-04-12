@@ -15,8 +15,10 @@
     "@tarojs/runtime",
     "@tarojs/vite-runner",
     "@vitejs/plugin-react",
+    "miniprogram-ci",
     "vite"
   ],
   "ignoreExportsUsedInFile": true,
-  "ignore": ["src/types/index.ts"]
+  "ignore": ["src/types/index.ts"],
+  "ignoreBinaries": ["miniprogram-ci"]
 }

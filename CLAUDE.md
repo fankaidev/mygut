@@ -12,6 +12,8 @@ Always use `pnpm` instead of `npm` or `yarn`.
 
 Always create a pull request for changes. Never push directly to main.
 
+Never skip pre-commit hooks (--no-verify). If a hook fails, fix the underlying issue.
+
 Use [Conventional Commits](https://www.conventionalcommits.org/) format:
 
 ```
