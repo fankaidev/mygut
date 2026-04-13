@@ -70,7 +70,7 @@ export default function ExamAdd() {
       if (tempPaths.length === 0) return;
 
       Taro.navigateTo({
-        url: `/pages/labtest/mosaic/index?url=${encodeURIComponent(tempPaths[0])}&source=exam`,
+        url: `/pages/common/mosaic/index?url=${encodeURIComponent(tempPaths[0])}&source=exam`,
       });
     } catch (error) {
       console.error("选择图片失败:", error);

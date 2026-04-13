@@ -14,10 +14,8 @@ const TIPS: Record<string, string> = {
   exam: '您上传的图片将用于 AI 自动识别检查结论。请用手指涂抹遮盖姓名、身份证号、住址、电话等敏感信息，确认图片中不含敏感个人信息后再点击"确认"。',
 };
 
-// 马赛克笔刷大小
-const BRUSH_SIZE = 30;
 // 马赛克块大小
-const BLOCK_SIZE = 10;
+const BLOCK_SIZE = 6;
 
 export default function MosaicEditor() {
   const router = useRouter();
@@ -92,19 +90,22 @@ export default function MosaicEditor() {
     }
   };
 
-  // 在某个点绘制马赛克
+  // 在某个点绘制马赛克（画 2x2 个块）
   const drawMosaicAt = (ctx: Taro.CanvasContext, point: Point) => {
-    const halfBrush = BRUSH_SIZE / 2;
-    const startX = Math.floor((point.x - halfBrush) / BLOCK_SIZE) * BLOCK_SIZE;
-    const startY = Math.floor((point.y - halfBrush) / BLOCK_SIZE) * BLOCK_SIZE;
-    const endX = point.x + halfBrush;
-    const endY = point.y + halfBrush;
+    const centerBlockX = Math.floor(point.x / BLOCK_SIZE) * BLOCK_SIZE;
+    const centerBlockY = Math.floor(point.y / BLOCK_SIZE) * BLOCK_SIZE;
 
-    for (let x = startX; x < endX; x += BLOCK_SIZE) {
-      for (let y = startY; y < endY; y += BLOCK_SIZE) {
+    // 画 2x2 的块，以触摸点为中心偏左上
+    for (let dx = 0; dx < 2; dx++) {
+      for (let dy = 0; dy < 2; dy++) {
         const gray = Math.floor(Math.random() * 100) + 100;
         ctx.setFillStyle(`rgb(${gray}, ${gray}, ${gray})`);
-        ctx.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+        ctx.fillRect(
+          centerBlockX + dx * BLOCK_SIZE,
+          centerBlockY + dy * BLOCK_SIZE,
+          BLOCK_SIZE,
+          BLOCK_SIZE,
+        );
       }
     }
   };
@@ -282,6 +283,7 @@ export default function MosaicEditor() {
             <Canvas
               canvasId={canvasRef.current}
               style={{ width: `${canvasSize.width}px`, height: `${canvasSize.height}px` }}
+              disableScroll
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}

@@ -13,7 +13,7 @@ export default defineAppConfig({
     "pages/medication/add/index",
     "pages/labtest/index/index",
     "pages/labtest/add/index",
-    "pages/labtest/mosaic/index",
+    "pages/common/mosaic/index",
     "pages/exam/index/index",
     "pages/exam/add/index",
     "pages/privacy/index",

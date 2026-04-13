@@ -84,7 +84,7 @@ export default function LabTestAdd() {
 
       // 跳转到打码页面
       Taro.navigateTo({
-        url: `/pages/labtest/mosaic/index?url=${encodeURIComponent(tempPaths[0])}`,
+        url: `/pages/common/mosaic/index?url=${encodeURIComponent(tempPaths[0])}`,
       });
     } catch (error) {
       console.error("选择图片失败:", error);
