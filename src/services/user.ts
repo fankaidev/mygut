@@ -11,6 +11,15 @@ interface UserSettings {
   updatedAt?: Date;
 }
 
+// 将云存储 fileID 转换为临时访问 URL
+async function getAvatarUrl(fileID: string): Promise<string> {
+  const res = await Taro.cloud.getTempFileURL({ fileList: [fileID] });
+  if (res.fileList[0]?.status === 0) {
+    return res.fileList[0].tempFileURL;
+  }
+  return fileID; // 转换失败时返回原值
+}
+
 // 获取当前用户设置（不存在则自动创建）
 export async function getUserSettings(): Promise<UserSettings> {
   const db = getDatabase();
@@ -20,7 +29,12 @@ export async function getUserSettings(): Promise<UserSettings> {
   const res = await db.collection(COLLECTION).where({ _id: userId }).limit(1).get();
 
   if (res.data && res.data.length > 0) {
-    return res.data[0] as UserSettings;
+    const settings = res.data[0] as UserSettings;
+    // 如果有头像 fileID，转换为临时 URL
+    if (settings.avatar && settings.avatar.startsWith("cloud://")) {
+      settings.avatar = await getAvatarUrl(settings.avatar);
+    }
+    return settings;
   }
 
   // 不存在，创建新记录
@@ -60,8 +74,10 @@ export async function updateUserSettings(data: {
     });
 }
 
-// 上传头像到云存储
-export async function uploadAvatar(tempFilePath: string): Promise<string> {
+// 上传头像到云存储，返回 fileID 和临时访问 URL
+export async function uploadAvatar(
+  tempFilePath: string
+): Promise<{ fileID: string; tempURL: string }> {
   const openId = await getOpenId();
   const cloudPath = `${openId}/avatar.jpg`;
 
@@ -70,5 +86,6 @@ export async function uploadAvatar(tempFilePath: string): Promise<string> {
     filePath: tempFilePath,
   });
 
-  return res.fileID;
+  const tempURL = await getAvatarUrl(res.fileID);
+  return { fileID: res.fileID, tempURL };
 }
