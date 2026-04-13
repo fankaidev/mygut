@@ -62,22 +62,25 @@ export default function ProfilePopup({
     setSaving(true);
 
     try {
-      let avatarFileId = currentAvatar;
+      let avatarToSave: string | undefined;
+      let avatarToDisplay: string | undefined = currentAvatar;
 
       // 如果有新选择的头像，先上传
       if (tempAvatarPath) {
-        avatarFileId = await uploadAvatar(tempAvatarPath);
+        const { fileID, tempURL } = await uploadAvatar(tempAvatarPath);
+        avatarToSave = fileID; // 保存 fileID 到数据库
+        avatarToDisplay = tempURL; // 用临时 URL 显示
       }
 
-      // 更新用户设置
+      // 更新用户设置（只有新上传的头像才需要更新）
       await updateUserSettings({
         nickname: currentNickname.trim(),
-        avatar: avatarFileId,
+        ...(avatarToSave && { avatar: avatarToSave }),
       });
 
       onSave({
         nickname: currentNickname.trim(),
-        avatar: avatarFileId,
+        avatar: avatarToDisplay,
       });
 
       Taro.showToast({ title: "保存成功", icon: "success" });
