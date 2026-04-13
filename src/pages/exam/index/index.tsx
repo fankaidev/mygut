@@ -1,14 +1,14 @@
 import { View, Text } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { useState } from "react";
-import { imagingService } from "../../../services/imaging";
+import { examService } from "../../../services/exam";
 import { formatDisplayDate } from "../../../utils/date";
-import { EXAM_TYPES } from "../../../constants/imaging";
-import type { ImagingRecord } from "../../../types";
+import { EXAM_TYPES } from "../../../constants/exam";
+import type { ExamRecord } from "../../../types";
 import "./index.css";
 
-export default function ImagingIndex() {
-  const [records, setRecords] = useState<ImagingRecord[]>([]);
+export default function ExamIndex() {
+  const [records, setRecords] = useState<ExamRecord[]>([]);
   const [loading, setLoading] = useState(true);
 
   useDidShow(() => {
@@ -18,7 +18,7 @@ export default function ImagingIndex() {
   const loadRecords = async () => {
     setLoading(true);
     try {
-      const data = await imagingService.getRecent(50);
+      const data = await examService.getRecent(50);
       setRecords(data);
     } catch (error) {
       console.error("加载记录失败:", error);
@@ -29,11 +29,11 @@ export default function ImagingIndex() {
   };
 
   const handleAdd = () => {
-    Taro.navigateTo({ url: "/pages/imaging/add/index" });
+    Taro.navigateTo({ url: "/pages/exam/add/index" });
   };
 
   const handleEdit = (id: string) => {
-    Taro.navigateTo({ url: `/pages/imaging/add/index?id=${id}` });
+    Taro.navigateTo({ url: `/pages/exam/add/index?id=${id}` });
   };
 
   const getExamTypeInfo = (examType: string) => {
@@ -43,7 +43,7 @@ export default function ImagingIndex() {
   return (
     <View className="health-page">
       <View className="header">
-        <Text className="title">影像检查</Text>
+        <Text className="title">检查记录</Text>
         <View className="add-btn" onClick={handleAdd}>
           + 添加
         </View>

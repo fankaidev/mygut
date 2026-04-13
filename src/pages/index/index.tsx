@@ -75,10 +75,10 @@ export default function Index() {
           </View>
           <View
             className="action-item"
-            onClick={() => handleNavigate("/pages/imaging/add/index")}
+            onClick={() => handleNavigate("/pages/exam/add/index")}
           >
-            <Text className="action-icon">🩻</Text>
-            <Text className="action-label">影像</Text>
+            <Text className="action-icon">🩺</Text>
+            <Text className="action-label">检查</Text>
           </View>
         </View>
       </View>

@@ -1,4 +1,4 @@
-// 影像检查类型
+// 检查类型
 export const EXAM_TYPES = [
   { value: "ultrasound", label: "B超", emoji: "🔊" },
   { value: "ct", label: "CT", emoji: "🔬" },

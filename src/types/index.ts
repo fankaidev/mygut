@@ -60,8 +60,8 @@ export interface LabTestRecord extends BaseRecord {
   note?: string;
 }
 
-// 影像检查记录
-export interface ImagingRecord extends BaseRecord {
+// 检查记录
+export interface ExamRecord extends BaseRecord {
   examType: string; // 检查类型：B超、CT、MRI、肠镜、胃镜等
   examDate: string; // 检查日期
   imageFileIds: string[]; // 报告图片云存储 ID 列表

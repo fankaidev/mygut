@@ -6,9 +6,9 @@ import { mealService } from "../../services/meal";
 import { stoolService } from "../../services/stool";
 import { medicationService } from "../../services/medication";
 import { labTestService } from "../../services/labtest";
-import { imagingService } from "../../services/imaging";
+import { examService } from "../../services/exam";
 import { formatDate, getPrevDate, getNextDate, getWeekday } from "../../utils/date";
-import { EXAM_TYPES } from "../../constants/imaging";
+import { EXAM_TYPES } from "../../constants/exam";
 import { SEVERITY_OPTIONS, FEELING_OPTIONS } from "../../constants/symptom";
 import { AMOUNT_OPTIONS } from "../../constants/meal";
 import { BRISTOL_TYPES, STOOL_AMOUNTS } from "../../constants/stool";
@@ -18,7 +18,7 @@ import type {
   StoolRecord,
   MedicationRecord,
   LabTestRecord,
-  ImagingRecord,
+  ExamRecord,
 } from "../../types";
 import "./index.css";
 
@@ -59,25 +59,25 @@ export default function Records() {
   const [stoolRecords, setStoolRecords] = useState<StoolRecord[]>([]);
   const [medicationRecords, setMedicationRecords] = useState<MedicationRecord[]>([]);
   const [labTestRecords, setLabTestRecords] = useState<LabTestRecord[]>([]);
-  const [imagingRecords, setImagingRecords] = useState<ImagingRecord[]>([]);
+  const [examRecords, setExamRecords] = useState<ExamRecord[]>([]);
 
   const loadData = useCallback(async (date: string) => {
     setLoading(true);
     try {
-      const [symptoms, meals, stools, medications, labTests, imagings] = await Promise.all([
+      const [symptoms, meals, stools, medications, labTests, exams] = await Promise.all([
         symptomService.getByDate(date),
         mealService.getByDate(date),
         stoolService.getByDate(date),
         medicationService.getByDate(date),
         labTestService.getByDate(date),
-        imagingService.getByDate(date),
+        examService.getByDate(date),
       ]);
       setSymptomRecords(symptoms);
       setMealRecords(meals);
       setStoolRecords(stools);
       setMedicationRecords(medications);
       setLabTestRecords(labTests);
-      setImagingRecords(imagings);
+      setExamRecords(exams);
     } catch (error) {
       console.error("加载数据失败:", error);
       Taro.showToast({ title: "加载失败", icon: "none" });
@@ -344,35 +344,35 @@ export default function Records() {
             </View>
           </View>
 
-          {/* 影像检查记录 */}
+          {/* 检查记录 */}
           <View className="record-card">
             <View className="card-header">
               <View
                 className="card-title-row"
-                onClick={() => handleNavigate("/pages/imaging/index/index")}
+                onClick={() => handleNavigate("/pages/exam/index/index")}
               >
-                <Text className="card-icon">🩻</Text>
-                <Text className="card-title">影像</Text>
-                <Text className="card-count">[{imagingRecords.length}条]</Text>
+                <Text className="card-icon">🩺</Text>
+                <Text className="card-title">检查</Text>
+                <Text className="card-count">[{examRecords.length}条]</Text>
               </View>
               <Text
                 className="card-add-btn"
-                onClick={() => handleNavigate("/pages/imaging/add/index")}
+                onClick={() => handleNavigate("/pages/exam/add/index")}
               >
                 ＋
               </Text>
             </View>
             <View className="card-content">
-              {imagingRecords.length === 0 ? (
+              {examRecords.length === 0 ? (
                 <Text className="empty-hint">暂无记录</Text>
               ) : (
-                imagingRecords.map((record) => {
+                examRecords.map((record) => {
                   const examTypeInfo = getExamTypeInfo(record.examType);
                   return (
                     <View
                       key={record._id}
                       className="record-item"
-                      onClick={() => handleNavigate(`/pages/imaging/add/index?id=${record._id}`)}
+                      onClick={() => handleNavigate(`/pages/exam/add/index?id=${record._id}`)}
                     >
                       <Text className="record-time">{record.time}</Text>
                       <Text className="record-feeling">{examTypeInfo.emoji}</Text>

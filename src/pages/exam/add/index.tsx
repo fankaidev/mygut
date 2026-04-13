@@ -1,14 +1,14 @@
 import { View, Text, Image, Picker, Input, Textarea } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect, useRef } from "react";
-import { imagingService } from "../../../services/imaging";
-import { recognizeImagingReport } from "../../../services/ai";
+import { examService } from "../../../services/exam";
+import { recognizeExamReport } from "../../../services/ai";
 import { chooseImage, uploadImage, deleteCloudFile } from "../../../utils/upload";
 import { formatDate, formatTime } from "../../../utils/date";
-import { EXAM_TYPES } from "../../../constants/imaging";
+import { EXAM_TYPES } from "../../../constants/exam";
 import "./index.css";
 
-export default function ImagingAdd() {
+export default function ExamAdd() {
   const router = useRouter();
   const editId = router.params.id;
   const isEdit = !!editId;
@@ -45,7 +45,7 @@ export default function ImagingAdd() {
 
   const loadRecord = async (id: string) => {
     try {
-      const record = await imagingService.getById(id);
+      const record = await examService.getById(id);
       if (record) {
         setDate(record.date);
         setTime(record.time || formatTime());
@@ -72,7 +72,7 @@ export default function ImagingAdd() {
       if (tempPaths.length === 0) return;
 
       Taro.navigateTo({
-        url: `/pages/labtest/mosaic/index?url=${encodeURIComponent(tempPaths[0])}&source=imaging`,
+        url: `/pages/labtest/mosaic/index?url=${encodeURIComponent(tempPaths[0])}&source=exam`,
       });
     } catch (error) {
       console.error("选择图片失败:", error);
@@ -125,7 +125,7 @@ export default function ImagingAdd() {
       Taro.showLoading({ title: "识别中..." });
       // 识别第一张本地图片
       if (localImages.length > 0) {
-        const result = await recognizeImagingReport(localImages[0]);
+        const result = await recognizeExamReport(localImages[0]);
         if (result.date) {
           setExamDate(result.date);
         }
@@ -157,7 +157,7 @@ export default function ImagingAdd() {
         for (const fileId of uploadedImages) {
           await deleteCloudFile(fileId);
         }
-        await imagingService.delete(editId);
+        await examService.delete(editId);
         Taro.showToast({ title: "已删除", icon: "success" });
         setTimeout(() => {
           Taro.navigateBack();
@@ -200,10 +200,10 @@ export default function ImagingAdd() {
       };
 
       if (isEdit && editId) {
-        await imagingService.update(editId, data);
+        await examService.update(editId, data);
         Taro.showToast({ title: "更新成功", icon: "success" });
       } else {
-        await imagingService.add(data);
+        await examService.add(data);
         Taro.showToast({ title: "记录成功", icon: "success" });
       }
 
