@@ -135,58 +135,24 @@ export default function MosaicEditor() {
     currentStrokeRef.current = [point];
     lastPointRef.current = point;
 
-    // 立即绘制当前点
+    // 增量绘制当前点
     const ctx = Taro.createCanvasContext(canvasRef.current);
-    ctx.drawImage(imageUrl, 0, 0, canvasSize.width, canvasSize.height);
-
-    // 绘制历史笔画
-    strokeHistory.forEach((stroke) => {
-      for (let i = 0; i < stroke.length; i++) {
-        if (i === 0) {
-          drawMosaicAt(ctx, stroke[i]);
-        } else {
-          drawMosaicLine(ctx, stroke[i - 1], stroke[i]);
-        }
-      }
-    });
-
-    // 绘制当前点
     drawMosaicAt(ctx, point);
-    ctx.draw();
+    ctx.draw(true); // reserve = true，保留之前的内容
   };
 
   const handleTouchMove = (e: { touches: { x: number; y: number }[] }) => {
-    if (!drawing) return;
+    if (!drawing || !lastPointRef.current) return;
 
     const touch = e.touches[0];
     const point = { x: touch.x, y: touch.y };
     currentStrokeRef.current.push(point);
 
+    // 只增量绘制从上一个点到当前点
     const ctx = Taro.createCanvasContext(canvasRef.current);
-    ctx.drawImage(imageUrl, 0, 0, canvasSize.width, canvasSize.height);
+    drawMosaicLine(ctx, lastPointRef.current, point);
+    ctx.draw(true); // reserve = true，保留之前的内容
 
-    // 绘制历史笔画
-    strokeHistory.forEach((stroke) => {
-      for (let i = 0; i < stroke.length; i++) {
-        if (i === 0) {
-          drawMosaicAt(ctx, stroke[i]);
-        } else {
-          drawMosaicLine(ctx, stroke[i - 1], stroke[i]);
-        }
-      }
-    });
-
-    // 绘制当前笔画
-    const currentStroke = currentStrokeRef.current;
-    for (let i = 0; i < currentStroke.length; i++) {
-      if (i === 0) {
-        drawMosaicAt(ctx, currentStroke[i]);
-      } else {
-        drawMosaicLine(ctx, currentStroke[i - 1], currentStroke[i]);
-      }
-    }
-
-    ctx.draw();
     lastPointRef.current = point;
   };
 
@@ -197,7 +163,11 @@ export default function MosaicEditor() {
 
     // 保存当前笔画到历史
     if (currentStrokeRef.current.length > 0) {
-      setStrokeHistory([...strokeHistory, [...currentStrokeRef.current]]);
+      const newHistory = [...strokeHistory, [...currentStrokeRef.current]];
+      setStrokeHistory(newHistory);
+
+      // 手指抬起后完整重绘，确保状态一致
+      redrawAllStrokes(newHistory);
     }
 
     currentStrokeRef.current = [];
