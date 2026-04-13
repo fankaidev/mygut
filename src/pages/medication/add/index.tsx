@@ -40,7 +40,7 @@ export default function MedicationAdd() {
   const [date, setDate] = useState(formatDate());
   const [time, setTime] = useState(formatTime());
   const [selectedCategory, setSelectedCategory] = useState(-1); // -1 = 常用
-  const [selectedMedication, setSelectedMedication] = useState("");
+  const [selectedMedications, setSelectedMedications] = useState<string[]>([]);
   const [manualInput, setManualInput] = useState("");
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -60,7 +60,7 @@ export default function MedicationAdd() {
       if (record) {
         setDate(record.date);
         setTime(record.time || formatTime());
-        setSelectedMedication(record.name);
+        setSelectedMedications(record.names);
         setNote(record.note || "");
       }
     } catch (error) {
@@ -78,11 +78,10 @@ export default function MedicationAdd() {
   });
 
   const handleMedicationClick = (medication: string) => {
-    // 单选：点击选中，再点击取消
-    if (selectedMedication === medication) {
-      setSelectedMedication("");
+    if (selectedMedications.includes(medication)) {
+      setSelectedMedications(selectedMedications.filter((m) => m !== medication));
     } else {
-      setSelectedMedication(medication);
+      setSelectedMedications([...selectedMedications, medication]);
     }
   };
 
@@ -99,7 +98,11 @@ export default function MedicationAdd() {
       return;
     }
 
-    setSelectedMedication(medication);
+    if (selectedMedications.includes(medication)) {
+      Taro.showToast({ title: "已添加该药物", icon: "none" });
+      return;
+    }
+    setSelectedMedications([...selectedMedications, medication]);
     setManualInput("");
     if (!ALL_PRESET_MEDICATIONS.has(medication)) {
       saveCustomMedication(medication);
@@ -115,14 +118,12 @@ export default function MedicationAdd() {
     if (res.confirm) {
       removeCustomMedication(medication);
       setCustomMedications(getStoredCustomMedications());
-      if (selectedMedication === medication) {
-        setSelectedMedication("");
-      }
+      setSelectedMedications(selectedMedications.filter((m) => m !== medication));
     }
   };
 
-  const handleClearMedication = () => {
-    setSelectedMedication("");
+  const handleRemoveMedication = (medication: string) => {
+    setSelectedMedications(selectedMedications.filter((m) => m !== medication));
   };
 
   const handleDelete = async () => {
@@ -149,8 +150,8 @@ export default function MedicationAdd() {
   const handleSubmit = async () => {
     if (submitting) return;
 
-    if (!selectedMedication) {
-      Taro.showToast({ title: "请选择或输入药物", icon: "none" });
+    if (selectedMedications.length === 0) {
+      Taro.showToast({ title: "请选择至少一种药物", icon: "none" });
       return;
     }
 
@@ -159,7 +160,7 @@ export default function MedicationAdd() {
       const data = {
         date,
         time,
-        name: selectedMedication,
+        names: selectedMedications,
         note: note.trim() || undefined,
       };
 
@@ -225,7 +226,7 @@ export default function MedicationAdd() {
             className={`category-tab ${selectedCategory === -1 ? "active" : ""}`}
             onClick={() => setSelectedCategory(-1)}
           >
-            常用
+            我的常用
           </View>
           {MEDICATION_CATEGORIES.map((cat, index) => (
             <View
@@ -248,7 +249,7 @@ export default function MedicationAdd() {
               return (
                 <View
                   key={medication}
-                  className={`medication-item ${selectedMedication === medication ? "selected" : ""} ${isCustom ? "custom" : ""}`}
+                  className={`medication-item ${selectedMedications.includes(medication) ? "selected" : ""} ${isCustom ? "custom" : ""}`}
                   onClick={() => handleMedicationClick(medication)}
                   onLongPress={
                     isCustom ? () => handleDeleteCustomMedication(medication) : undefined
@@ -281,14 +282,20 @@ export default function MedicationAdd() {
       {/* 已选药物 */}
       <View className="section">
         <Text className="section-title">已选药物</Text>
-        {!selectedMedication ? (
+        {selectedMedications.length === 0 ? (
           <Text className="no-medication-hint">请从上方选择或输入药物</Text>
         ) : (
-          <View className="selected-medication">
-            <Text className="selected-medication-name">{selectedMedication}</Text>
-            <Text className="clear-medication-btn" onClick={handleClearMedication}>
-              清除
-            </Text>
+          <View className="selected-medications">
+            {selectedMedications.map((medication) => (
+              <View
+                key={medication}
+                className="selected-medication-tag"
+                onClick={() => handleRemoveMedication(medication)}
+              >
+                <Text className="selected-medication-name">{medication}</Text>
+                <Text className="remove-medication-btn">×</Text>
+              </View>
+            ))}
           </View>
         )}
       </View>

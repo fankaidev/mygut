@@ -40,8 +40,7 @@ export interface StoolRecord extends BaseRecord {
 
 // 用药记录
 export interface MedicationRecord extends BaseRecord {
-  name: string;
-  dosage: string;
+  names: string[];
   note?: string;
 }
 

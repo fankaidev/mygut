@@ -23,7 +23,9 @@ export const medicationService = {
 
   async add(data: Omit<MedicationRecord, "_id" | "userId" | "createdAt">): Promise<string> {
     const id = await baseService.add(data);
-    addRecentMedications([data.name]);
+    if (data.names) {
+      addRecentMedications(data.names);
+    }
     return id;
   },
 
