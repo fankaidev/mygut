@@ -138,13 +138,10 @@ export default function RecordItem({ record, showTypeIcon = false }: RecordItemP
       case "exam": {
         const examTypeInfo = getExamTypeInfo(record.examType);
         return (
-          <>
-            <Text className="record-feeling">{examTypeInfo.emoji}</Text>
-            <Text className="record-desc">
-              {record.examName || examTypeInfo.label}
-              {record.imageFileIds.length > 0 && ` · ${record.imageFileIds.length}张图片`}
-            </Text>
-          </>
+          <Text className="record-desc">
+            {record.examName || examTypeInfo.label}
+            {record.imageFileIds.length > 0 && ` · ${record.imageFileIds.length}张图片`}
+          </Text>
         );
       }
     }
