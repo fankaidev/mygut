@@ -81,9 +81,14 @@ export default function ProfilePopup({
         ...(avatarToSave && { avatar: avatarToSave }),
       });
 
+      // 给 URL 加时间戳防止缓存
+      const avatarWithTimestamp = avatarToDisplay
+        ? `${avatarToDisplay}${avatarToDisplay.includes("?") ? "&" : "?"}_t=${Date.now()}`
+        : avatarToDisplay;
+
       onSave({
         nickname: currentNickname.trim(),
-        avatar: avatarToDisplay,
+        avatar: avatarWithTimestamp,
       });
 
       Taro.showToast({ title: "保存成功", icon: "success" });
