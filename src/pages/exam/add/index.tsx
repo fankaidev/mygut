@@ -69,7 +69,7 @@ export default function ExamAdd() {
 
   const handleChooseImage = async () => {
     const totalImages = localImages.length + uploadedImages.length;
-    if (totalImages >= 6) return;
+    if (totalImages >= 1) return;
 
     try {
       const tempPaths = await chooseImage(1);
@@ -317,7 +317,7 @@ export default function ExamAdd() {
               </View>
             </View>
           ))}
-          {totalImages < 6 && (
+          {totalImages < 1 && (
             <View className="image-add" onClick={handleChooseImage}>
               <Text className="image-add-icon">+</Text>
               <Text className="image-add-text">添加图片</Text>
