@@ -137,10 +137,7 @@ export default function Records() {
           {/* 体感 */}
           <View className="record-card">
             <View className="card-header">
-              <View
-                className="card-title-row"
-                onClick={() => handleNavigate("/pages/symptom/index/index")}
-              >
+              <View className="card-title-row">
                 <Text className="card-icon">🌡️</Text>
                 <Text className="card-title">体感</Text>
                 <Text className="card-count">[{symptomRecords.length}条]</Text>
@@ -189,10 +186,7 @@ export default function Records() {
           {/* 用药记录 */}
           <View className="record-card">
             <View className="card-header">
-              <View
-                className="card-title-row"
-                onClick={() => handleNavigate("/pages/medication/index/index")}
-              >
+              <View className="card-title-row">
                 <Text className="card-icon">💊</Text>
                 <Text className="card-title">用药</Text>
                 <Text className="card-count">[{medicationRecords.length}条]</Text>
@@ -215,10 +209,7 @@ export default function Records() {
                     onClick={() => handleNavigate(`/pages/medication/add/index?id=${record._id}`)}
                   >
                     <Text className="record-time">{record.time}</Text>
-                    <Text className="record-desc">
-                      {record.name}
-                      {record.dosage ? ` ${record.dosage}` : ""}
-                    </Text>
+                    <Text className="record-desc">{record.names.join("、")}</Text>
                   </View>
                 ))
               )}
@@ -228,10 +219,7 @@ export default function Records() {
           {/* 饮食记录 */}
           <View className="record-card">
             <View className="card-header">
-              <View
-                className="card-title-row"
-                onClick={() => handleNavigate("/pages/meal/index/index")}
-              >
+              <View className="card-title-row">
                 <Text className="card-icon">🍱</Text>
                 <Text className="card-title">饮食</Text>
                 <Text className="card-count">[{mealRecords.length}条]</Text>
@@ -265,10 +253,7 @@ export default function Records() {
           {/* 排便记录 */}
           <View className="record-card">
             <View className="card-header">
-              <View
-                className="card-title-row"
-                onClick={() => handleNavigate("/pages/stool/index/index")}
-              >
+              <View className="card-title-row">
                 <Text className="card-icon">💩</Text>
                 <Text className="card-title">排便</Text>
                 <Text className="card-count">[{stoolRecords.length}条]</Text>
@@ -307,10 +292,7 @@ export default function Records() {
           {/* 化验记录 */}
           <View className="record-card">
             <View className="card-header">
-              <View
-                className="card-title-row"
-                onClick={() => handleNavigate("/pages/labtest/index/index")}
-              >
+              <View className="card-title-row">
                 <Text className="card-icon">🧪</Text>
                 <Text className="card-title">化验</Text>
                 <Text className="card-count">[{labTestRecords.length}条]</Text>
@@ -346,10 +328,7 @@ export default function Records() {
           {/* 检查记录 */}
           <View className="record-card">
             <View className="card-header">
-              <View
-                className="card-title-row"
-                onClick={() => handleNavigate("/pages/exam/index/index")}
-              >
+              <View className="card-title-row">
                 <Text className="card-icon">🩺</Text>
                 <Text className="card-title">检查</Text>
                 <Text className="card-count">[{examRecords.length}条]</Text>
