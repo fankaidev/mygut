@@ -34,7 +34,7 @@ export interface MealRecord extends BaseRecord {
 // 排便记录
 export interface StoolRecord extends BaseRecord {
   type: 1 | 2 | 3 | 4 | 5 | 6 | 7; // Bristol 分类
-  amount: 1 | 2 | 3; // 1-少量 2-适中 3-大量
+  amount: 1 | 2 | 3 | 4 | 5; // 1-极少 2-少量 3-适中 4-较多 5-大量
   note?: string;
 }
 

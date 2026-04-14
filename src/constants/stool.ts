@@ -11,9 +11,11 @@ export const BRISTOL_TYPES = [
 
 // 量选项
 export const STOOL_AMOUNTS = [
-  { value: 1, label: "少量" },
-  { value: 2, label: "适中" },
-  { value: 3, label: "大量" },
+  { value: 1, label: "极少" },
+  { value: 2, label: "少量" },
+  { value: 3, label: "适中" },
+  { value: 4, label: "较多" },
+  { value: 5, label: "大量" },
 ] as const;
 
 // 备注快捷输入

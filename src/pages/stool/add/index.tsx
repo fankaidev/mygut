@@ -16,7 +16,7 @@ export default function StoolAdd() {
   const [date, setDate] = useState(formatDate());
   const [time, setTime] = useState(formatTime());
   const [bristolType, setBristolType] = useState<StoolRecord["type"]>(4);
-  const [amount, setAmount] = useState<StoolRecord["amount"]>(2);
+  const [amount, setAmount] = useState<StoolRecord["amount"]>(3);
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(isEdit);
