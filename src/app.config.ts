@@ -3,19 +3,14 @@ export default defineAppConfig({
   pages: [
     "pages/index/index",
     "pages/records/index",
+    "pages/history/index",
     "pages/settings/index",
-    "pages/symptom/index/index",
     "pages/symptom/add/index",
-    "pages/meal/index/index",
     "pages/meal/add/index",
-    "pages/stool/index/index",
     "pages/stool/add/index",
-    "pages/medication/index/index",
     "pages/medication/add/index",
-    "pages/labtest/index/index",
     "pages/labtest/add/index",
     "pages/common/mosaic/index",
-    "pages/exam/index/index",
     "pages/exam/add/index",
     "pages/privacy/index",
   ],
@@ -37,7 +32,11 @@ export default defineAppConfig({
       },
       {
         pagePath: "pages/records/index",
-        text: "📋 记录",
+        text: "📅 日期",
+      },
+      {
+        pagePath: "pages/history/index",
+        text: "📋 历史",
       },
       {
         pagePath: "pages/settings/index",
