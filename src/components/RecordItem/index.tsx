@@ -129,7 +129,7 @@ export default function RecordItem({ record, showTypeIcon = false }: RecordItemP
           <>
             <Text className="record-feeling">{examTypeInfo.emoji}</Text>
             <Text className="record-desc">
-              {examTypeInfo.label}
+              {record.examName || examTypeInfo.label}
               {record.imageFileIds.length > 0 && ` · ${record.imageFileIds.length}张图片`}
             </Text>
           </>

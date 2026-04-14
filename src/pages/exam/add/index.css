@@ -112,6 +112,15 @@
   opacity: 0.5;
 }
 
+.exam-name-input {
+  width: 100%;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  font-size: 28px;
+  color: #333;
+}
+
 .content-input {
   width: 100%;
   min-height: 500px;

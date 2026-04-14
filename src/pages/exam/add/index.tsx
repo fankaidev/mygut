@@ -19,6 +19,7 @@ export default function ExamAdd() {
   const [examType, setExamType] = useState<(typeof EXAM_TYPES)[number]["value"]>(
     EXAM_TYPES[0].value,
   );
+  const [examName, setExamName] = useState("");
   const [content, setContent] = useState("");
   const [note, setNote] = useState("");
   const [localImages, setLocalImages] = useState<string[]>([]);
@@ -53,6 +54,7 @@ export default function ExamAdd() {
         setDate(record.date);
         setTime(record.time || "10:00");
         setExamType(record.examType as (typeof EXAM_TYPES)[number]["value"]);
+        setExamName(record.examName || "");
         setContent(record.content || "");
         setNote(record.note || "");
         setUploadedImages(record.imageFileIds || []);
@@ -140,6 +142,12 @@ export default function ExamAdd() {
         if (result.date) {
           setDate(result.date);
         }
+        if (result.examName) {
+          setExamName(result.examName);
+        }
+        if (result.examType && EXAM_TYPES.some((t) => t.value === result.examType)) {
+          setExamType(result.examType as (typeof EXAM_TYPES)[number]["value"]);
+        }
         if (result.content) {
           setContent(result.content);
         }
@@ -204,6 +212,7 @@ export default function ExamAdd() {
         date,
         time,
         examType,
+        examName: examName || undefined,
         imageFileIds,
         content: content || undefined,
         note: note || undefined,
@@ -319,24 +328,36 @@ export default function ExamAdd() {
 
       {/* AI 识别 */}
       {totalImages > 0 && (
-        <View className="section">
-          <View className="section-header">
-            <Text className="section-title">报告内容</Text>
-            <View
-              className={`recognize-btn ${recognizing ? "disabled" : ""}`}
-              onClick={handleRecognize}
-            >
-              {recognizing ? "识别中..." : "AI 识别"}
+        <>
+          <View className="section">
+            <View className="section-header">
+              <Text className="section-title">检查名称</Text>
+              <View
+                className={`recognize-btn ${recognizing ? "disabled" : ""}`}
+                onClick={handleRecognize}
+              >
+                {recognizing ? "识别中..." : "AI 识别"}
+              </View>
             </View>
+            <Input
+              className="exam-name-input"
+              value={examName}
+              onInput={(e) => setExamName(e.detail.value)}
+              placeholder='点击"AI 识别"或手动输入，如"胸部CT"'
+              maxlength={50}
+            />
           </View>
-          <Textarea
-            className="content-input"
-            value={content}
-            onInput={(e) => setContent(e.detail.value)}
-            placeholder='点击"AI 识别"或手动输入报告内容'
-            maxlength={2000}
-          />
-        </View>
+          <View className="section">
+            <Text className="section-title">报告内容</Text>
+            <Textarea
+              className="content-input"
+              value={content}
+              onInput={(e) => setContent(e.detail.value)}
+              placeholder="报告完整内容"
+              maxlength={2000}
+            />
+          </View>
+        </>
       )}
 
       {/* 备注 */}
