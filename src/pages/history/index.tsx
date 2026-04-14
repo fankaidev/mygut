@@ -34,6 +34,8 @@ export default function History() {
     "medication",
     "meal",
     "stool",
+    "labtest",
+    "exam",
   ]);
   const [loading, setLoading] = useState(true);
   const [records, setRecords] = useState<AnyRecord[]>([]);
