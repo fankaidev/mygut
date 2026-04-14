@@ -33,7 +33,7 @@ interface RecordItemProps {
 }
 
 const TYPE_ICONS: Record<RecordType, string> = {
-  symptom: "🌡️",
+  symptom: "🌱",
   medication: "💊",
   meal: "🍱",
   stool: "💩",
