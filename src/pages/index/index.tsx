@@ -50,7 +50,7 @@ export default function Index() {
     <View className="home-page">
       <View className="top-header">
         <View className="title-section">
-          <Text className="app-title">OMyGut</Text>
+          <Text className="app-title">MyGut</Text>
           <Text className="app-subtitle">肠道健康记录</Text>
         </View>
         <View className="header-avatar" onClick={handleAvatarClick}>
