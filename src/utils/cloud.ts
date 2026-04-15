@@ -37,8 +37,8 @@ function createMemoryDatabase() {
 
 function createMemoryCollection(data: Record<string, unknown>[]) {
   let filters: Record<string, unknown> = {};
-  let sortField: string | null = null;
-  let sortOrder: "asc" | "desc" = "asc";
+  const sortFields: { field: string; order: "asc" | "desc" }[] = [];
+  let skipCount = 0;
   let limitCount: number | null = null;
 
   const query = {
@@ -47,8 +47,11 @@ function createMemoryCollection(data: Record<string, unknown>[]) {
       return query;
     },
     orderBy(field: string, order: "asc" | "desc") {
-      sortField = field;
-      sortOrder = order;
+      sortFields.push({ field, order });
+      return query;
+    },
+    skip(count: number) {
+      skipCount = count;
       return query;
     },
     limit(count: number) {
@@ -65,15 +68,20 @@ function createMemoryCollection(data: Record<string, unknown>[]) {
         });
       });
 
-      if (sortField) {
-        const field = sortField;
+      if (sortFields.length > 0) {
         result = result.sort((a, b) => {
-          const aVal = a[field];
-          const bVal = b[field];
-          if (aVal < bVal) return sortOrder === "asc" ? -1 : 1;
-          if (aVal > bVal) return sortOrder === "asc" ? 1 : -1;
+          for (const { field, order } of sortFields) {
+            const aVal = a[field];
+            const bVal = b[field];
+            if (aVal < bVal) return order === "asc" ? -1 : 1;
+            if (aVal > bVal) return order === "asc" ? 1 : -1;
+          }
           return 0;
         });
+      }
+
+      if (skipCount > 0) {
+        result = result.slice(skipCount);
       }
 
       if (limitCount !== null) {

@@ -54,14 +54,14 @@ describe("stool service", () => {
       expect(records[0].userId).toBe("test_user_001");
     });
 
-    it("should order by createdAt descending", async () => {
+    it("should order by date and time descending", async () => {
       const records = await stoolService.getRecent(10);
 
       if (records.length >= 2) {
         for (let i = 0; i < records.length - 1; i++) {
-          const current = new Date(records[i].createdAt).getTime();
-          const next = new Date(records[i + 1].createdAt).getTime();
-          expect(current).toBeGreaterThanOrEqual(next);
+          const currentDateTime = `${records[i].date} ${records[i].time}`;
+          const nextDateTime = `${records[i + 1].date} ${records[i + 1].time}`;
+          expect(currentDateTime >= nextDateTime).toBe(true);
         }
       }
     });
