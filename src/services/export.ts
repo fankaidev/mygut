@@ -42,7 +42,7 @@ async function prepareExportFile(): Promise<void> {
   const jsonString = JSON.stringify(data, null, 2);
 
   const fs = Taro.getFileSystemManager();
-  const fileName = `mygut-export-${new Date().toISOString().split("T")[0]}.json`;
+  const fileName = `omygut-export-${new Date().toISOString().split("T")[0]}.json`;
   const filePath = `${Taro.env.USER_DATA_PATH}/${fileName}`;
 
   await new Promise<void>((resolve, reject) => {

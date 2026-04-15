@@ -9,7 +9,7 @@ const pkg = require("../package.json");
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig<"vite">(async (merge, _env) => {
   const baseConfig: UserConfigExport<"vite"> = {
-    projectName: "mygut",
+    projectName: "omygut",
     date: "2026-4-10",
     designWidth: 750,
     deviceRatio: {
