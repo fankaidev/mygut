@@ -102,6 +102,19 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
 
   const days = generateCalendarDays(viewYear, viewMonth);
 
+  const handlePrevYear = () => {
+    setViewYear(viewYear - 1);
+  };
+
+  const handleNextYear = () => {
+    const todayYear = parseInt(today.slice(0, 4));
+    // 不能超过今天所在年份
+    if (viewYear >= todayYear) {
+      return;
+    }
+    setViewYear(viewYear + 1);
+  };
+
   const handlePrevMonth = () => {
     if (viewMonth === 0) {
       setViewYear(viewYear - 1);
@@ -186,12 +199,16 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
   const todayYear = parseInt(today.slice(0, 4));
   const todayMonth = parseInt(today.slice(5, 7)) - 1;
   const isCurrentMonth = viewYear === todayYear && viewMonth === todayMonth;
+  const isCurrentYear = viewYear === todayYear;
 
   return (
     <View className="calendar-popup-mask" onClick={onClose}>
       <View className="calendar-popup" onClick={(e) => e.stopPropagation()}>
         {/* 月份标题 */}
         <View className="calendar-header">
+          <Text className="calendar-nav" onClick={handlePrevYear}>
+            ◀◀
+          </Text>
           <Text className="calendar-nav" onClick={handlePrevMonth}>
             ◀
           </Text>
@@ -203,6 +220,12 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
             onClick={handleNextMonth}
           >
             ▶
+          </Text>
+          <Text
+            className={`calendar-nav ${isCurrentYear ? "disabled" : ""}`}
+            onClick={handleNextYear}
+          >
+            ▶▶
           </Text>
         </View>
 
