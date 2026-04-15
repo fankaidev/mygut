@@ -17,6 +17,10 @@ export default function Settings() {
     avatar?: string;
   } | null>(null);
   const [showProfilePopup, setShowProfilePopup] = useState(false);
+  const [devModeEnabled, setDevModeEnabled] = useState(false);
+  const [devModeExpanded, setDevModeExpanded] = useState(false);
+  const [tapCount, setTapCount] = useState(0);
+  const [lastTapTime, setLastTapTime] = useState(0);
 
   const loadUserSettings = useCallback(async () => {
     try {
@@ -47,6 +51,22 @@ export default function Settings() {
   const displayNickname =
     userSettings?.nickname ||
     (userSettings?._id ? getDefaultNickname(userSettings._id) : "加载中...");
+
+  const handleAppNameTap = () => {
+    const now = Date.now();
+    // 如果距离上次点击超过2秒，重置计数
+    if (now - lastTapTime > 2000) {
+      setTapCount(1);
+    } else {
+      const newCount = tapCount + 1;
+      setTapCount(newCount);
+      if (newCount >= 5 && !devModeEnabled) {
+        setDevModeEnabled(true);
+        Taro.showToast({ title: "开发者模式已开启", icon: "none" });
+      }
+    }
+    setLastTapTime(now);
+  };
 
   return (
     <View className="settings-page">
@@ -79,7 +99,7 @@ export default function Settings() {
           <Text className="about-label">版本</Text>
           <Text className="about-value">{APP_VERSION}</Text>
         </View>
-        <View className="about-item">
+        <View className="about-item" onClick={handleAppNameTap}>
           <Text className="about-label">名称</Text>
           <Text className="about-value">{APP_NAME}</Text>
         </View>
@@ -105,6 +125,34 @@ export default function Settings() {
         </View>
         <Text className="data-hint">删除后数据无法恢复</Text>
       </View>
+
+      {devModeEnabled && (
+        <View className="data-section">
+          <View className="data-item" onClick={() => setDevModeExpanded(!devModeExpanded)}>
+            <Text className="section-title" style={{ marginBottom: 0 }}>
+              开发调试
+            </Text>
+            <Text className="data-arrow">{devModeExpanded ? "∨" : "›"}</Text>
+          </View>
+          {devModeExpanded && (
+            <>
+              <View
+                className="data-item"
+                onClick={() => {
+                  Taro.showToast({ title: "已触发测试错误", icon: "none" });
+                  setTimeout(() => {
+                    throw new Error("测试错误上报");
+                  }, 100);
+                }}
+              >
+                <Text className="data-label">测试错误上报</Text>
+                <Text className="data-arrow">›</Text>
+              </View>
+              <Text className="data-hint">触发一个测试错误，验证错误上报功能</Text>
+            </>
+          )}
+        </View>
+      )}
 
       <View className="contact-section">
         <Button className="contact-btn" openType="contact">
