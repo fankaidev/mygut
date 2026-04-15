@@ -2,7 +2,7 @@
   "name": "omygut",
   "version": "0.1.10",
   "private": true,
-  "description": "MyGut - 肠道健康记录",
+  "description": "OMyGut - 肠道健康记录",
   "scripts": {
     "prepare": "lefthook install",
     "postinstall": "lefthook install",
