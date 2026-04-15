@@ -10,14 +10,6 @@ import { examService } from "../../services/exam";
 import { formatDate, getPrevDate, getNextDate, getWeekday } from "../../utils/date";
 import RecordItem, { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
-import type {
-  SymptomRecord,
-  MealRecord,
-  StoolRecord,
-  MedicationRecord,
-  LabTestRecord,
-  ExamRecord,
-} from "../../types";
 import "./index.css";
 
 interface RecordGroup {
