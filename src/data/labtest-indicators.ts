@@ -193,7 +193,6 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "nameZh": "嗜碱性粒细胞百分比",
     "abbr": "BASO%",
     "unit": "%",
-    "refMin": 0,
     "refMax": 1,
     "aliases": [
       "嗜碱性粒细胞比率"
@@ -205,7 +204,6 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "nameZh": "嗜碱性粒细胞绝对值",
     "abbr": "BASO#",
     "unit": "×10⁹/L",
-    "refMin": 0,
     "refMax": 0.1
   },
   {
@@ -274,11 +272,10 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "血沉",
+    "category": "炎症指标",
     "nameZh": "红细胞沉降率",
     "abbr": "ESR",
     "unit": "mm/h",
-    "refMin": 0,
     "refMax": 20,
     "aliases": [
       "血沉"
@@ -286,11 +283,10 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "CRP",
+    "category": "炎症指标",
     "nameZh": "C反应蛋白",
     "abbr": "CRP",
     "unit": "mg/L",
-    "refMin": 0,
     "refMax": 10,
     "aliases": [
       "C-反应蛋白"
@@ -298,11 +294,10 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "CRP",
+    "category": "炎症指标",
     "nameZh": "超敏C反应蛋白",
     "abbr": "hs-CRP",
     "unit": "mg/L",
-    "refMin": 0,
     "refMax": 3,
     "aliases": [
       "C反应蛋白(超敏)"
@@ -310,7 +305,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "丙氨酸氨基转移酶",
     "abbr": "ALT",
     "unit": "U/L",
@@ -322,7 +317,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "天门冬氨酸氨基转移酶",
     "abbr": "AST",
     "unit": "U/L",
@@ -335,7 +330,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "碱性磷酸酶",
     "abbr": "ALP",
     "unit": "U/L",
@@ -344,7 +339,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "γ-谷氨酰转移酶",
     "abbr": "GGT",
     "unit": "U/L",
@@ -357,7 +352,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "总胆红素",
     "abbr": "TBIL",
     "unit": "μmol/L",
@@ -369,16 +364,15 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "直接胆红素",
     "abbr": "DBIL",
     "unit": "μmol/L",
-    "refMin": 0,
     "refMax": 7
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "间接胆红素",
     "abbr": "IBIL",
     "unit": "μmol/L",
@@ -387,7 +381,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "总蛋白",
     "abbr": "TP",
     "unit": "g/L",
@@ -399,7 +393,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "白蛋白",
     "abbr": "ALB",
     "unit": "g/L",
@@ -413,7 +407,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "球蛋白",
     "abbr": "GLB",
     "unit": "g/L",
@@ -422,7 +416,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "白球比",
     "abbr": "A/G",
     "refMin": 1.2,
@@ -433,11 +427,10 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "血清总胆汁酸",
     "abbr": "TBA",
     "unit": "μmol/L",
-    "refMin": 0,
     "refMax": 10,
     "aliases": [
       "总胆汁酸"
@@ -445,7 +438,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肝功能",
+    "category": "肝肾功能",
     "nameZh": "前白蛋白",
     "abbr": "PA",
     "unit": "mg/L",
@@ -454,7 +447,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肾功能",
+    "category": "肝肾功能",
     "nameZh": "血尿素氮",
     "abbr": "BUN",
     "unit": "mmol/L",
@@ -468,7 +461,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肾功能",
+    "category": "肝肾功能",
     "nameZh": "肌酐",
     "abbr": "CREA",
     "unit": "μmol/L",
@@ -483,7 +476,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肾功能",
+    "category": "肝肾功能",
     "nameZh": "尿酸",
     "abbr": "UA",
     "unit": "μmol/L",
@@ -492,7 +485,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肾功能",
+    "category": "肝肾功能",
     "nameZh": "估算肾小球滤过率",
     "abbr": "eGFR",
     "unit": "mL/min/1.73m²",
@@ -500,7 +493,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肾功能",
+    "category": "肝肾功能",
     "nameZh": "β2微球蛋白",
     "abbr": "β2-MG",
     "unit": "mg/L",
@@ -509,7 +502,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肾功能",
+    "category": "肝肾功能",
     "nameZh": "胱抑素C",
     "abbr": "CysC",
     "unit": "mg/L",
@@ -521,7 +514,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
   },
   {
     "specimen": "血液",
-    "category": "肾功能",
+    "category": "肝肾功能",
     "nameZh": "C1q测定",
     "abbr": "C1q",
     "unit": "mg/L",
@@ -689,7 +682,7 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "category": "心肌标志物",
     "nameZh": "N末端B型钠尿肽原",
     "abbr": "NT-proBNP",
-    "unit": "pg/ml",
+    "unit": "pg/mL",
     "refMax": 125,
     "aliases": [
       "NT-proBNP",
@@ -740,6 +733,56 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "unit": "s",
     "refMin": 20,
     "refMax": 40
+  },
+  {
+    "specimen": "血液",
+    "category": "血脂",
+    "nameZh": "总胆固醇",
+    "abbr": "TC",
+    "unit": "mmol/L",
+    "refMin": 2.8,
+    "refMax": 5.2,
+    "aliases": [
+      "胆固醇",
+      "总胆固醇(酶法)"
+    ]
+  },
+  {
+    "specimen": "血液",
+    "category": "血脂",
+    "nameZh": "甘油三酯",
+    "abbr": "TG",
+    "unit": "mmol/L",
+    "refMin": 0.56,
+    "refMax": 1.7,
+    "aliases": [
+      "甘油三脂",
+      "三酰甘油"
+    ]
+  },
+  {
+    "specimen": "血液",
+    "category": "血脂",
+    "nameZh": "高密度脂蛋白胆固醇",
+    "abbr": "HDL-C",
+    "unit": "mmol/L",
+    "refMin": 1,
+    "aliases": [
+      "高密度脂蛋白",
+      "HDL"
+    ]
+  },
+  {
+    "specimen": "血液",
+    "category": "血脂",
+    "nameZh": "低密度脂蛋白胆固醇",
+    "abbr": "LDL-C",
+    "unit": "mmol/L",
+    "refMax": 3.4,
+    "aliases": [
+      "低密度脂蛋白",
+      "LDL"
+    ]
   },
   {
     "specimen": "尿液",
@@ -837,6 +880,97 @@ export const STANDARD_INDICATORS: StandardIndicator[] = [
     "aliases": [
       "尿糖",
       "尿葡萄糖"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "便常规",
+    "nameZh": "颜色",
+    "abbr": "COLOR",
+    "refValue": "黄色",
+    "aliases": [
+      "大便颜色",
+      "便色"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "便常规",
+    "nameZh": "性状",
+    "abbr": "FORM",
+    "refValue": "软便",
+    "aliases": [
+      "大便性状",
+      "便性状"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "便常规",
+    "nameZh": "白细胞",
+    "abbr": "WBC",
+    "unit": "/HPF",
+    "refMax": 5,
+    "aliases": [
+      "粪便白细胞"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "便常规",
+    "nameZh": "红细胞",
+    "abbr": "RBC",
+    "unit": "/HPF",
+    "refMax": 0,
+    "aliases": [
+      "粪便红细胞"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "便常规",
+    "nameZh": "隐血",
+    "abbr": "OB",
+    "refValue": "negative",
+    "aliases": [
+      "便隐血",
+      "潜血",
+      "粪便隐血",
+      "大便隐血"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "便常规",
+    "nameZh": "虫卵",
+    "abbr": "PARA",
+    "refValue": "negative",
+    "aliases": [
+      "寄生虫卵"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "便常规",
+    "nameZh": "脂肪球",
+    "abbr": "FAT",
+    "unit": "/HPF",
+    "refMax": 2,
+    "aliases": [
+      "脂肪滴"
+    ]
+  },
+  {
+    "specimen": "粪便",
+    "category": "炎症指标",
+    "nameZh": "钙卫蛋白",
+    "abbr": "FCP",
+    "unit": "μg/g",
+    "refMax": 50,
+    "aliases": [
+      "粪便钙卫蛋白",
+      "Calprotectin",
+      "FC"
     ]
   }
 ];

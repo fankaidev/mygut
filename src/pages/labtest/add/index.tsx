@@ -370,7 +370,28 @@ export default function LabTestAdd() {
                         : "-");
 
                 // 判断值是否超出参考范围
+                const isNegativeValue = (value: string) => {
+                  const v = value.toLowerCase().trim();
+                  return (
+                    v === "negative" || v === "neg" || v === "阴性" || v === "(-)" || v === "-"
+                  );
+                };
+
+                const isPositiveValue = (value: string) => {
+                  const v = value.toLowerCase().trim();
+                  return (
+                    v === "positive" || v === "pos" || v === "阳性" || v === "(+)" || v === "+"
+                  );
+                };
+
                 const getAbnormalFlag = (ind: (typeof indicators)[0]) => {
+                  // 定性结果：refValue=negative 时，阴性正常，阳性异常
+                  if (ind.refValue === "negative") {
+                    if (isNegativeValue(ind.value)) return "";
+                    if (isPositiveValue(ind.value)) return "↑";
+                  }
+
+                  // 定量结果
                   const numValue = parseFloat(ind.value);
                   if (isNaN(numValue)) return "";
                   if (ind.refMin !== undefined && numValue < ind.refMin) return "↓";
