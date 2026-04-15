@@ -1,4 +1,4 @@
 export default definePageConfig({
-  navigationBarTitleText: "记录",
+  navigationBarTitleText: "历史",
   enablePullDownRefresh: true,
 });

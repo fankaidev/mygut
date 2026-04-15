@@ -1,5 +1,5 @@
 import { View, Text } from "@tarojs/components";
-import Taro, { useDidShow } from "@tarojs/taro";
+import Taro, { useDidShow, usePullDownRefresh } from "@tarojs/taro";
 import { useState, useCallback } from "react";
 import { symptomService } from "../../services/symptom";
 import { mealService } from "../../services/meal";
@@ -10,14 +10,6 @@ import { examService } from "../../services/exam";
 import { formatDate, getPrevDate, getNextDate, getWeekday } from "../../utils/date";
 import RecordItem, { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
-import type {
-  SymptomRecord,
-  MealRecord,
-  StoolRecord,
-  MedicationRecord,
-  LabTestRecord,
-  ExamRecord,
-} from "../../types";
 import "./index.css";
 
 interface RecordGroup {
@@ -99,7 +91,15 @@ export default function Records() {
   }, []);
 
   useDidShow(() => {
-    loadData(currentDate);
+    // Only load on first visit, not when returning from detail page
+    if (recordGroups.length === 0) {
+      loadData(currentDate);
+    }
+  });
+
+  usePullDownRefresh(async () => {
+    await loadData(currentDate);
+    Taro.stopPullDownRefresh();
   });
 
   const handlePrevDate = () => {
