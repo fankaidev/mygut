@@ -173,6 +173,7 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
           {days.map((dayInfo, index) => (
             <View
               key={index}
+              data-index={index}
               className={`calendar-day ${!dayInfo.isCurrentMonth ? "other-month" : ""} ${dayInfo.dateStr === today ? "today" : ""} ${dayInfo.dateStr === value ? "selected" : ""} ${dayInfo.dateStr > today ? "future" : ""}`}
               onClick={() => handleDayClick(dayInfo)}
             >
