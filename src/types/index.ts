@@ -1,3 +1,23 @@
+// 记录类型
+export const RECORD_TYPES = ["symptom", "medication", "meal", "stool", "labtest", "exam"] as const;
+export type RecordType = (typeof RECORD_TYPES)[number];
+
+export interface RecordTypeOption {
+  value: RecordType;
+  label: string;
+  icon: string;
+  addPath: string;
+}
+
+export const RECORD_TYPE_OPTIONS: RecordTypeOption[] = [
+  { value: "symptom", label: "体感", icon: "🌱", addPath: "/pages/symptom/add/index" },
+  { value: "medication", label: "用药", icon: "💊", addPath: "/pages/medication/add/index" },
+  { value: "meal", label: "饮食", icon: "🍱", addPath: "/pages/meal/add/index" },
+  { value: "stool", label: "排便", icon: "💩", addPath: "/pages/stool/add/index" },
+  { value: "labtest", label: "化验", icon: "🧪", addPath: "/pages/labtest/add/index" },
+  { value: "exam", label: "检查", icon: "🩺", addPath: "/pages/exam/add/index" },
+];
+
 // 用户信息
 export interface User {
   _id: string; // openid

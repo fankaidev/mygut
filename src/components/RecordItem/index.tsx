@@ -14,10 +14,10 @@ import type {
   LabTestRecord,
   LabTestIndicator,
   ExamRecord,
+  RecordType,
 } from "../../types";
+import { RECORD_TYPE_OPTIONS } from "../../types";
 import "./index.css";
-
-type RecordType = "symptom" | "medication" | "meal" | "stool" | "labtest" | "exam";
 
 export type AnyRecord =
   | (SymptomRecord & { _type: "symptom" })
@@ -32,23 +32,9 @@ interface RecordItemProps {
   showTypeIcon?: boolean;
 }
 
-const TYPE_ICONS: Record<RecordType, string> = {
-  symptom: "🌱",
-  medication: "💊",
-  meal: "🍱",
-  stool: "💩",
-  labtest: "🧪",
-  exam: "🩺",
-};
-
-const EDIT_PATHS: Record<RecordType, string> = {
-  symptom: "/pages/symptom/add/index",
-  medication: "/pages/medication/add/index",
-  meal: "/pages/meal/add/index",
-  stool: "/pages/stool/add/index",
-  labtest: "/pages/labtest/add/index",
-  exam: "/pages/exam/add/index",
-};
+const RECORD_TYPE_MAP = Object.fromEntries(
+  RECORD_TYPE_OPTIONS.map((opt) => [opt.value, opt]),
+) as Record<RecordType, (typeof RECORD_TYPE_OPTIONS)[number]>;
 
 const UNKNOWN = "❓";
 
@@ -83,8 +69,10 @@ const getLabTestCategories = (indicators: LabTestIndicator[]): string => {
 };
 
 export default function RecordItem({ record, showTypeIcon = false }: RecordItemProps) {
+  const typeInfo = RECORD_TYPE_MAP[record._type];
+
   const handleClick = () => {
-    const path = `${EDIT_PATHS[record._type]}?id=${record._id}`;
+    const path = `${typeInfo.addPath}?id=${record._id}`;
     Taro.navigateTo({ url: path });
   };
 
@@ -149,7 +137,7 @@ export default function RecordItem({ record, showTypeIcon = false }: RecordItemP
 
   return (
     <View className="record-item" onClick={handleClick}>
-      {showTypeIcon && <Text className="record-type-icon">{TYPE_ICONS[record._type]}</Text>}
+      {showTypeIcon && <Text className="record-type-icon">{typeInfo.icon}</Text>}
       <Text className="record-time">{record.time || "--:--"}</Text>
       {renderContent()}
     </View>
