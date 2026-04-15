@@ -139,7 +139,9 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
   const handleTouchStart = (e: {
     touches: { clientX: number }[];
     target: { dataset?: { index?: string } };
+    stopPropagation: () => void;
   }) => {
+    e.stopPropagation();
     const touch = e.touches[0];
     const targetIndex = e.target.dataset?.index;
     touchRef.current = {
@@ -148,7 +150,15 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
     };
   };
 
-  const handleTouchEnd = (e: { changedTouches: { clientX: number }[] }) => {
+  const handleTouchMove = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+  };
+
+  const handleTouchEnd = (e: {
+    changedTouches: { clientX: number }[];
+    stopPropagation: () => void;
+  }) => {
+    e.stopPropagation();
     const touch = e.changedTouches[0];
     const deltaX = touch.clientX - touchRef.current.startX;
     const absDelta = Math.abs(deltaX);
@@ -206,7 +216,13 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
         </View>
 
         {/* 日期网格 */}
-        <View className="calendar-days" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <View
+          className="calendar-days"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          catchMove
+        >
           {days.map((dayInfo, index) => (
             <View
               key={index}
