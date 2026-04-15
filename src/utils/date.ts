@@ -6,10 +6,10 @@ export function formatDate(date: Date = new Date()): string {
   return `${year}-${month}-${day}`;
 }
 
-// 格式化时间为 HH:mm
+// 格式化时间为 HH:mm，分钟向下取整到5分钟
 export function formatTime(date: Date = new Date()): string {
   const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const minutes = String(Math.floor(date.getMinutes() / 5) * 5).padStart(2, "0");
   return `${hours}:${minutes}`;
 }
 

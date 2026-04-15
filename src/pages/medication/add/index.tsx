@@ -1,4 +1,4 @@
-import { View, Text, Input, Textarea, Picker } from "@tarojs/components";
+import { View, Text, Input, Textarea } from "@tarojs/components";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import { useState, useEffect } from "react";
 import { medicationService } from "../../../services/medication";
@@ -6,6 +6,7 @@ import { MEDICATION_CATEGORIES } from "../../../constants/medication";
 import { formatDate, formatTime } from "../../../utils/date";
 import { validateMedication } from "../../../utils/validation";
 import CalendarPopup from "../../../components/CalendarPopup";
+import TimePicker from "../../../components/TimePicker";
 import "./index.css";
 
 const CUSTOM_MEDICATIONS_KEY = "custom_medications";
@@ -212,9 +213,7 @@ export default function MedicationAdd() {
           <View className="picker-value" onClick={() => setCalendarVisible(true)}>
             {date}
           </View>
-          <Picker mode="time" value={time} onChange={(e) => setTime(e.detail.value)}>
-            <View className="picker-value">{time}</View>
-          </Picker>
+          <TimePicker value={time} onChange={setTime} />
         </View>
         <CalendarPopup
           visible={calendarVisible}

@@ -1,4 +1,4 @@
-import { View, Text, Textarea, Picker } from "@tarojs/components";
+import { View, Text, Textarea } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect } from "react";
 import { stoolService } from "../../../services/stool";
@@ -6,6 +6,7 @@ import { BRISTOL_TYPES, STOOL_AMOUNTS, NOTE_SHORTCUTS } from "../../../constants
 import { formatDate, formatTime } from "../../../utils/date";
 import BristolIcon from "../../../components/BristolIcon";
 import CalendarPopup from "../../../components/CalendarPopup";
+import TimePicker from "../../../components/TimePicker";
 import type { StoolRecord } from "../../../types";
 import "./index.css";
 
@@ -117,9 +118,7 @@ export default function StoolAdd() {
           <View className="picker-value" onClick={() => setCalendarVisible(true)}>
             {date}
           </View>
-          <Picker mode="time" value={time} onChange={(e) => setTime(e.detail.value)}>
-            <View className="picker-value">{time}</View>
-          </Picker>
+          <TimePicker value={time} onChange={setTime} />
         </View>
         <CalendarPopup
           visible={calendarVisible}

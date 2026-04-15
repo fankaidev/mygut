@@ -1,4 +1,4 @@
-import { View, Text, Textarea, Picker, Input } from "@tarojs/components";
+import { View, Text, Textarea, Input } from "@tarojs/components";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import { useState, useEffect } from "react";
 import { symptomService } from "../../../services/symptom";
@@ -6,6 +6,7 @@ import { SYMPTOM_SHORTCUTS, SEVERITY_OPTIONS, FEELING_OPTIONS } from "../../../c
 import { formatDate, formatTime } from "../../../utils/date";
 import { validateSymptom } from "../../../utils/validation";
 import CalendarPopup from "../../../components/CalendarPopup";
+import TimePicker from "../../../components/TimePicker";
 import type { SymptomRecord } from "../../../types";
 import "./index.css";
 
@@ -191,9 +192,7 @@ export default function SymptomAdd() {
           <View className="picker-value" onClick={() => setCalendarVisible(true)}>
             {date}
           </View>
-          <Picker mode="time" value={time} onChange={(e) => setTime(e.detail.value)}>
-            <View className="picker-value">{time}</View>
-          </Picker>
+          <TimePicker value={time} onChange={setTime} />
         </View>
         <CalendarPopup
           visible={calendarVisible}

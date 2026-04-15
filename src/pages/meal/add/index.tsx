@@ -1,4 +1,4 @@
-import { View, Text, Input, Textarea, Picker } from "@tarojs/components";
+import { View, Text, Input, Textarea } from "@tarojs/components";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import { useState, useEffect } from "react";
 import { mealService } from "../../../services/meal";
@@ -6,6 +6,7 @@ import { FOOD_CATEGORIES, AMOUNT_OPTIONS } from "../../../constants/meal";
 import { formatDate, formatTime } from "../../../utils/date";
 import { validateFood } from "../../../utils/validation";
 import CalendarPopup from "../../../components/CalendarPopup";
+import TimePicker from "../../../components/TimePicker";
 import "./index.css";
 
 const CUSTOM_FOODS_KEY = "custom_foods";
@@ -223,9 +224,7 @@ export default function MealAdd() {
           <View className="picker-value" onClick={() => setCalendarVisible(true)}>
             {date}
           </View>
-          <Picker mode="time" value={time} onChange={(e) => setTime(e.detail.value)}>
-            <View className="picker-value">{time}</View>
-          </Picker>
+          <TimePicker value={time} onChange={setTime} />
         </View>
         <CalendarPopup
           visible={calendarVisible}

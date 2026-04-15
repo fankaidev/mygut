@@ -1,4 +1,4 @@
-import { View, Text, Image, Picker } from "@tarojs/components";
+import { View, Text, Image } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect, useRef } from "react";
 import { labTestService } from "../../../services/labtest";
@@ -7,6 +7,7 @@ import { normalizeIndicators, type SpecimenType } from "../../../services/labtes
 import { chooseImage, uploadImage, deleteCloudFile } from "../../../utils/upload";
 import { formatDate, formatTime } from "../../../utils/date";
 import CalendarPopup from "../../../components/CalendarPopup";
+import TimePicker from "../../../components/TimePicker";
 import type { LabTestIndicator } from "../../../types";
 import "./index.css";
 
@@ -263,9 +264,7 @@ export default function LabTestAdd() {
           <View className="picker-value" onClick={() => setCalendarVisible(true)}>
             {date}
           </View>
-          <Picker mode="time" value={time} onChange={(e) => setTime(e.detail.value)}>
-            <View className="picker-value">{time}</View>
-          </Picker>
+          <TimePicker value={time} onChange={setTime} />
         </View>
         <CalendarPopup
           visible={calendarVisible}

@@ -1,4 +1,4 @@
-import { View, Text, Image, Picker, Input, Textarea, ScrollView } from "@tarojs/components";
+import { View, Text, Image, Input, Textarea, ScrollView } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect, useRef } from "react";
 import { examService } from "../../../services/exam";
@@ -7,6 +7,7 @@ import { chooseImage, uploadImage, deleteCloudFile } from "../../../utils/upload
 import { formatDate } from "../../../utils/date";
 import { EXAM_TYPES } from "../../../constants/exam";
 import CalendarPopup from "../../../components/CalendarPopup";
+import TimePicker from "../../../components/TimePicker";
 import "./index.css";
 
 export default function ExamAdd() {
@@ -257,9 +258,7 @@ export default function ExamAdd() {
           <View className="picker-value" onClick={() => setCalendarVisible(true)}>
             {date}
           </View>
-          <Picker mode="time" value={time} onChange={(e) => setTime(e.detail.value)}>
-            <View className="picker-value">{time}</View>
-          </Picker>
+          <TimePicker value={time} onChange={setTime} />
         </View>
         <CalendarPopup
           visible={calendarVisible}

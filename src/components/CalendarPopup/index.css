@@ -16,6 +16,23 @@
   padding-bottom: calc(24px + env(safe-area-inset-bottom));
 }
 
+.calendar-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendar-btn {
+  font-size: 28px;
+  color: #999;
+  padding: 8px 16px;
+}
+
+.calendar-btn.confirm {
+  color: #07c160;
+}
+
 .calendar-header {
   display: flex;
   justify-content: space-between;
