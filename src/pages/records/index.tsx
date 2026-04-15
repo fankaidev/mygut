@@ -10,10 +10,12 @@ import { examService } from "../../services/exam";
 import { formatDate, getPrevDate, getNextDate, getWeekday } from "../../utils/date";
 import RecordItem, { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
+import type { RecordType } from "../../types";
+import { RECORD_TYPE_OPTIONS } from "../../types";
 import "./index.css";
 
 interface RecordGroup {
-  type: "symptom" | "medication" | "meal" | "stool" | "labtest" | "exam";
+  type: RecordType;
   icon: string;
   title: string;
   addPath: string;
@@ -38,50 +40,24 @@ export default function Records() {
         examService.getByDate(date),
       ]);
 
-      setRecordGroups([
-        {
-          type: "symptom",
-          icon: "🌱",
-          title: "体感",
-          addPath: "/pages/symptom/add/index",
-          records: symptoms.map((r) => ({ ...r, _type: "symptom" as const })),
-        },
-        {
-          type: "medication",
-          icon: "💊",
-          title: "用药",
-          addPath: "/pages/medication/add/index",
-          records: medications.map((r) => ({ ...r, _type: "medication" as const })),
-        },
-        {
-          type: "meal",
-          icon: "🍱",
-          title: "饮食",
-          addPath: "/pages/meal/add/index",
-          records: meals.map((r) => ({ ...r, _type: "meal" as const })),
-        },
-        {
-          type: "stool",
-          icon: "💩",
-          title: "排便",
-          addPath: "/pages/stool/add/index",
-          records: stools.map((r) => ({ ...r, _type: "stool" as const })),
-        },
-        {
-          type: "labtest",
-          icon: "🧪",
-          title: "化验",
-          addPath: "/pages/labtest/add/index",
-          records: labTests.map((r) => ({ ...r, _type: "labtest" as const })),
-        },
-        {
-          type: "exam",
-          icon: "🩺",
-          title: "检查",
-          addPath: "/pages/exam/add/index",
-          records: exams.map((r) => ({ ...r, _type: "exam" as const })),
-        },
-      ]);
+      const recordsMap: Record<RecordType, AnyRecord[]> = {
+        symptom: symptoms.map((r) => ({ ...r, _type: "symptom" as const })),
+        medication: medications.map((r) => ({ ...r, _type: "medication" as const })),
+        meal: meals.map((r) => ({ ...r, _type: "meal" as const })),
+        stool: stools.map((r) => ({ ...r, _type: "stool" as const })),
+        labtest: labTests.map((r) => ({ ...r, _type: "labtest" as const })),
+        exam: exams.map((r) => ({ ...r, _type: "exam" as const })),
+      };
+
+      setRecordGroups(
+        RECORD_TYPE_OPTIONS.map((opt) => ({
+          type: opt.value,
+          icon: opt.icon,
+          title: opt.label,
+          addPath: opt.addPath,
+          records: recordsMap[opt.value],
+        })),
+      );
     } catch (error) {
       console.error("加载数据失败:", error);
       Taro.showToast({ title: "加载失败", icon: "none" });

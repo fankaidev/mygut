@@ -9,34 +9,14 @@ import { labTestService } from "../../services/labtest";
 import { examService } from "../../services/exam";
 import { formatDisplayDate, getWeekday } from "../../utils/date";
 import RecordItem, { AnyRecord } from "../../components/RecordItem";
+import { RecordType, RECORD_TYPES, RECORD_TYPE_OPTIONS } from "../../types";
 import "./index.css";
 
-type RecordType = "symptom" | "medication" | "meal" | "stool" | "labtest" | "exam";
-
-interface TypeOption {
-  value: RecordType;
-  label: string;
-  icon: string;
-}
-
-const TYPE_OPTIONS: TypeOption[] = [
-  { value: "symptom", label: "体感", icon: "🌱" },
-  { value: "medication", label: "用药", icon: "💊" },
-  { value: "meal", label: "饮食", icon: "🍱" },
-  { value: "stool", label: "排便", icon: "💩" },
-  { value: "labtest", label: "化验", icon: "🧪" },
-  { value: "exam", label: "检查", icon: "🩺" },
-];
-
 export default function History() {
-  const [selectedTypes, setSelectedTypes] = useState<RecordType[]>([
-    "symptom",
-    "medication",
-    "meal",
-    "stool",
-    "labtest",
-    "exam",
-  ]);
+  const [selectedTypes, setSelectedTypes] = useState<RecordType[]>(() => {
+    const saved = Taro.getStorageSync("history_selected_types");
+    return saved || [...RECORD_TYPES];
+  });
   const [loading, setLoading] = useState(true);
   const [records, setRecords] = useState<AnyRecord[]>([]);
 
@@ -129,6 +109,7 @@ export default function History() {
       newTypes = [...selectedTypes, type];
     }
     setSelectedTypes(newTypes);
+    Taro.setStorageSync("history_selected_types", newTypes);
     loadData(newTypes);
   };
 
@@ -147,7 +128,7 @@ export default function History() {
     <View className="history-page">
       {/* 类型筛选 */}
       <View className="type-filter">
-        {TYPE_OPTIONS.map((option) => (
+        {RECORD_TYPE_OPTIONS.map((option) => (
           <View
             key={option.value}
             className={`type-option ${selectedTypes.includes(option.value) ? "active" : ""}`}
