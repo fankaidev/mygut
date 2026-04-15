@@ -87,6 +87,7 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
   const today = formatDate();
   const [viewYear, setViewYear] = useState(() => parseInt(value.slice(0, 4)));
   const [viewMonth, setViewMonth] = useState(() => parseInt(value.slice(5, 7)) - 1);
+  const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(null);
 
   const SWIPE_THRESHOLD = 50;
   const TAP_THRESHOLD = 10;
@@ -180,10 +181,14 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
       // Swipe detected
       if (deltaX > 0) {
         // Swipe right -> previous month (like iOS calendar)
+        setSlideDirection("right");
         handlePrevMonth();
+        setTimeout(() => setSlideDirection(null), 200);
       } else {
         // Swipe left -> next month (like iOS calendar)
+        setSlideDirection("left");
         handleNextMonth();
+        setTimeout(() => setSlideDirection(null), 200);
       }
     } else if (absDelta < TAP_THRESHOLD && touchRef.current.targetIndex !== null) {
       // Tap detected
@@ -240,7 +245,7 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
 
         {/* 日期网格 */}
         <View
-          className="calendar-days"
+          className={`calendar-days ${slideDirection ? `slide-${slideDirection}` : ""}`}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
