@@ -37,8 +37,8 @@ exports.main = async (event) => {
     hasMore = data.length === MAX_LIMIT;
   }
 
-  // Bristol type to score: 1→3, 2→4, 3→5, 4→5, 5→3, 6→2, 7→1
-  const BRISTOL_SCORES = [0, 3, 4, 5, 5, 3, 2, 1];
+  // Bristol type to score: 1→3, 2→4, 3→5, 4→5, 5→4, 6→3, 7→1
+  const BRISTOL_SCORES = [0, 3, 4, 5, 5, 4, 3, 1];
   const getBristolScore = (bristol) => BRISTOL_SCORES[bristol] || 0;
   const getCountScore = (count) => Math.max(0, 6 - count);
 
