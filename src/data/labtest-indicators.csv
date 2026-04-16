@@ -86,4 +86,4 @@ specimen,category,nameZh,abbr,unit,refValue,refMin,refMax,aliases
 粪便,便常规,隐血,OB,,negative,,,便隐血|潜血|粪便隐血|大便隐血
 粪便,便常规,虫卵,PARA,,negative,,,寄生虫卵
 粪便,便常规,脂肪球,FAT,/HPF,,,2,脂肪滴
-粪便,炎症指标,钙卫蛋白,FCP,μg/g,,,50,粪便钙卫蛋白|Calprotectin|FC
+粪便,炎症指标,粪便钙卫蛋白,FCP,μg/g,,,50,钙卫蛋白|Calprotectin|FC
