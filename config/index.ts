@@ -28,7 +28,7 @@ export default defineConfig<"vite">(async (merge, _env) => {
       APP_NAME: JSON.stringify(pkg.description),
     },
     copy: {
-      patterns: [],
+      patterns: [{ from: "cloudfunctions/", to: "dist/cloudfunctions/" }],
       options: {},
     },
     framework: "react",
