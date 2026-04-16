@@ -38,14 +38,18 @@ exports.main = async (event) => {
   }
 
   // 按日期聚合统计
-  const counts = {};
+  const dailyData = {};
   allData.forEach((record) => {
-    counts[record.date] = (counts[record.date] || 0) + 1;
+    if (!dailyData[record.date]) {
+      dailyData[record.date] = { count: 0, records: [] };
+    }
+    dailyData[record.date].count += 1;
+    dailyData[record.date].records.push({ bristol: record.bristol });
   });
 
   // 转换为数组格式
-  const result = Object.entries(counts)
-    .map(([date, value]) => ({ date, value }))
+  const result = Object.entries(dailyData)
+    .map(([date, data]) => ({ date, count: data.count, records: data.records }))
     .sort((a, b) => a.date.localeCompare(b.date));
 
   return { data: result };
