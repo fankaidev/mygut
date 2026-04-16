@@ -331,13 +331,13 @@ export default function History() {
             className={`view-mode-tab ${stoolViewTab === "score" ? "active" : ""}`}
             onClick={() => handleStoolViewTabChange("score")}
           >
-            <Text>得分</Text>
+            <Text>分数统计</Text>
           </View>
           <View
             className={`view-mode-tab ${stoolViewTab === "count" ? "active" : ""}`}
             onClick={() => handleStoolViewTabChange("count")}
           >
-            <Text>次数</Text>
+            <Text>次数统计</Text>
           </View>
           <View
             className={`view-mode-tab ${stoolViewTab === "records" ? "active" : ""}`}
