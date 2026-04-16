@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useMemo } from "react";
 import { symptomService } from "../../services/symptom";
 import { mealService } from "../../services/meal";
 import { stoolService } from "../../services/stool";
@@ -10,6 +10,7 @@ import { examService } from "../../services/exam";
 import { formatDisplayDate, getWeekday, formatDate } from "../../utils/date";
 import RecordItem, { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
+import BarChart from "../../components/BarChart";
 import { RecordType, RECORD_TYPE_OPTIONS } from "../../types";
 import "./index.css";
 
@@ -178,13 +179,37 @@ export default function History() {
 
   const { startDate: effectiveStartDate, endDate: effectiveEndDate } = getEffectiveDateRange();
 
+  // 计算每天的排便次数
+  const dailyCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    records.forEach((record) => {
+      counts.set(record.date, (counts.get(record.date) || 0) + 1);
+    });
+    return Array.from(counts.entries())
+      .map(([date, value]) => ({ date, value }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }, [records]);
+
   const renderStatsView = () => (
     <View className="stats-view">
-      <View className="stats-chart-placeholder">
-        <Text className="placeholder-text">
+      <View className="stats-header">
+        <Text className="stats-title">每日排便次数</Text>
+        <Text className="stats-range">
           {effectiveStartDate} ~ {effectiveEndDate}
         </Text>
-        <Text className="placeholder-text">图表开发中...</Text>
+      </View>
+      <View className="stats-chart-container">
+        {loading ? (
+          <View className="stats-loading">
+            <Text>加载中...</Text>
+          </View>
+        ) : dailyCounts.length === 0 ? (
+          <View className="stats-empty">
+            <Text>暂无数据</Text>
+          </View>
+        ) : (
+          <BarChart data={dailyCounts} />
+        )}
       </View>
     </View>
   );

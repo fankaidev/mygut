@@ -191,20 +191,41 @@
   color: #999;
 }
 
-/* 图表占位符 */
-.stats-chart-placeholder {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 16px;
-  min-height: 400px;
+/* 统计视图头部 */
+.stats-header {
+  margin-bottom: 16px;
 }
 
-.placeholder-text {
+.stats-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.stats-range {
+  font-size: 24px;
+  color: #999;
+}
+
+/* 图表容器 */
+.stats-chart-container {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-loading,
+.stats-empty {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
   font-size: 28px;
-  color: #ccc;
-  margin-bottom: 16px;
 }
