@@ -143,7 +143,8 @@
 .date-range-selector {
   display: flex;
   gap: 16px;
-  margin-bottom: 24px;
+  padding: 24px;
+  background-color: #fff;
 }
 
 .date-range-option {
@@ -169,7 +170,8 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-bottom: 24px;
+  padding: 0 24px 24px;
+  background-color: #fff;
 }
 
 .date-picker {

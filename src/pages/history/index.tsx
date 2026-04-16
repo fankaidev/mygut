@@ -161,6 +161,17 @@ export default function History() {
 
   const renderStatsView = () => (
     <View className="stats-view">
+      <View className="stats-chart-placeholder">
+        <Text className="placeholder-text">
+          {effectiveStartDate} ~ {effectiveEndDate}
+        </Text>
+        <Text className="placeholder-text">图表开发中...</Text>
+      </View>
+    </View>
+  );
+
+  return (
+    <View className="history-page">
       <View className="date-range-selector">
         <View
           className={`date-range-option ${dateRangePreset === "7" ? "active" : ""}`}
@@ -200,13 +211,6 @@ export default function History() {
         </View>
       )}
 
-      <View className="stats-chart-placeholder">
-        <Text className="placeholder-text">
-          {effectiveStartDate} ~ {effectiveEndDate}
-        </Text>
-        <Text className="placeholder-text">图表开发中...</Text>
-      </View>
-
       <CalendarPopup
         visible={startCalendarVisible}
         value={customStartDate}
@@ -229,11 +233,7 @@ export default function History() {
         }}
         onClose={() => setEndCalendarVisible(false)}
       />
-    </View>
-  );
 
-  return (
-    <View className="history-page">
       <View className="type-filter">
         {RECORD_TYPE_OPTIONS.map((option) => (
           <View
