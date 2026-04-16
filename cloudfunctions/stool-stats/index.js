@@ -49,7 +49,7 @@ exports.main = async (event) => {
       dailyData[record.date] = { count: 0, bristolSum: 0 };
     }
     dailyData[record.date].count += 1;
-    dailyData[record.date].bristolSum += getBristolScore(record.bristol);
+    dailyData[record.date].bristolSum += getBristolScore(record.type);
   });
 
   // 转换为数组格式，计算得分
