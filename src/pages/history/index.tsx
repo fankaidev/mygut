@@ -218,6 +218,7 @@ export default function History() {
     title: string,
     data: { date: string; value: number }[],
     maxValue?: number,
+    higherIsBetter?: boolean,
   ) => (
     <View className="stats-view">
       <View className="stats-header">
@@ -236,7 +237,7 @@ export default function History() {
             <Text>暂无数据</Text>
           </View>
         ) : (
-          <BarChart data={data} maxValue={maxValue} />
+          <BarChart data={data} maxValue={maxValue} higherIsBetter={higherIsBetter} />
         )}
       </View>
     </View>
@@ -348,7 +349,7 @@ export default function History() {
       )}
 
       {selectedType === "stool" && stoolViewTab === "score" ? (
-        renderChartView("每日肠道健康得分", scoreData, 10)
+        renderChartView("每日肠道健康得分", scoreData, 10, true)
       ) : selectedType === "stool" && stoolViewTab === "count" ? (
         renderChartView("每日排便次数", countData)
       ) : loading ? (
