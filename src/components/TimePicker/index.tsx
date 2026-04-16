@@ -1,5 +1,5 @@
 import { View, Text, PickerView, PickerViewColumn } from "@tarojs/components";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import "./index.css";
 
 interface TimePickerProps {
@@ -26,23 +26,29 @@ function roundToStep(minute: number, step: number): number {
 }
 
 export default function TimePicker({ value, onChange, minuteStep = 5 }: TimePickerProps) {
-  const MINUTES = generateMinutes(minuteStep);
+  const MINUTES = useMemo(() => generateMinutes(minuteStep), [minuteStep]);
 
   const [visible, setVisible] = useState(false);
   const [hourIndex, setHourIndex] = useState(0);
   const [minuteIndex, setMinuteIndex] = useState(0);
 
-  // 解析 value 并设置选中状态
-  useEffect(() => {
+  // 解析 value 为索引
+  const parseValueToIndices = () => {
     const [hourStr, minuteStr] = value.split(":");
     const hour = parseInt(hourStr) || 0;
     const minute = parseInt(minuteStr) || 0;
-
-    setHourIndex(hour);
     const roundedMinute = roundToStep(minute, minuteStep);
     const idx = MINUTES.indexOf(String(roundedMinute).padStart(2, "0"));
-    setMinuteIndex(idx >= 0 ? idx : 0);
-  }, [value, minuteStep, MINUTES]);
+    return { hourIndex: hour, minuteIndex: idx >= 0 ? idx : 0 };
+  };
+
+  // 打开 picker 时初始化索引
+  const handleOpen = () => {
+    const indices = parseValueToIndices();
+    setHourIndex(indices.hourIndex);
+    setMinuteIndex(indices.minuteIndex);
+    setVisible(true);
+  };
 
   const handlePickerChange = (e: { detail: { value: number[] } }) => {
     const [newHourIndex, newMinuteIndex] = e.detail.value;
@@ -56,22 +62,12 @@ export default function TimePicker({ value, onChange, minuteStep = 5 }: TimePick
   };
 
   const handleCancel = () => {
-    // 重置为原值
-    const [hourStr, minuteStr] = value.split(":");
-    const hour = parseInt(hourStr) || 0;
-    const minute = parseInt(minuteStr) || 0;
-
-    setHourIndex(hour);
-    const roundedMinute = roundToStep(minute, minuteStep);
-    const idx = MINUTES.indexOf(String(roundedMinute).padStart(2, "0"));
-    setMinuteIndex(idx >= 0 ? idx : 0);
-
     setVisible(false);
   };
 
   return (
     <>
-      <View className="picker-value" onClick={() => setVisible(true)}>
+      <View className="picker-value" onClick={handleOpen}>
         {value}
       </View>
 
