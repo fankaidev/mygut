@@ -68,7 +68,7 @@ function drawChart(
   rawData: BarChartData[],
   propMaxValue?: number,
 ) {
-  const padding = { top: 20, right: 8, bottom: 40, left: 24 };
+  const padding = { top: 20, right: 8, bottom: 40, left: 16 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
