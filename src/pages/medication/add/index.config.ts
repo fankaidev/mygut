@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: "添加用药",
+  navigationBarTitleText: "添加用药记录",
 });

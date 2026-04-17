@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: "记录体感",
+  navigationBarTitleText: "添加体感记录",
 });
