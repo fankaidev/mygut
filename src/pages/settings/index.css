@@ -80,6 +80,14 @@
 
 
 /* 联系客服 - 清除 Button 默认样式 */
+.contact-btn {
+  background: transparent;
+  border: none;
+  margin: 0;
+  text-align: left;
+  line-height: inherit;
+}
+
 .contact-btn::after {
   display: none;
 }
