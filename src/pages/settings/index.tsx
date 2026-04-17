@@ -10,7 +10,6 @@ declare const APP_NAME: string;
 
 export default function Settings() {
   const [devModeEnabled, setDevModeEnabled] = useState(false);
-  const [devModeExpanded, setDevModeExpanded] = useState(false);
   const [tapCount, setTapCount] = useState(0);
   const [lastTapTime, setLastTapTime] = useState(0);
 
@@ -71,29 +70,20 @@ export default function Settings() {
 
       {devModeEnabled && (
         <View className="data-section">
-          <View className="data-item" onClick={() => setDevModeExpanded(!devModeExpanded)}>
-            <Text className="section-title" style={{ marginBottom: 0 }}>
-              开发调试
-            </Text>
-            <Text className="data-arrow">{devModeExpanded ? "∨" : "›"}</Text>
+          <Text className="section-title">开发调试</Text>
+          <View
+            className="data-item"
+            onClick={() => {
+              Taro.showToast({ title: "已触发测试错误", icon: "none" });
+              setTimeout(() => {
+                throw new Error("测试错误上报");
+              }, 100);
+            }}
+          >
+            <Text className="data-label">测试错误上报</Text>
+            <Text className="data-arrow">›</Text>
           </View>
-          {devModeExpanded && (
-            <>
-              <View
-                className="data-item"
-                onClick={() => {
-                  Taro.showToast({ title: "已触发测试错误", icon: "none" });
-                  setTimeout(() => {
-                    throw new Error("测试错误上报");
-                  }, 100);
-                }}
-              >
-                <Text className="data-label">测试错误上报</Text>
-                <Text className="data-arrow">›</Text>
-              </View>
-              <Text className="data-hint">触发一个测试错误，验证错误上报功能</Text>
-            </>
-          )}
+          <Text className="data-hint">触发一个测试错误，验证错误上报功能</Text>
         </View>
       )}
 
