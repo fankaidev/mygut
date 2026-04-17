@@ -419,7 +419,6 @@ export default function History() {
     </View>
   );
 
-<<<<<<< HEAD
   const renderLabtestStatsView = () => {
     const refRange =
       selectedIndicator.refMin !== undefined && selectedIndicator.refMax !== undefined
@@ -439,66 +438,25 @@ export default function History() {
     return (
       <View className="stats-view">
         <View className="stats-header">
-          <View
-            className="stats-title indicator-selector"
-            onClick={() => setIndicatorPickerVisible(true)}
-          >
-            <Text>
-              {selectedIndicator.nameZh} ({selectedIndicator.abbr})
-            </Text>
-            <Text className="indicator-selector-arrow">▼</Text>
+          <View className="stats-header-row">
+            <View
+              className="stats-title indicator-selector"
+              onClick={() => setIndicatorPickerVisible(true)}
+            >
+              <Text>
+                {selectedIndicator.nameZh} ({selectedIndicator.abbr})
+              </Text>
+              <Text className="indicator-selector-arrow">▼</Text>
+            </View>
+            <View className="add-event-btn" onClick={handleAddEvent}>
+              <Text>+ 事件</Text>
+            </View>
           </View>
           {refRange && (
             <Text className="stats-range">
               参考范围: {refRange} {selectedIndicator.unit}
             </Text>
           )}
-=======
-  const renderLabtestStatsView = () => (
-    <View className="stats-view">
-      <View className="stats-header">
-        <View className="stats-header-row">
-          <Text className="stats-title">{FCP_INDICATOR.nameZh}趋势</Text>
-          <View className="add-event-btn" onClick={handleAddEvent}>
-            <Text>+ 事件</Text>
-          </View>
-        </View>
-        <Text className="stats-range">
-          参考范围: &lt;{FCP_INDICATOR.refMax} {FCP_INDICATOR.unit}
-        </Text>
-      </View>
-      <View className="stats-chart-container">
-        {labtestStatsLoading ? (
-          <View className="stats-loading">
-            <Text>加载中...</Text>
-          </View>
-        ) : labtestChartData.length === 0 ? (
-          <View className="stats-empty">
-            <Text>暂无数据</Text>
-          </View>
-        ) : (
-          <LineChart
-            data={labtestChartData}
-            unit={FCP_INDICATOR.unit}
-            refMax={FCP_INDICATOR.refMax}
-            events={events}
-            onEventTap={handleEventTap}
-          />
-        )}
-      </View>
-      {labtestChartData.length > 0 && (
-        <View className="stats-data-list">
-          {[...labtestChartData].reverse().map((item, index) => (
-            <View key={index} className="stats-data-item">
-              <Text className="stats-data-date">{item.date}</Text>
-              <Text
-                className={`stats-data-value ${FCP_INDICATOR.refMax !== undefined && item.value > FCP_INDICATOR.refMax ? "out-of-range" : ""}`}
-              >
-                {item.displayValue || item.value} {FCP_INDICATOR.unit}
-              </Text>
-            </View>
-          ))}
->>>>>>> 561b720 (feat(chart): integrate event annotations into history page (#167))
         </View>
         <View className="stats-chart-container">
           {labtestStatsLoading ? (
@@ -515,6 +473,8 @@ export default function History() {
               unit={selectedIndicator.unit}
               refMin={selectedIndicator.refMin}
               refMax={selectedIndicator.refMax}
+              events={events}
+              onEventTap={handleEventTap}
             />
           )}
         </View>
@@ -523,7 +483,9 @@ export default function History() {
             {[...labtestChartData].reverse().map((item, index) => (
               <View key={index} className="stats-data-item">
                 <Text className="stats-data-date">{item.date}</Text>
-                <Text className={`stats-data-value ${isOutOfRange(item.value) ? "out-of-range" : ""}`}>
+                <Text
+                  className={`stats-data-value ${isOutOfRange(item.value) ? "out-of-range" : ""}`}
+                >
                   {item.displayValue || item.value} {selectedIndicator.unit}
                 </Text>
               </View>
