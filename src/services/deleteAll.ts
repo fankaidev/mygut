@@ -29,7 +29,7 @@ export async function confirmAndDeleteAllData(): Promise<void> {
   return new Promise((resolve) => {
     Taro.showModal({
       title: "确认删除",
-      content: "将删除所有健康记录，此操作无法撤销",
+      content: "将从服务器上删除所有健康记录，此操作无法撤销",
       confirmText: "继续",
       confirmColor: "#ff4d4f",
       success: (res) => {
