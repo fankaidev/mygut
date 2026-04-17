@@ -163,6 +163,12 @@ export default function History() {
     setLabtestChartData([]);
     const { startDate, endDate } = getEffectiveDateRange();
     loadInitial(type, startDate, endDate);
+    // Load chart data for stool and labtest
+    if (type === "stool") {
+      loadStatsData(startDate, endDate);
+    } else if (type === "labtest") {
+      loadLabtestStatsData();
+    }
   };
 
   const loadStatsData = useCallback(async (startDate: string, endDate: string) => {
