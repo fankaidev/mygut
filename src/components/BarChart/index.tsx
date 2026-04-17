@@ -101,9 +101,7 @@ function drawChart(
   higherIsBetter?: boolean,
   events: ChartEvent[] = [],
 ): { event: ChartEvent; x: number }[] {
-  // Reserve space for event labels if there are events
-  const eventLabelHeight = events.length > 0 ? 20 : 0;
-  const padding = { top: 20 + eventLabelHeight, right: 8, bottom: 40, left: 16 };
+  const padding = { top: 20, right: 8, bottom: 40, left: 16 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
@@ -215,18 +213,18 @@ function drawChart(
   ctx.fillStyle = "#666";
   ctx.font = "10px sans-serif";
   ctx.textAlign = "center";
-  ctx.textBaseline = "bottom";
+  ctx.textBaseline = "top";
 
   for (const [x, eventGroup] of eventsByX) {
-    // Draw vertical line from below label to chart bottom
+    // Draw vertical line
     ctx.beginPath();
     ctx.moveTo(x, padding.top);
     ctx.lineTo(x, height - padding.bottom);
     ctx.stroke();
 
-    // Draw horizontal label above the chart
+    // Draw horizontal label at top
     const label = eventGroup.map((e) => e.description).join(" / ");
-    ctx.fillText(label, x, padding.top - 4);
+    ctx.fillText(label, x, 4);
 
     for (const event of eventGroup) {
       eventPositions.push({ event, x });
