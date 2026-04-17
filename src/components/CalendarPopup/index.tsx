@@ -142,18 +142,7 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
     // 不能选择未来的日期
     if (dayInfo.dateStr > today) return;
     setSelectedDate(dayInfo.dateStr);
-  };
-
-  const handleConfirm = () => {
-    onChange(selectedDate);
-    onClose();
-  };
-
-  const handleCancel = () => {
-    // 重置为原值
-    setViewYear(parseInt(value.slice(0, 4)));
-    setViewMonth(parseInt(value.slice(5, 7)) - 1);
-    setSelectedDate(value);
+    onChange(dayInfo.dateStr);
     onClose();
   };
 
@@ -183,18 +172,8 @@ export default function CalendarPopup({ visible, value, onChange, onClose }: Cal
   const isCurrentYear = viewYear === todayYear;
 
   return (
-    <View className="calendar-popup-mask" onClick={handleCancel}>
+    <View className="calendar-popup-mask" onClick={onClose}>
       <View className="calendar-popup" onClick={(e) => e.stopPropagation()}>
-        {/* 取消/确定按钮 */}
-        <View className="calendar-actions">
-          <Text className="calendar-btn" onClick={handleCancel}>
-            取消
-          </Text>
-          <Text className="calendar-btn confirm" onClick={handleConfirm}>
-            确定
-          </Text>
-        </View>
-
         {/* 月份标题 */}
         <View className="calendar-header">
           <Text className="calendar-nav" onClick={handlePrevYear}>

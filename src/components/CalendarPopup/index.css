@@ -13,36 +13,21 @@
   background-color: #fff;
   border-radius: 24px 24px 0 0;
   padding: 24px;
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
-}
-
-.calendar-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.calendar-btn {
-  font-size: 28px;
-  color: #999;
-  padding: 8px 16px;
-}
-
-.calendar-btn.confirm {
-  color: #07c160;
+  padding-top: 48px;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 36px;
+  padding: 0 24px;
 }
 
 .calendar-nav {
   font-size: 32px;
-  color: #07c160;
+  color: #5fcf9a;
   padding: 16px;
 }
 
@@ -52,7 +37,6 @@
 
 .calendar-title {
   font-size: 32px;
-  font-weight: 600;
   color: #333;
 }
 
@@ -75,16 +59,16 @@
 }
 
 .calendar-day {
-  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px 0;
 }
 
 .day-text {
-  width: 64px;
-  height: 64px;
-  line-height: 64px;
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
   text-align: center;
   font-size: 28px;
   color: #333;
@@ -97,12 +81,12 @@
 }
 
 .calendar-day.today .day-text {
-  color: #07c160;
+  color: #5fcf9a;
   font-weight: 600;
 }
 
 .calendar-day.selected .day-text {
-  background-color: #07c160;
+  background-color: #5fcf9a;
   color: #fff;
 }
 

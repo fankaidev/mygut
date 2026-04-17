@@ -12,7 +12,7 @@ import RecordItem, { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
 import type { RecordType } from "../../types";
 import { RECORD_TYPE_OPTIONS } from "../../types";
-import logoImg from "../../assets/logo.png";
+import logoImg from "../../assets/logo.jpg";
 import "./index.css";
 
 interface RecordGroup {
@@ -72,15 +72,28 @@ export default function Index() {
         exam: exams.map((r) => ({ ...r, _type: "exam" as const })),
       };
 
-      setRecordGroups(
-        RECORD_TYPE_OPTIONS.map((opt) => ({
-          type: opt.value,
-          icon: opt.icon,
-          title: opt.label,
-          addPath: opt.addPath,
-          records: recordsMap[opt.value],
-        })),
-      );
+      const groups = RECORD_TYPE_OPTIONS.map((opt) => ({
+        type: opt.value,
+        icon: opt.icon,
+        title: opt.label,
+        addPath: opt.addPath,
+        records: recordsMap[opt.value],
+      }));
+      setRecordGroups(groups);
+
+      // Auto-collapse empty categories (only if user hasn't manually set)
+      const storedState = getCollapsedState();
+      const autoCollapsedState: Record<RecordType, boolean> = {};
+      groups.forEach((group) => {
+        // If user has manually set this category, keep their preference
+        if (storedState[group.type] !== undefined) {
+          autoCollapsedState[group.type] = storedState[group.type];
+        } else {
+          // Otherwise, collapse if empty
+          autoCollapsedState[group.type] = group.records.length === 0;
+        }
+      });
+      setCollapsedState(autoCollapsedState);
     } catch (error) {
       console.error("加载数据失败:", error);
       Taro.showToast({ title: "加载失败", icon: "none" });
