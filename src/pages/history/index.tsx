@@ -7,8 +7,9 @@ import { stoolService } from "../../services/stool";
 import { medicationService } from "../../services/medication";
 import { labTestService } from "../../services/labtest";
 import { examService } from "../../services/exam";
-import { findStandardIndicator } from "../../services/labtest-standards";
+import { findStandardIndicator, StandardIndicator } from "../../services/labtest-standards";
 import { formatDisplayDate, getWeekday, formatDate } from "../../utils/date";
+import IndicatorPicker from "../../components/IndicatorPicker";
 import RecordItem, { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
 import BarChart from "../../components/BarChart";
@@ -16,8 +17,10 @@ import LineChart, { LineChartData } from "../../components/LineChart";
 import { RecordType, RECORD_TYPE_OPTIONS, LabTestRecord } from "../../types";
 import "./index.css";
 
-// 粪便钙卫蛋白指标配置
-const FCP_INDICATOR = {
+// 默认指标：粪便钙卫蛋白
+const DEFAULT_INDICATOR: StandardIndicator = {
+  specimen: "粪便",
+  category: "炎症标志物",
   nameZh: "粪便钙卫蛋白",
   abbr: "FCP",
   unit: "μg/g",
@@ -71,6 +74,11 @@ export default function History() {
   // Labtest stats state
   const [labtestChartData, setLabtestChartData] = useState<LineChartData[]>([]);
   const [labtestStatsLoading, setLabtestStatsLoading] = useState(false);
+  const [selectedIndicator, setSelectedIndicator] = useState<StandardIndicator>(() => {
+    const saved = Taro.getStorageSync("history_selected_indicator");
+    return saved ? JSON.parse(saved) : DEFAULT_INDICATOR;
+  });
+  const [indicatorPickerVisible, setIndicatorPickerVisible] = useState(false);
 
   const cursorRef = useRef({ date: "9999-12-31", time: "23:59" });
   const dateRangeRef = useRef({ startDate: "", endDate: "" });
@@ -169,38 +177,41 @@ export default function History() {
     }
   }, []);
 
-  const loadLabtestStatsData = useCallback(async (startDate: string, endDate: string) => {
-    setLabtestStatsLoading(true);
-    try {
-      // Fetch labtest records in date range
-      const allRecords = await labTestService.getByDateRange(startDate, endDate);
+  const loadLabtestStatsData = useCallback(
+    async (startDate: string, endDate: string, indicator: StandardIndicator) => {
+      setLabtestStatsLoading(true);
+      try {
+        // Fetch labtest records in date range
+        const allRecords = await labTestService.getByDateRange(startDate, endDate);
 
-      // Extract FCP indicator values
-      const chartData: LineChartData[] = [];
-      (allRecords as LabTestRecord[]).forEach((record) => {
-        record.indicators.forEach((ind) => {
-          const matched = findStandardIndicator(ind.name, record.specimen);
-          if (matched && matched.nameZh === FCP_INDICATOR.nameZh) {
-            // Parse value, handling comparison symbols like >1800 or <10
-            const valueStr = ind.value.trim();
-            const numValue = parseFloat(valueStr.replace(/^[<>]/, ""));
-            if (!isNaN(numValue)) {
-              chartData.push({ date: record.date, value: numValue, displayValue: valueStr });
+        // Extract indicator values
+        const chartData: LineChartData[] = [];
+        (allRecords as LabTestRecord[]).forEach((record) => {
+          record.indicators.forEach((ind) => {
+            const matched = findStandardIndicator(ind.name, record.specimen);
+            if (matched && matched.nameZh === indicator.nameZh) {
+              // Parse value, handling comparison symbols like >1800 or <10
+              const valueStr = ind.value.trim();
+              const numValue = parseFloat(valueStr.replace(/^[<>]/, ""));
+              if (!isNaN(numValue)) {
+                chartData.push({ date: record.date, value: numValue, displayValue: valueStr });
+              }
             }
-          }
+          });
         });
-      });
 
-      // Sort by date ascending
-      chartData.sort((a, b) => a.date.localeCompare(b.date));
-      setLabtestChartData(chartData);
-    } catch (error) {
-      console.error("加载化验统计数据失败:", error);
-      Taro.showToast({ title: "加载失败", icon: "none" });
-    } finally {
-      setLabtestStatsLoading(false);
-    }
-  }, []);
+        // Sort by date ascending
+        chartData.sort((a, b) => a.date.localeCompare(b.date));
+        setLabtestChartData(chartData);
+      } catch (error) {
+        console.error("加载化验统计数据失败:", error);
+        Taro.showToast({ title: "加载失败", icon: "none" });
+      } finally {
+        setLabtestStatsLoading(false);
+      }
+    },
+    [],
+  );
 
   useDidShow(() => {
     const { startDate, endDate } = getEffectiveDateRange();
@@ -209,7 +220,7 @@ export default function History() {
     if (selectedType === "stool") {
       loadStatsData(startDate, endDate);
     } else if (selectedType === "labtest") {
-      loadLabtestStatsData(startDate, endDate);
+      loadLabtestStatsData(startDate, endDate, selectedIndicator);
     }
   });
 
@@ -233,7 +244,7 @@ export default function History() {
     if (type === "stool") {
       loadStatsData(startDate, endDate);
     } else if (type === "labtest") {
-      loadLabtestStatsData(startDate, endDate);
+      loadLabtestStatsData(startDate, endDate, selectedIndicator);
     }
   };
 
@@ -251,8 +262,16 @@ export default function History() {
     setLabtestViewTab(tab);
     if (tab === "chart" && labtestChartData.length === 0) {
       const { startDate, endDate } = getEffectiveDateRange();
-      loadLabtestStatsData(startDate, endDate);
+      loadLabtestStatsData(startDate, endDate, selectedIndicator);
     }
+  };
+
+  const handleIndicatorSelect = (indicator: StandardIndicator) => {
+    setSelectedIndicator(indicator);
+    Taro.setStorageSync("history_selected_indicator", JSON.stringify(indicator));
+    setLabtestChartData([]);
+    const { startDate, endDate } = getEffectiveDateRange();
+    loadLabtestStatsData(startDate, endDate, indicator);
   };
 
   const handleDateRangePresetChange = (preset: DateRangePreset) => {
@@ -275,7 +294,7 @@ export default function History() {
         loadStatsData(startDate, endDate);
       }
       if (selectedType === "labtest" && labtestViewTab === "chart") {
-        loadLabtestStatsData(startDate, endDate);
+        loadLabtestStatsData(startDate, endDate, selectedIndicator);
       }
     }
   };
@@ -287,7 +306,7 @@ export default function History() {
       loadStatsData(start, end);
     }
     if (selectedType === "labtest" && labtestViewTab === "chart") {
-      loadLabtestStatsData(start, end);
+      loadLabtestStatsData(start, end, selectedIndicator);
     }
   };
 
@@ -333,47 +352,79 @@ export default function History() {
     </View>
   );
 
-  const renderLabtestStatsView = () => (
-    <View className="stats-view">
-      <View className="stats-header">
-        <Text className="stats-title">{FCP_INDICATOR.nameZh}趋势</Text>
-        <Text className="stats-range">
-          参考范围: &lt;{FCP_INDICATOR.refMax} {FCP_INDICATOR.unit}
-        </Text>
-      </View>
-      <View className="stats-chart-container">
-        {labtestStatsLoading ? (
-          <View className="stats-loading">
-            <Text>加载中...</Text>
+  const renderLabtestStatsView = () => {
+    const refRange =
+      selectedIndicator.refMin !== undefined && selectedIndicator.refMax !== undefined
+        ? `${selectedIndicator.refMin}-${selectedIndicator.refMax}`
+        : selectedIndicator.refMax !== undefined
+          ? `<${selectedIndicator.refMax}`
+          : selectedIndicator.refMin !== undefined
+            ? `>${selectedIndicator.refMin}`
+            : "";
+
+    const isOutOfRange = (value: number) => {
+      if (selectedIndicator.refMin !== undefined && value < selectedIndicator.refMin) return true;
+      if (selectedIndicator.refMax !== undefined && value > selectedIndicator.refMax) return true;
+      return false;
+    };
+
+    return (
+      <View className="stats-view">
+        <View className="stats-header">
+          <View
+            className="stats-title indicator-selector"
+            onClick={() => setIndicatorPickerVisible(true)}
+          >
+            <Text>
+              {selectedIndicator.nameZh} ({selectedIndicator.abbr})
+            </Text>
+            <Text className="indicator-selector-arrow">▼</Text>
           </View>
-        ) : labtestChartData.length === 0 ? (
-          <View className="stats-empty">
-            <Text>暂无数据</Text>
-          </View>
-        ) : (
-          <LineChart
-            data={labtestChartData}
-            unit={FCP_INDICATOR.unit}
-            refMax={FCP_INDICATOR.refMax}
-          />
-        )}
-      </View>
-      {labtestChartData.length > 0 && (
-        <View className="stats-data-list">
-          {[...labtestChartData].reverse().map((item, index) => (
-            <View key={index} className="stats-data-item">
-              <Text className="stats-data-date">{item.date}</Text>
-              <Text
-                className={`stats-data-value ${FCP_INDICATOR.refMax !== undefined && item.value > FCP_INDICATOR.refMax ? "out-of-range" : ""}`}
-              >
-                {item.displayValue || item.value} {FCP_INDICATOR.unit}
-              </Text>
-            </View>
-          ))}
+          {refRange && (
+            <Text className="stats-range">
+              参考范围: {refRange} {selectedIndicator.unit}
+            </Text>
+          )}
         </View>
-      )}
-    </View>
-  );
+        <View className="stats-chart-container">
+          {labtestStatsLoading ? (
+            <View className="stats-loading">
+              <Text>加载中...</Text>
+            </View>
+          ) : labtestChartData.length === 0 ? (
+            <View className="stats-empty">
+              <Text>暂无数据</Text>
+            </View>
+          ) : (
+            <LineChart
+              data={labtestChartData}
+              unit={selectedIndicator.unit}
+              refMin={selectedIndicator.refMin}
+              refMax={selectedIndicator.refMax}
+            />
+          )}
+        </View>
+        {labtestChartData.length > 0 && (
+          <View className="stats-data-list">
+            {[...labtestChartData].reverse().map((item, index) => (
+              <View key={index} className="stats-data-item">
+                <Text className="stats-data-date">{item.date}</Text>
+                <Text className={`stats-data-value ${isOutOfRange(item.value) ? "out-of-range" : ""}`}>
+                  {item.displayValue || item.value} {selectedIndicator.unit}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        <IndicatorPicker
+          visible={indicatorPickerVisible}
+          onSelect={handleIndicatorSelect}
+          onClose={() => setIndicatorPickerVisible(false)}
+        />
+      </View>
+    );
+  };
 
   const renderRecordsList = () => {
     if (loading) {
