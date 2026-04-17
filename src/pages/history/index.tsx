@@ -332,6 +332,20 @@ export default function History() {
           />
         )}
       </View>
+      {labtestChartData.length > 0 && (
+        <View className="stats-data-list">
+          {[...labtestChartData].reverse().map((item, index) => (
+            <View key={index} className="stats-data-item">
+              <Text className="stats-data-date">{item.date}</Text>
+              <Text
+                className={`stats-data-value ${FCP_INDICATOR.refMax !== undefined && item.value > FCP_INDICATOR.refMax ? "out-of-range" : ""}`}
+              >
+                {item.value} {FCP_INDICATOR.unit}
+              </Text>
+            </View>
+          ))}
+        </View>
+      )}
     </View>
   );
 
