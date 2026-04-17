@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { symptomService } from "../../services/symptom";
@@ -9,14 +9,15 @@ import { labTestService } from "../../services/labtest";
 import { examService } from "../../services/exam";
 import { eventService } from "../../services/event";
 import { findStandardIndicator, StandardIndicator } from "../../services/labtest-standards";
-import { formatDisplayDate, getWeekday, formatDate } from "../../utils/date";
-import IndicatorPicker from "../../components/IndicatorPicker";
-import RecordItem, { AnyRecord } from "../../components/RecordItem";
+import { formatDate } from "../../utils/date";
+import { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
 import EventFormPopup from "../../components/EventFormPopup";
-import BarChart from "../../components/BarChart";
-import LineChart, { LineChartData } from "../../components/LineChart";
+import { LineChartData } from "../../components/LineChart";
 import { RecordType, RECORD_TYPE_OPTIONS, LabTestRecord, ChartEvent } from "../../types";
+import StoolChartView from "./components/StoolChartView";
+import LabtestChartView from "./components/LabtestChartView";
+import RecordsList from "./components/RecordsList";
 import "./index.css";
 
 // 默认指标：粪便钙卫蛋白
@@ -412,17 +413,6 @@ export default function History() {
     setEditingEvent(undefined);
   };
 
-  // 按日期分组记录
-  const groupedRecords: { date: string; records: AnyRecord[] }[] = [];
-  let currentDate = "";
-  records.forEach((record) => {
-    if (record.date !== currentDate) {
-      currentDate = record.date;
-      groupedRecords.push({ date: record.date, records: [] });
-    }
-    groupedRecords[groupedRecords.length - 1].records.push(record);
-  });
-
   const { startDate: effectiveStartDate, endDate: effectiveEndDate } = getEffectiveDateRange();
 
   const renderDateRangeSelector = () => (
@@ -449,168 +439,6 @@ export default function History() {
       )}
     </View>
   );
-
-  const [scoreHelpVisible, setScoreHelpVisible] = useState(false);
-
-  const renderChartView = (
-    title: string,
-    data: { date: string; value: number }[],
-    maxValue?: number,
-    showHelp?: boolean,
-  ) => (
-    <View className="stats-view">
-      <View className="stats-header">
-        <View className="stats-header-row">
-          <View className="stats-title-row">
-            <Text className="stats-title">{title}</Text>
-            {showHelp && (
-              <View className="stats-help-btn" onClick={() => setScoreHelpVisible(true)}>
-                <Text>?</Text>
-              </View>
-            )}
-          </View>
-          <View className="add-event-btn" onClick={handleAddEvent}>
-            <Text>+ 事件</Text>
-          </View>
-        </View>
-        {renderDateRangeSelector()}
-      </View>
-      <View className="stats-chart-container">
-        {statsLoading ? (
-          <View className="stats-loading">
-            <Text>加载中...</Text>
-          </View>
-        ) : data.length === 0 ? (
-          <View className="stats-empty">
-            <Text>暂无数据</Text>
-          </View>
-        ) : (
-          <BarChart data={data} maxValue={maxValue} events={events} onEventTap={handleEventTap} />
-        )}
-      </View>
-    </View>
-  );
-
-  const renderLabtestStatsView = () => {
-    const isOutOfRange = (value: number) => {
-      if (selectedIndicator.refMin !== undefined && value < selectedIndicator.refMin) return true;
-      if (selectedIndicator.refMax !== undefined && value > selectedIndicator.refMax) return true;
-      return false;
-    };
-
-    return (
-      <View className="stats-view">
-        <View className="stats-header">
-          <View className="stats-header-row">
-            <View
-              className="stats-title indicator-selector"
-              onClick={() => setIndicatorPickerVisible(true)}
-            >
-              <Text>
-                {selectedIndicator.nameZh} ({selectedIndicator.abbr})
-              </Text>
-              <Text className="indicator-selector-arrow">▼</Text>
-            </View>
-            <View className="add-event-btn" onClick={handleAddEvent}>
-              <Text>+ 事件</Text>
-            </View>
-          </View>
-          {renderDateRangeSelector()}
-        </View>
-        <View className="stats-chart-container">
-          {labtestStatsLoading ? (
-            <View className="stats-loading">
-              <Text>加载中...</Text>
-            </View>
-          ) : labtestChartData.length === 0 ? (
-            <View className="stats-empty">
-              <Text>暂无数据</Text>
-            </View>
-          ) : (
-            <LineChart
-              data={labtestChartData}
-              unit={selectedIndicator.unit}
-              refMin={selectedIndicator.refMin}
-              refMax={selectedIndicator.refMax}
-              events={events}
-              onEventTap={handleEventTap}
-            />
-          )}
-        </View>
-        {labtestChartData.length > 0 && (
-          <View className="stats-data-list">
-            {[...labtestChartData].reverse().map((item, index) => (
-              <View key={index} className="stats-data-item">
-                <Text className="stats-data-date">{item.date}</Text>
-                <Text
-                  className={`stats-data-value ${isOutOfRange(item.value) ? "out-of-range" : ""}`}
-                >
-                  {item.displayValue || item.value} {selectedIndicator.unit}
-                </Text>
-              </View>
-            ))}
-          </View>
-        )}
-
-        <IndicatorPicker
-          visible={indicatorPickerVisible}
-          onSelect={handleIndicatorSelect}
-          onClose={() => setIndicatorPickerVisible(false)}
-        />
-      </View>
-    );
-  };
-
-  const renderRecordsList = () => {
-    if (loading) {
-      return <View className="loading">加载中...</View>;
-    }
-    if (records.length === 0) {
-      return (
-        <View className="empty">
-          <Text className="empty-text">暂无记录</Text>
-        </View>
-      );
-    }
-    return (
-      <ScrollView
-        className="records-scroll"
-        scrollY
-        refresherEnabled
-        refresherTriggered={loading}
-        onRefresherRefresh={handleRefresh}
-        onScrollToLower={handleLoadMore}
-        lowerThreshold={100}
-      >
-        <View className="records-list">
-          {groupedRecords.map((group) => (
-            <View key={group.date} className="date-group">
-              <View className="date-header">
-                <Text className="date-text">
-                  {formatDisplayDate(group.date)} {getWeekday(group.date)}
-                </Text>
-              </View>
-              <View className="date-records">
-                {group.records.map((record) => (
-                  <RecordItem key={record._id} record={record} />
-                ))}
-              </View>
-            </View>
-          ))}
-        </View>
-        {loadingMore && (
-          <View className="loading-more">
-            <Text>加载中...</Text>
-          </View>
-        )}
-        {!hasMore && records.length > 0 && (
-          <View className="no-more">
-            <Text>没有更多了</Text>
-          </View>
-        )}
-      </ScrollView>
-    );
-  };
 
   return (
     <View className="history-page">
@@ -693,13 +521,52 @@ export default function History() {
         </View>
       )}
 
-      {selectedType === "stool" && stoolViewTab === "score"
-        ? renderChartView("每日排便得分", scoreData, 10, true)
-        : selectedType === "stool" && stoolViewTab === "count"
-          ? renderChartView("每日排便次数", countData)
-          : selectedType === "labtest" && labtestViewTab === "chart"
-            ? renderLabtestStatsView()
-            : renderRecordsList()}
+      {selectedType === "stool" && stoolViewTab === "score" ? (
+        <StoolChartView
+          title="每日排便得分"
+          data={scoreData}
+          maxValue={10}
+          loading={statsLoading}
+          showHelp
+          events={events}
+          onEventTap={handleEventTap}
+          onAddEvent={handleAddEvent}
+          dateRangeSelector={renderDateRangeSelector()}
+        />
+      ) : selectedType === "stool" && stoolViewTab === "count" ? (
+        <StoolChartView
+          title="每日排便次数"
+          data={countData}
+          loading={statsLoading}
+          events={events}
+          onEventTap={handleEventTap}
+          onAddEvent={handleAddEvent}
+          dateRangeSelector={renderDateRangeSelector()}
+        />
+      ) : selectedType === "labtest" && labtestViewTab === "chart" ? (
+        <LabtestChartView
+          chartData={labtestChartData}
+          loading={labtestStatsLoading}
+          selectedIndicator={selectedIndicator}
+          indicatorPickerVisible={indicatorPickerVisible}
+          events={events}
+          onIndicatorSelect={handleIndicatorSelect}
+          onIndicatorPickerOpen={() => setIndicatorPickerVisible(true)}
+          onIndicatorPickerClose={() => setIndicatorPickerVisible(false)}
+          onEventTap={handleEventTap}
+          onAddEvent={handleAddEvent}
+          dateRangeSelector={renderDateRangeSelector()}
+        />
+      ) : (
+        <RecordsList
+          records={records}
+          loading={loading}
+          loadingMore={loadingMore}
+          hasMore={hasMore}
+          onRefresh={handleRefresh}
+          onLoadMore={handleLoadMore}
+        />
+      )}
 
       <EventFormPopup
         visible={eventFormVisible}
@@ -707,34 +574,6 @@ export default function History() {
         onConfirm={handleEventFormConfirm}
         onClose={handleEventFormClose}
       />
-
-      {scoreHelpVisible && (
-        <View className="help-popup-mask" onClick={() => setScoreHelpVisible(false)}>
-          <View className="help-popup" onClick={(e) => e.stopPropagation()}>
-            <Text className="help-popup-title">排便得分计算规则</Text>
-            <View className="help-popup-section">
-              <Text className="help-popup-subtitle">Bristol 分型得分：</Text>
-              <Text className="help-popup-item">3-4型（正常）：6分</Text>
-              <Text className="help-popup-item">2型或5型：4分</Text>
-              <Text className="help-popup-item">1型或6型：2分</Text>
-              <Text className="help-popup-item">7型（水样）：0分</Text>
-            </View>
-            <View className="help-popup-section">
-              <Text className="help-popup-subtitle">次数得分：</Text>
-              <Text className="help-popup-item">
-                1-2次：4分；3次：3分；4次：2分；5次：1分；6+次：0分
-              </Text>
-            </View>
-            <View className="help-popup-section">
-              <Text className="help-popup-item">每日得分 = 平均分型得分 + 次数得分</Text>
-              <Text className="help-popup-item">得分越高越好，满分 10 分</Text>
-            </View>
-            <View className="help-popup-btn" onClick={() => setScoreHelpVisible(false)}>
-              <Text>知道了</Text>
-            </View>
-          </View>
-        </View>
-      )}
     </View>
   );
 }
