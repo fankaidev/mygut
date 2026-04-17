@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: "添加饮食",
+  navigationBarTitleText: "添加饮食记录",
 });
