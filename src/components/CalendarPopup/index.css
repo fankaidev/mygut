@@ -13,7 +13,7 @@
   background-color: #fff;
   border-radius: 24px 24px 0 0;
   padding: 24px;
-  padding-top: 32px;
+  padding-top: 48px;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -21,7 +21,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 36px;
   padding: 0 24px;
 }
 
@@ -59,10 +59,10 @@
 }
 
 .calendar-day {
-  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px 0;
 }
 
 .day-text {
