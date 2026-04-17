@@ -87,7 +87,9 @@ function drawChart(
   refMax?: number,
   events: ChartEvent[] = [],
 ): { event: ChartEvent; x: number }[] {
-  const padding = { top: 20, right: 16, bottom: 50, left: 50 };
+  // Reserve space for event labels if there are events
+  const eventLabelHeight = events.length > 0 ? 20 : 0;
+  const padding = { top: 20 + eventLabelHeight, right: 16, bottom: 50, left: 50 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
@@ -220,26 +222,23 @@ function drawChart(
   ctx.setLineDash([4, 4]);
   ctx.fillStyle = "#666";
   ctx.font = "10px sans-serif";
+  ctx.textAlign = "center";
   ctx.textBaseline = "bottom";
 
   for (const [x, eventGroup] of eventsByX) {
+    // Draw vertical line from below label to chart bottom
     ctx.beginPath();
     ctx.moveTo(x, padding.top);
     ctx.lineTo(x, height - padding.bottom);
     ctx.stroke();
 
-    ctx.save();
-    ctx.translate(x + 4, padding.top + 8);
-    ctx.rotate(Math.PI / 2);
+    // Draw horizontal label above the chart
+    const label = eventGroup.map((e) => e.description).join(" / ");
+    ctx.fillText(label, x, padding.top - 4);
 
-    let labelOffset = 0;
     for (const event of eventGroup) {
-      ctx.fillText(event.description, labelOffset, 0);
-      labelOffset += ctx.measureText(event.description).width + 8;
       eventPositions.push({ event, x });
     }
-
-    ctx.restore();
   }
 
   ctx.setLineDash([]);
