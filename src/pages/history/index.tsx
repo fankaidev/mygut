@@ -720,7 +720,7 @@ export default function History() {
       )}
 
       {selectedType === "stool" && stoolViewTab === "score"
-        ? renderChartView("每日肠道健康得分", scoreData, 10, true)
+        ? renderChartView("每日排便得分", scoreData, 10, true)
         : selectedType === "stool" && stoolViewTab === "count"
           ? renderChartView("每日排便次数", countData)
           : selectedType === "labtest" && labtestViewTab === "chart"
