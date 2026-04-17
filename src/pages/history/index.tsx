@@ -409,12 +409,7 @@ export default function History() {
             <Text>暂无数据</Text>
           </View>
         ) : (
-          <BarChart
-            data={data}
-            maxValue={maxValue}
-            events={events}
-            onEventTap={handleEventTap}
-          />
+          <BarChart data={data} maxValue={maxValue} events={events} onEventTap={handleEventTap} />
         )}
       </View>
     </View>
@@ -634,7 +629,7 @@ export default function History() {
         onClose={() => setEndCalendarVisible(false)}
       />
 
-      <ScrollView className="type-filter" scrollX scrollIntoView={`type-${selectedType}`}>
+      <ScrollView className="type-filter" scrollX>
         {RECORD_TYPE_OPTIONS.map((option) => (
           <View
             key={option.value}

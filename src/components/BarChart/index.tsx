@@ -98,7 +98,7 @@ function drawChart(
   propMaxValue?: number,
   events: ChartEvent[] = [],
 ): { event: ChartEvent; x: number }[] {
-  const padding = { top: 20, right: 8, bottom: 40, left: 16 };
+  const padding = { top: 30, right: 8, bottom: 40, left: 16 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
