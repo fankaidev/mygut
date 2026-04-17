@@ -12,7 +12,6 @@ export interface BarChartData {
 interface BarChartProps {
   data: BarChartData[];
   maxValue?: number;
-  higherIsBetter?: boolean; // true: green for high values, false: green for low values
   events?: ChartEvent[];
   onEventTap?: (event: ChartEvent) => void;
 }
@@ -20,7 +19,6 @@ interface BarChartProps {
 export default function BarChart({
   data,
   maxValue: propMaxValue,
-  higherIsBetter = false,
   events = [],
   onEventTap,
 }: BarChartProps) {
@@ -64,10 +62,10 @@ export default function BarChart({
         canvas.height = height * dpr;
         ctx.scale(dpr, dpr);
 
-        const positions = drawChart(ctx, width, height, data, propMaxValue, higherIsBetter, events);
+        const positions = drawChart(ctx, width, height, data, propMaxValue, events);
         eventPositionsRef.current = positions;
       });
-  }, [data, propMaxValue, canvasId, higherIsBetter, events]);
+  }, [data, propMaxValue, canvasId, events]);
 
   return (
     <Canvas type="2d" id={canvasId} className="bar-chart-canvas" onTouchEnd={handleTouchEnd} />
@@ -98,7 +96,6 @@ function drawChart(
   height: number,
   rawData: BarChartData[],
   propMaxValue?: number,
-  higherIsBetter?: boolean,
   events: ChartEvent[] = [],
 ): { event: ChartEvent; x: number }[] {
   const padding = { top: 20, right: 8, bottom: 40, left: 16 };
@@ -241,30 +238,7 @@ function drawChart(
     const x = startX + index * (barWidth + barGap);
     const y = height - padding.bottom - barHeight;
 
-    // Bar color based on value
-    let color: string;
-    const ratio = item.value / maxValue;
-    if (higherIsBetter) {
-      // Higher is better: green for high, red for low
-      if (ratio >= 0.7) {
-        color = "#07c160"; // green
-      } else if (ratio >= 0.4) {
-        color = "#ffc300"; // yellow
-      } else {
-        color = "#fa5151"; // red
-      }
-    } else {
-      // Lower is better: green for low, red for high
-      if (ratio <= 0.3) {
-        color = "#07c160"; // green
-      } else if (ratio <= 0.6) {
-        color = "#ffc300"; // yellow
-      } else {
-        color = "#fa5151"; // red
-      }
-    }
-
-    ctx.fillStyle = color;
+    ctx.fillStyle = "#07c160";
     ctx.fillRect(x, y, barWidth, barHeight);
   });
 
