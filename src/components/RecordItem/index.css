@@ -26,6 +26,7 @@
   margin-right: 8px;
   display: flex;
   align-items: center;
+  height: 40px;
 }
 
 .record-severity {
