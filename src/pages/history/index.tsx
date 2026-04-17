@@ -197,13 +197,7 @@ export default function History() {
     setLabtestStatsLoading(true);
     try {
       // Fetch all labtest records
-      const allRecords = await labTestService.getByDateRangeBefore(
-        "1900-01-01",
-        formatDate(),
-        "9999-12-31",
-        "23:59",
-        1000,
-      );
+      const allRecords = await labTestService.getByDateRange("1900-01-01", formatDate());
 
       // Extract FCP indicator values
       const chartData: LineChartData[] = [];
