@@ -119,33 +119,24 @@ function drawChart(
     return padding.top + chartHeight - ((v - minValue) / (maxValue - minValue)) * chartHeight;
   };
 
-  // Helper to convert index to X coordinate
-  const indexToX = (i: number) => {
-    if (data.length === 1) return padding.left + chartWidth / 2;
-    return padding.left + (i / (data.length - 1)) * chartWidth;
+  // Calculate date range for proportional X positioning
+  const timestamps = data.map((d) => new Date(d.date).getTime());
+  const minTime = timestamps[0];
+  const maxTime = timestamps[timestamps.length - 1];
+  const timeRange = maxTime - minTime;
+
+  // Helper to convert date to X coordinate (proportional to actual time)
+  const dateToX = (date: string): number | null => {
+    const time = new Date(date).getTime();
+    if (time < minTime || time > maxTime) return null;
+    if (timeRange === 0) return padding.left + chartWidth / 2;
+    return padding.left + ((time - minTime) / timeRange) * chartWidth;
   };
 
-  // Helper to convert date to X coordinate
-  const dateToX = (date: string): number | null => {
-    const index = data.findIndex((d) => d.date === date);
-    if (index !== -1) return indexToX(index);
-
-    const startDate = data[0].date;
-    const endDate = data[data.length - 1].date;
-    if (date < startDate || date > endDate) return null;
-
-    for (let i = 0; i < data.length - 1; i++) {
-      if (data[i].date <= date && date <= data[i + 1].date) {
-        const x1 = indexToX(i);
-        const x2 = indexToX(i + 1);
-        const d1 = new Date(data[i].date).getTime();
-        const d2 = new Date(data[i + 1].date).getTime();
-        const d = new Date(date).getTime();
-        const ratio = (d - d1) / (d2 - d1);
-        return x1 + (x2 - x1) * ratio;
-      }
-    }
-    return null;
+  // Helper to get X coordinate for data point by index
+  const dataPointX = (i: number) => {
+    if (data.length === 1) return padding.left + chartWidth / 2;
+    return dateToX(data[i].date) ?? padding.left;
   };
 
   // Draw reference range area
@@ -252,7 +243,7 @@ function drawChart(
   ctx.lineWidth = 2;
   ctx.beginPath();
   data.forEach((point, i) => {
-    const x = indexToX(i);
+    const x = dataPointX(i);
     const y = valueToY(point.value);
     if (i === 0) {
       ctx.moveTo(x, y);
@@ -264,7 +255,7 @@ function drawChart(
 
   // Draw data points
   data.forEach((point, i) => {
-    const x = indexToX(i);
+    const x = dataPointX(i);
     const y = valueToY(point.value);
 
     // Determine if point is out of reference range
@@ -283,33 +274,59 @@ function drawChart(
     ctx.stroke();
   });
 
-  // Draw X axis labels (dates)
+  // Draw X axis labels (dates) - select labels based on X position to avoid overlap
   ctx.fillStyle = "#999";
   ctx.font = "10px sans-serif";
-  ctx.textAlign = "center";
   ctx.textBaseline = "top";
 
-  // Show first, last, and some middle labels
-  const labelIndices = getLabelIndices(data.length);
-  labelIndices.forEach((i) => {
-    const x = indexToX(i);
+  const labelWidth = 55; // Approximate width of YY-MM-DD label
+  const labelsToShow: { i: number; x: number }[] = [];
+
+  // Always try to show first and last
+  if (data.length >= 1) {
+    labelsToShow.push({ i: 0, x: dataPointX(0) });
+  }
+  if (data.length >= 2) {
+    const lastX = dataPointX(data.length - 1);
+    // Only add last if it doesn't overlap with first
+    if (lastX - labelsToShow[0].x >= labelWidth) {
+      labelsToShow.push({ i: data.length - 1, x: lastX });
+    }
+  }
+
+  // Add middle labels if they don't overlap
+  for (let i = 1; i < data.length - 1; i++) {
+    const x = dataPointX(i);
+    let canShow = true;
+    for (const shown of labelsToShow) {
+      if (Math.abs(x - shown.x) < labelWidth) {
+        canShow = false;
+        break;
+      }
+    }
+    if (canShow) {
+      labelsToShow.push({ i, x });
+    }
+  }
+
+  // Sort by index for consistent rendering
+  labelsToShow.sort((a, b) => a.i - b.i);
+
+  labelsToShow.forEach(({ i, x }) => {
     const date = data[i].date;
-    // Format: YY/MM/DD
-    const dateLabel = `${date.slice(2, 4)}/${date.slice(5, 7)}/${date.slice(8, 10)}`;
+    // Format: YY-MM-DD
+    const dateLabel = date.slice(2);
+
+    // Align first label left, last label right, others center
+    if (i === 0) {
+      ctx.textAlign = "left";
+    } else if (i === data.length - 1) {
+      ctx.textAlign = "right";
+    } else {
+      ctx.textAlign = "center";
+    }
     ctx.fillText(dateLabel, x, height - padding.bottom + 8);
   });
 
   return eventPositions;
-}
-
-function getLabelIndices(length: number): number[] {
-  if (length <= 1) return [0];
-  if (length <= 5) return Array.from({ length }, (_, i) => i);
-
-  const indices = [0, length - 1];
-  const step = Math.ceil((length - 2) / 3);
-  for (let i = step; i < length - 1; i += step) {
-    indices.push(i);
-  }
-  return [...new Set(indices)].sort((a, b) => a - b);
 }
