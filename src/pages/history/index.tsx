@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { symptomService } from "../../services/symptom";
 import { mealService } from "../../services/meal";
 import { stoolService } from "../../services/stool";
@@ -223,9 +223,25 @@ export default function History() {
     [],
   );
 
+  const needsRefreshRef = useRef(true);
+
+  useEffect(() => {
+    const handleRecordChange = () => {
+      needsRefreshRef.current = true;
+    };
+    Taro.eventCenter.on("recordChange", handleRecordChange);
+    return () => {
+      Taro.eventCenter.off("recordChange", handleRecordChange);
+    };
+  }, []);
+
   useDidShow(() => {
-    // Load events
+    // Load events (lightweight, always refresh)
     setEvents(eventService.getAll());
+
+    // Only reload data if needed (first load or after record changes)
+    if (!needsRefreshRef.current) return;
+    needsRefreshRef.current = false;
 
     const { startDate, endDate } = getEffectiveDateRange();
     loadInitial(selectedType, startDate, endDate);
