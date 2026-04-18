@@ -14,9 +14,16 @@ import { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
 import EventFormPopup from "../../components/EventFormPopup";
 import { LineChartData } from "../../components/LineChart";
-import { RecordType, RECORD_TYPE_OPTIONS, LabTestRecord, ChartEvent } from "../../types";
+import {
+  RecordType,
+  RECORD_TYPE_OPTIONS,
+  LabTestRecord,
+  SymptomRecord,
+  ChartEvent,
+} from "../../types";
 import StoolChartView from "./components/StoolChartView";
 import LabtestChartView from "./components/LabtestChartView";
+import WeightChartView from "./components/WeightChartView";
 import RecordsList from "./components/RecordsList";
 import "./index.css";
 
@@ -32,6 +39,7 @@ const DEFAULT_INDICATOR: StandardIndicator = {
 
 type StoolViewTab = "score" | "count" | "records";
 type LabtestViewTab = "chart" | "records";
+type SymptomViewTab = "weight" | "records";
 type DateRangePreset = "30" | "90" | "365" | "1095" | "all" | "custom";
 
 const PAGE_SIZE = 50;
@@ -76,6 +84,7 @@ export default function Stats() {
   // Stats view state
   const [stoolViewTab, setStoolViewTab] = useState<StoolViewTab>("score");
   const [labtestViewTab, setLabtestViewTab] = useState<LabtestViewTab>("chart");
+  const [symptomViewTab, setSymptomViewTab] = useState<SymptomViewTab>("weight");
   const [dateRangePreset, setDateRangePreset] = useState<DateRangePreset>(() => {
     const saved = Taro.getStorageSync("history_date_range_preset");
     // Migrate old "7" preset to "30"
@@ -93,6 +102,10 @@ export default function Stats() {
   // Labtest stats state
   const [labtestChartData, setLabtestChartData] = useState<LineChartData[]>([]);
   const [labtestStatsLoading, setLabtestStatsLoading] = useState(false);
+
+  // Weight stats state
+  const [weightChartData, setWeightChartData] = useState<LineChartData[]>([]);
+  const [weightStatsLoading, setWeightStatsLoading] = useState(false);
   const [selectedIndicator, setSelectedIndicator] = useState<StandardIndicator>(() => {
     const saved = Taro.getStorageSync("history_selected_indicator");
     return saved ? JSON.parse(saved) : DEFAULT_INDICATOR;
@@ -237,6 +250,26 @@ export default function Stats() {
     [],
   );
 
+  const loadWeightStatsData = useCallback(async (startDate: string, endDate: string) => {
+    setWeightStatsLoading(true);
+    try {
+      const allRecords = await symptomService.getByDateRange(startDate, endDate);
+      const chartData: LineChartData[] = [];
+      (allRecords as SymptomRecord[]).forEach((record) => {
+        if (record.weight !== undefined) {
+          chartData.push({ date: record.date, value: record.weight });
+        }
+      });
+      chartData.sort((a, b) => a.date.localeCompare(b.date));
+      setWeightChartData(chartData);
+    } catch (error) {
+      console.error("加载体重统计数据失败:", error);
+      Taro.showToast({ title: "加载失败", icon: "none" });
+    } finally {
+      setWeightStatsLoading(false);
+    }
+  }, []);
+
   const needsRefreshRef = useRef(true);
 
   useEffect(() => {
@@ -262,11 +295,13 @@ export default function Stats() {
 
     const { startDate, endDate } = getEffectiveDateRange();
     loadInitial(selectedType, startDate, endDate);
-    // Load chart data for stool and labtest
+    // Load chart data for stool, labtest, and symptom
     if (selectedType === "stool") {
       loadStatsData(startDate, endDate);
     } else if (selectedType === "labtest") {
       loadLabtestStatsData(startDate, endDate, selectedIndicator);
+    } else if (selectedType === "symptom") {
+      loadWeightStatsData(startDate, endDate);
     }
   });
 
@@ -283,15 +318,19 @@ export default function Stats() {
     setRecords([]);
     setStoolViewTab("score");
     setLabtestViewTab("chart");
-    // Reset labtest stats when switching types
+    setSymptomViewTab("weight");
+    // Reset stats when switching types
     setLabtestChartData([]);
+    setWeightChartData([]);
     const { startDate, endDate } = getEffectiveDateRange();
     loadInitial(type, startDate, endDate);
-    // Load chart data for stool and labtest
+    // Load chart data for stool, labtest, and symptom
     if (type === "stool") {
       loadStatsData(startDate, endDate);
     } else if (type === "labtest") {
       loadLabtestStatsData(startDate, endDate, selectedIndicator);
+    } else if (type === "symptom") {
+      loadWeightStatsData(startDate, endDate);
     }
   };
 
@@ -310,6 +349,15 @@ export default function Stats() {
     if (tab === "chart" && labtestChartData.length === 0) {
       const { startDate, endDate } = getEffectiveDateRange();
       loadLabtestStatsData(startDate, endDate, selectedIndicator);
+    }
+  };
+
+  const handleSymptomViewTabChange = (tab: SymptomViewTab) => {
+    if (tab === symptomViewTab) return;
+    setSymptomViewTab(tab);
+    if (tab === "weight" && weightChartData.length === 0) {
+      const { startDate, endDate } = getEffectiveDateRange();
+      loadWeightStatsData(startDate, endDate);
     }
   };
 
@@ -343,6 +391,9 @@ export default function Stats() {
       if (selectedType === "labtest" && labtestViewTab === "chart") {
         loadLabtestStatsData(startDate, endDate, selectedIndicator);
       }
+      if (selectedType === "symptom" && symptomViewTab === "weight") {
+        loadWeightStatsData(startDate, endDate);
+      }
     }
   };
 
@@ -364,6 +415,9 @@ export default function Stats() {
     }
     if (selectedType === "labtest" && labtestViewTab === "chart") {
       loadLabtestStatsData(start, end, selectedIndicator);
+    }
+    if (selectedType === "symptom" && symptomViewTab === "weight") {
+      loadWeightStatsData(start, end);
     }
   };
 
@@ -521,6 +575,23 @@ export default function Stats() {
         </View>
       )}
 
+      {selectedType === "symptom" && (
+        <View className="view-mode-tabs">
+          <View
+            className={`view-mode-tab ${symptomViewTab === "weight" ? "active" : ""}`}
+            onClick={() => handleSymptomViewTabChange("weight")}
+          >
+            <Text>体重趋势</Text>
+          </View>
+          <View
+            className={`view-mode-tab ${symptomViewTab === "records" ? "active" : ""}`}
+            onClick={() => handleSymptomViewTabChange("records")}
+          >
+            <Text>原始数据</Text>
+          </View>
+        </View>
+      )}
+
       {selectedType === "stool" && stoolViewTab === "score" ? (
         <StoolChartView
           title="每日排便得分"
@@ -553,6 +624,15 @@ export default function Stats() {
           onIndicatorSelect={handleIndicatorSelect}
           onIndicatorPickerOpen={() => setIndicatorPickerVisible(true)}
           onIndicatorPickerClose={() => setIndicatorPickerVisible(false)}
+          onEventTap={handleEventTap}
+          onAddEvent={handleAddEvent}
+          dateRangeSelector={renderDateRangeSelector()}
+        />
+      ) : selectedType === "symptom" && symptomViewTab === "weight" ? (
+        <WeightChartView
+          chartData={weightChartData}
+          loading={weightStatsLoading}
+          events={events}
           onEventTap={handleEventTap}
           onAddEvent={handleAddEvent}
           dateRangeSelector={renderDateRangeSelector()}

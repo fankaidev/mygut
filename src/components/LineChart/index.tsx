@@ -17,6 +17,7 @@ interface LineChartProps {
   refMax?: number;
   events?: ChartEvent[];
   onEventTap?: (event: ChartEvent) => void;
+  startFromZero?: boolean; // Default true for backward compatibility
 }
 
 export default function LineChart({
@@ -26,6 +27,7 @@ export default function LineChart({
   refMax,
   events = [],
   onEventTap,
+  startFromZero = true,
 }: LineChartProps) {
   const canvasId = useRef(`line-chart-${Date.now()}`).current;
   const eventPositionsRef = useRef<{ event: ChartEvent; x: number }[]>([]);
@@ -67,10 +69,20 @@ export default function LineChart({
         canvas.height = height * dpr;
         ctx.scale(dpr, dpr);
 
-        const positions = drawChart(ctx, width, height, data, unit, refMin, refMax, events);
+        const positions = drawChart(
+          ctx,
+          width,
+          height,
+          data,
+          unit,
+          refMin,
+          refMax,
+          events,
+          startFromZero,
+        );
         eventPositionsRef.current = positions;
       });
-  }, [data, unit, refMin, refMax, canvasId, events]);
+  }, [data, unit, refMin, refMax, canvasId, events, startFromZero]);
 
   return (
     <Canvas type="2d" id={canvasId} className="line-chart-canvas" onTouchEnd={handleTouchEnd} />
@@ -86,6 +98,7 @@ function drawChart(
   refMin?: number,
   refMax?: number,
   events: ChartEvent[] = [],
+  startFromZero = true,
 ): { event: ChartEvent; x: number }[] {
   const padding = { top: 30, right: 16, bottom: 50, left: 50 };
   const chartWidth = width - padding.left - padding.right;
@@ -105,8 +118,8 @@ function drawChart(
   if (refMin !== undefined) minValue = Math.min(minValue, refMin);
   if (refMax !== undefined) maxValue = Math.max(maxValue, refMax);
 
-  // Start from 0 unless there are negative values
-  if (minValue >= 0) {
+  // Start from 0 unless there are negative values or startFromZero is false
+  if (startFromZero && minValue >= 0) {
     minValue = 0;
   }
 
