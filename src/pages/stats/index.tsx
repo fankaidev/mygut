@@ -465,6 +465,10 @@ export default function Stats() {
         loadLabtestStatsData(startDate, endDate, selectedIndicator);
       }
       if (selectedType === "symptom") {
+        // Clear non-active tabs so they reload when switched to
+        setFeelingData([]);
+        setWeightChartData([]);
+        setSymptomTrendData([]);
         if (symptomViewTab === "feeling") {
           loadFeelingStatsData(startDate, endDate);
         } else if (symptomViewTab === "weight") {
@@ -496,6 +500,10 @@ export default function Stats() {
       loadLabtestStatsData(start, end, selectedIndicator);
     }
     if (selectedType === "symptom") {
+      // Clear non-active tabs so they reload when switched to
+      setFeelingData([]);
+      setWeightChartData([]);
+      setSymptomTrendData([]);
       if (symptomViewTab === "feeling") {
         loadFeelingStatsData(start, end);
       } else if (symptomViewTab === "weight") {
