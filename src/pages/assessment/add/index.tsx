@@ -252,14 +252,9 @@ export default function AssessmentAdd() {
 
       {/* 评估类型 */}
       <View className="section">
-        <View className="section-header">
-          <Text className="section-title">
-            {ASSESSMENT_TYPES.find((t) => t.value === assessmentType)?.label} 评估
-          </Text>
-          <Text className="change-type" onClick={() => setAssessmentType(null)}>
-            更换
-          </Text>
-        </View>
+        <Text className="section-title">
+          {ASSESSMENT_TYPES.find((t) => t.value === assessmentType)?.label} 评估
+        </Text>
       </View>
 
       {/* 问卷 */}
