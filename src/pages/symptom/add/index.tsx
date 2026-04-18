@@ -155,7 +155,7 @@ export default function SymptomAdd() {
         date,
         time,
         symptoms,
-        severity: symptoms.length > 0 ? severity : undefined,
+        severity: symptoms.length > 0 ? (severity ?? 1) : undefined,
         overallFeeling,
         weight: parsedWeight && !isNaN(parsedWeight) ? parsedWeight : undefined,
         note: note.trim() || undefined,
