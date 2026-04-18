@@ -50,19 +50,24 @@ exports.main = async (event) => {
 
   // 生成日期范围内所有日期，没有症状的天数填0
   const result = [];
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-    const dateStr = d.toISOString().slice(0, 10);
+  const start = new Date(startDate + "T00:00:00");
+  const end = new Date(endDate + "T00:00:00");
+  const current = new Date(start);
+  while (current <= end) {
+    const year = current.getFullYear();
+    const month = String(current.getMonth() + 1).padStart(2, "0");
+    const day = String(current.getDate()).padStart(2, "0");
+    const dateStr = `${year}-${month}-${day}`;
     if (dailyData[dateStr]) {
       const data = dailyData[dateStr];
       result.push({
         date: dateStr,
-        value: Math.round((data.sum / data.count) * 10) / 10,
+        value: data.sum / data.count,
       });
     } else {
       result.push({ date: dateStr, value: 0 });
     }
+    current.setDate(current.getDate() + 1);
   }
 
   return { data: result };
