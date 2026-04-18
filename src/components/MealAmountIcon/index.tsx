@@ -3,14 +3,7 @@ import { COLORS } from "../../constants/colors";
 
 function generateAmountSvg(level: 0 | 1 | 2 | 3 | 4): string {
   const bucketColor = "#999";
-  const filledColor =
-    level <= 1
-      ? COLORS.primary
-      : level === 2
-        ? COLORS.blue
-        : level === 3
-          ? COLORS.yellow
-          : COLORS.orange;
+  const filledColor = level <= 2 ? COLORS.primary : level === 3 ? COLORS.yellow : COLORS.orange;
 
   // Bucket shape: top width 20 (x: 2-22), bottom width 16 (x: 4-20)
   // Height from y=4 to y=18 (14 units)
