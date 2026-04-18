@@ -95,8 +95,11 @@ tcb db nosql execute -e cloud1-8gzx205084c1da0f --command '[{"TableName":"stool_
 # Query records (with filter, sort, limit)
 tcb db nosql execute -e cloud1-8gzx205084c1da0f --command '[{"TableName":"symptom_records","CommandType":"QUERY","Command":"{\"find\":\"symptom_records\",\"filter\":{\"userId\":\"USER_ID\"},\"sort\":{\"date\":-1},\"limit\":5}"}]'
 
-# Insert a record
+# Insert a record (single)
 tcb db nosql execute -e cloud1-8gzx205084c1da0f --command '[{"TableName":"symptom_records","CommandType":"INSERT","Command":"{\"insert\":\"symptom_records\",\"documents\":[{\"date\":\"2026-01-01\",\"time\":\"09:00\",\"symptoms\":[],\"userId\":\"USER_ID\",\"_openid\":\"USER_ID\"}]}"}]'
+
+# Batch insert (multiple documents in one request, recommended for bulk imports)
+tcb db nosql execute -e cloud1-8gzx205084c1da0f --command '[{"TableName":"symptom_records","CommandType":"INSERT","Command":"{\"insert\":\"symptom_records\",\"documents\":[{\"date\":\"2026-01-01\",\"doc\":1},{\"date\":\"2026-01-02\",\"doc\":2}]}"}]'
 
 # Update records
 # IMPORTANT: Before DELETE or UPDATE, always check affected count and confirm with user first
