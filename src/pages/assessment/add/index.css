@@ -177,6 +177,18 @@
   background-color: #fff;
   border-radius: 12px;
   padding: 16px;
+  margin-bottom: 16px;
+}
+
+.result-details:last-child {
+  margin-bottom: 0;
+}
+
+.details-title {
+  font-size: 26px;
+  color: #999;
+  margin-bottom: 12px;
+  display: block;
 }
 
 .detail-row {
@@ -199,4 +211,22 @@
   font-size: 28px;
   color: #333;
   font-weight: 500;
+}
+
+.detail-row.total-row {
+  border-top: 2px solid #f0f0f0;
+  margin-top: 8px;
+  padding-top: 16px;
+}
+
+.detail-row.total-row .detail-label,
+.detail-row.total-row .detail-value {
+  font-weight: bold;
+}
+
+.detail-row.highlight {
+  background-color: #f6ffed;
+  margin: 0 -16px;
+  padding: 16px;
+  border-radius: 8px;
 }

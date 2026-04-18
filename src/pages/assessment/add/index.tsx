@@ -11,6 +11,8 @@ import {
   ASSESSMENT_LEVELS,
   HBI_QUESTIONS,
   CDAI_QUESTIONS,
+  HBI_THRESHOLDS,
+  CDAI_THRESHOLDS,
   calculateHBI,
   calculateCDAI,
   getAssessmentLevel,
@@ -460,25 +462,74 @@ export default function AssessmentAdd() {
             </View>
           </View>
 
-          {/* 各项明细 */}
+          {/* 计算明细 */}
           <View className="result-details">
+            <Text className="details-title">计算明细</Text>
             {Object.entries(questions).map(([key, question]) => {
               const value = answers[key];
-              let displayValue = "";
+              let rawValue: number;
               if (Array.isArray(value)) {
-                displayValue = value.length > 0 ? `${value.length} 项` : "无";
+                rawValue = value.length;
               } else if (typeof value === "number") {
-                displayValue = String(value);
+                rawValue = value;
               } else {
-                displayValue = "-";
+                rawValue = 0;
               }
+
+              // CDAI 有系数，HBI 系数为 1
+              const coefficient = "coefficient" in question ? (question.coefficient as number) : 1;
+              const contribution = rawValue * coefficient;
+
+              // Hct 特殊处理：显示差值
+              const isHct = key === "hematocrit";
+              const hctDiff = isHct ? Math.abs(47 - rawValue) : 0;
+
               return (
                 <View key={key} className="detail-row">
                   <Text className="detail-label">{question.label}</Text>
-                  <Text className="detail-value">{displayValue}</Text>
+                  <Text className="detail-value">
+                    {isHct
+                      ? `|47-${rawValue}|×${coefficient} = ${hctDiff * coefficient}`
+                      : coefficient === 1
+                        ? String(rawValue)
+                        : `${rawValue}×${coefficient} = ${contribution}`}
+                  </Text>
                 </View>
               );
             })}
+            <View className="detail-row total-row">
+              <Text className="detail-label">总分</Text>
+              <Text className="detail-value">{result.score}</Text>
+            </View>
+          </View>
+
+          {/* 分级标准 */}
+          <View className="result-details">
+            <Text className="details-title">分级标准</Text>
+            {(assessmentType === "hbi" ? HBI_THRESHOLDS : CDAI_THRESHOLDS).map(
+              (threshold, index, arr) => {
+                const prevMax = index === 0 ? -1 : arr[index - 1].max;
+                const levelInfo = ASSESSMENT_LEVELS[threshold.level];
+                const isCurrentLevel = threshold.level === result.level;
+                const rangeText =
+                  threshold.max === Infinity
+                    ? `>${prevMax}`
+                    : index === 0
+                      ? `≤${threshold.max}`
+                      : `${prevMax + 1}-${threshold.max}`;
+                return (
+                  <View
+                    key={threshold.level}
+                    className={`detail-row ${isCurrentLevel ? "highlight" : ""}`}
+                  >
+                    <Text className="detail-label">{rangeText} 分</Text>
+                    <Text className="detail-value" style={{ color: levelInfo.color }}>
+                      {levelInfo.label}
+                    </Text>
+                  </View>
+                );
+              },
+            )}
           </View>
         </View>
       )}
