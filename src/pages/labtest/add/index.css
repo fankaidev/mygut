@@ -2,9 +2,11 @@
 
 /* 标本类型选择 */
 .section-desc {
+  display: block;
   font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-  margin-bottom: 16px;
+  color: var(--color-orange);
+  margin-top: -16px;
+  margin-bottom: 8px;
 }
 
 .specimen-options {
