@@ -45,8 +45,8 @@
 }
 
 .food-item.selected {
-  background-color: var(--color-blue-bg);
-  border-color: var(--color-blue);
+  background-color: var(--color-primary-bg);
+  border-color: var(--color-primary);
 }
 
 .food-item.custom {
@@ -55,7 +55,7 @@
 
 .food-item.custom.selected {
   border-style: solid;
-  border-color: var(--color-blue);
+  border-color: var(--color-primary);
 }
 
 .food-emoji {
@@ -68,7 +68,7 @@
 }
 
 .food-item.selected .food-name {
-  color: var(--color-blue);
+  color: var(--color-primary);
 }
 
 /* 手动输入 */
@@ -107,13 +107,13 @@
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background-color: var(--color-blue-bg);
+  background-color: var(--color-primary-bg);
   border-radius: 12px;
 }
 
 .selected-food-name {
   font-size: 28px;
-  color: var(--color-blue);
+  color: var(--color-primary);
 }
 
 .remove-food-btn {

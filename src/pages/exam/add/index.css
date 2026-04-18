@@ -21,9 +21,9 @@
 }
 
 .exam-type-item.active {
-  background-color: var(--color-blue-bg);
-  border-color: var(--color-blue);
-  color: var(--color-blue);
+  background-color: var(--color-primary-bg);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 /* 图片网格 */
@@ -102,7 +102,7 @@
 
 .recognize-btn {
   padding: 12px 24px;
-  background-color: var(--color-blue);
+  background-color: var(--color-primary);
   color: var(--color-white);
   border-radius: 8px;
   font-size: 28px;

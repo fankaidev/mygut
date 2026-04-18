@@ -55,8 +55,8 @@
 }
 
 .amount-item.active {
-  background-color: var(--color-blue-bg);
-  border-color: var(--color-blue);
+  background-color: var(--color-primary-bg);
+  border-color: var(--color-primary);
 }
 
 .amount-label {
@@ -65,7 +65,7 @@
 }
 
 .amount-item.active .amount-label {
-  color: var(--color-blue);
+  color: var(--color-primary);
 }
 
 /* 备注快捷输入 */
