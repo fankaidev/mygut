@@ -77,16 +77,19 @@ export default function SymptomTrendChartView({
           />
         )}
       </View>
-      {chartData.length > 0 && (
+      {chartData.some((item) => item.value > 0) && (
         <View className="stats-data-list">
-          {[...chartData].reverse().map((item, index) => (
-            <View key={index} className="stats-data-item">
-              <Text className="stats-data-date">{item.date}</Text>
-              <Text className="stats-data-value">
-                {item.value === 1 ? "轻度" : item.value === 2 ? "中度" : "重度"}
-              </Text>
-            </View>
-          ))}
+          {[...chartData]
+            .filter((item) => item.value > 0)
+            .reverse()
+            .map((item, index) => (
+              <View key={index} className="stats-data-item">
+                <Text className="stats-data-date">{item.date}</Text>
+                <Text className="stats-data-value">
+                  {item.value <= 1 ? "轻度" : item.value <= 2 ? "中度" : "重度"}
+                </Text>
+              </View>
+            ))}
         </View>
       )}
 

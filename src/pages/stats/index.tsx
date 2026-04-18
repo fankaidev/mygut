@@ -7,6 +7,7 @@ import { stoolService } from "../../services/stool";
 import { medicationService } from "../../services/medication";
 import { labTestService } from "../../services/labtest";
 import { examService } from "../../services/exam";
+import { assessmentService } from "../../services/assessment";
 import { eventService } from "../../services/event";
 import { findStandardIndicator, StandardIndicator } from "../../services/labtest-standards";
 import { formatDate } from "../../utils/date";
@@ -47,6 +48,7 @@ const services = {
   stool: stoolService,
   labtest: labTestService,
   exam: examService,
+  assessment: assessmentService,
 } as const;
 
 function getDateDaysAgo(days: number): string {
@@ -465,6 +467,10 @@ export default function Stats() {
         loadLabtestStatsData(startDate, endDate, selectedIndicator);
       }
       if (selectedType === "symptom") {
+        // Clear non-active tabs so they reload when switched to
+        setFeelingData([]);
+        setWeightChartData([]);
+        setSymptomTrendData([]);
         if (symptomViewTab === "feeling") {
           loadFeelingStatsData(startDate, endDate);
         } else if (symptomViewTab === "weight") {
@@ -496,6 +502,10 @@ export default function Stats() {
       loadLabtestStatsData(start, end, selectedIndicator);
     }
     if (selectedType === "symptom") {
+      // Clear non-active tabs so they reload when switched to
+      setFeelingData([]);
+      setWeightChartData([]);
+      setSymptomTrendData([]);
       if (symptomViewTab === "feeling") {
         loadFeelingStatsData(start, end);
       } else if (symptomViewTab === "weight") {
