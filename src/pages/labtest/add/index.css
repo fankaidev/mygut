@@ -12,7 +12,7 @@
   background-color: var(--color-bg);
   border-radius: 8px;
   border: 2px solid transparent;
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text);
 }
 
@@ -53,7 +53,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }
 
 /* 本地待上传图片标识 */
@@ -76,12 +76,12 @@
 }
 
 .image-add-icon {
-  font-size: 48px;
+  font-size: var(--font-size-xl);
   color: var(--color-text-tertiary);
 }
 
 .image-add-text {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
@@ -108,7 +108,7 @@
   background-color: var(--color-bg);
   color: var(--color-text);
   border-radius: 8px;
-  font-size: 26px;
+  font-size: var(--font-size-sm);
 }
 
 .action-btn.primary {
@@ -133,7 +133,7 @@
 }
 
 .indicator-group-title {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   font-weight: 500;
   color: var(--color-text);
 }
@@ -170,19 +170,19 @@
 
 .indicator-col-name {
   flex: 4;
-  font-size: 22px;
+  font-size: var(--font-size-sm);
   color: var(--color-text);
 }
 
 .indicator-col-value {
   flex: 1.5;
-  font-size: 22px;
+  font-size: var(--font-size-sm);
   color: var(--color-primary);
 }
 
 .abnormal-flag {
   margin-left: 4px;
-  font-size: 20px;
+  font-size: var(--font-size-xs);
 }
 
 .abnormal-flag.high {
@@ -195,13 +195,13 @@
 
 .indicator-col-ref {
   flex: 1.5;
-  font-size: 22px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
 .indicator-col-unit {
   flex: 1.5;
-  font-size: 22px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
@@ -209,13 +209,13 @@
 .indicator-table-header .indicator-col-value,
 .indicator-table-header .indicator-col-unit,
 .indicator-table-header .indicator-col-ref {
-  font-size: 22px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   font-weight: 500;
 }
 
 .no-indicators {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text-tertiary);
   text-align: center;
   padding: 32px;
@@ -241,7 +241,7 @@
 }
 
 .indicator-modal-title {
-  font-size: 32px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--color-text);
   text-align: center;
@@ -254,7 +254,7 @@
 }
 
 .indicator-modal-label {
-  font-size: 26px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   margin-bottom: 12px;
   display: block;
@@ -266,7 +266,7 @@
   padding: 0 16px;
   border: 1px solid var(--color-border-dark);
   border-radius: 8px;
-  font-size: 28px;
+  font-size: var(--font-size-base);
   box-sizing: border-box;
 }
 
@@ -280,7 +280,7 @@
   flex: 1;
   padding: 16px;
   border-radius: 8px;
-  font-size: 28px;
+  font-size: var(--font-size-base);
   text-align: center;
 }
 
@@ -293,6 +293,6 @@
   margin-top: 24px;
   padding: 16px;
   text-align: center;
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-red);
 }

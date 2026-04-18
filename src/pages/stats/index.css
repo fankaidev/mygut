@@ -31,7 +31,7 @@
 }
 
 .type-tab-icon {
-  font-size: 40px;
+  font-size: var(--font-size-lg);
 }
 
 /* 加载状态 */
@@ -41,7 +41,7 @@
   align-items: center;
   padding: 80px;
   color: var(--color-text-tertiary);
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }
 
 /* 空状态 */
@@ -54,7 +54,7 @@
 
 .empty-text {
   color: var(--color-text-disabled);
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }
 
 /* 记录列表 */
@@ -72,7 +72,7 @@
 }
 
 .date-text {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   font-weight: 600;
   color: var(--color-text-secondary);
 }
@@ -90,7 +90,7 @@
   justify-content: center;
   padding: 32px;
   color: var(--color-text-tertiary);
-  font-size: 26px;
+  font-size: var(--font-size-sm);
 }
 
 /* 视图模式切换 */
@@ -106,7 +106,7 @@
   justify-content: center;
   align-items: center;
   padding: 20px 0;
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text-secondary);
   border-bottom: 4px solid transparent;
 }
@@ -140,17 +140,17 @@
   padding: 8px 12px;
   border-radius: 6px;
   background-color: var(--color-bg);
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text);
 }
 
 .date-range-arrow {
-  font-size: 18px;
+  font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
 }
 
 .date-range-display {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
@@ -165,12 +165,12 @@
   padding: 8px 12px;
   border-radius: 6px;
   background-color: var(--color-bg);
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text);
 }
 
 .date-range-separator {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
@@ -193,7 +193,7 @@
 }
 
 .stats-title {
-  font-size: 32px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--color-text);
 }
@@ -206,7 +206,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
@@ -218,7 +218,7 @@
   padding: 8px 16px;
   background-color: var(--color-bg);
   border-radius: 8px;
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
@@ -228,7 +228,7 @@
 
 .stats-range,
 .stats-ref-range {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
@@ -250,7 +250,7 @@
   justify-content: center;
   align-items: center;
   color: var(--color-text-tertiary);
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }
 
 /* 数据列表 */
@@ -274,12 +274,12 @@
 }
 
 .stats-data-date {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
 .stats-data-value {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-primary);
   font-weight: 500;
 }
@@ -296,7 +296,7 @@
 }
 
 .indicator-selector-arrow {
-  font-size: 20px;
+  font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
 }
 
@@ -321,7 +321,7 @@
 
 .help-popup-title {
   display: block;
-  font-size: 32px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--color-text);
   text-align: center;
@@ -334,7 +334,7 @@
 
 .help-popup-subtitle {
   display: block;
-  font-size: 26px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-text);
   margin-bottom: 8px;
@@ -342,7 +342,7 @@
 
 .help-popup-item {
   display: block;
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   line-height: 1.6;
 }
@@ -353,6 +353,6 @@
   background-color: var(--color-primary);
   border-radius: 8px;
   text-align: center;
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-white);
 }

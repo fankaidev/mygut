@@ -26,7 +26,7 @@
 }
 
 .app-title {
-  font-size: 32px;
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--color-text);
 }
@@ -42,7 +42,7 @@
 }
 
 .date-arrow {
-  font-size: 36px;
+  font-size: var(--font-size-title);
   color: var(--color-primary);
   padding: 16px;
 }
@@ -52,7 +52,7 @@
 }
 
 .date-text {
-  font-size: 30px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--color-text);
 }
@@ -64,7 +64,7 @@
   align-items: center;
   padding: 80px;
   color: var(--color-text-tertiary);
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }
 
 /* 记录容器 */
@@ -95,7 +95,7 @@
 }
 
 .card-arrow {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
   transition: transform 0.2s;
 }
@@ -105,22 +105,22 @@
 }
 
 .card-icon {
-  font-size: 36px;
+  font-size: var(--font-size-title);
 }
 
 .card-title {
-  font-size: 30px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .card-count {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
 .card-add-btn {
-  font-size: 40px;
+  font-size: var(--font-size-lg);
   color: var(--color-primary);
   padding: 8px 16px;
 }
@@ -131,7 +131,7 @@
 }
 
 .empty-hint {
-  font-size: 26px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-disabled);
   text-align: center;
   display: block;

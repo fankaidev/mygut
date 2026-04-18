@@ -18,12 +18,12 @@
 
 
 .feeling-emoji {
-  font-size: 48px;
+  font-size: var(--font-size-xl);
   margin-bottom: 8px;
 }
 
 .feeling-label {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
@@ -43,7 +43,7 @@
   padding: 12px 24px;
   border-radius: 8px;
   border: 2px solid var(--color-border-light);
-  font-size: 26px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   background-color: var(--color-bg-light);
   transition: all 0.2s;
@@ -65,7 +65,7 @@
   padding: 0 20px;
   border: 2px solid var(--color-border-light);
   border-radius: 8px;
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }
 
 .custom-symptom-add {
@@ -74,7 +74,7 @@
   line-height: 72px;
   background-color: var(--color-primary);
   color: var(--color-white);
-  font-size: 28px;
+  font-size: var(--font-size-base);
   border-radius: 8px;
 }
 
@@ -97,11 +97,11 @@
   padding: 0 20px;
   border: 2px solid var(--color-border-light);
   border-radius: 8px;
-  font-size: 32px;
+  font-size: var(--font-size-md);
   box-sizing: border-box;
 }
 
 .weight-unit {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text-secondary);
 }

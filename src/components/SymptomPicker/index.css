@@ -26,13 +26,13 @@
 }
 
 .symptom-picker-title {
-  font-size: 32px;
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .symptom-picker-close {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text-tertiary);
   padding: 8px;
 }
@@ -55,7 +55,7 @@
 }
 
 .symptom-name {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text);
 }
 
@@ -65,5 +65,5 @@
   align-items: center;
   padding: 48px;
   color: var(--color-text-tertiary);
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }

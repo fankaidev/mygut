@@ -11,7 +11,7 @@
 }
 
 .section-title {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text-tertiary);
   margin-bottom: 20px;
   display: block;
@@ -29,17 +29,17 @@
 }
 
 .about-label {
-  font-size: 30px;
+  font-size: var(--font-size-md);
   color: var(--color-text);
 }
 
 .about-value {
-  font-size: 30px;
+  font-size: var(--font-size-md);
   color: var(--color-text-tertiary);
 }
 
 .about-arrow {
-  font-size: 36px;
+  font-size: var(--font-size-title);
   color: var(--color-text-disabled);
 }
 
@@ -58,17 +58,17 @@
 }
 
 .data-label {
-  font-size: 30px;
+  font-size: var(--font-size-md);
   color: var(--color-text);
 }
 
 .data-arrow {
-  font-size: 40px;
+  font-size: var(--font-size-lg);
   color: var(--color-text-disabled);
 }
 
 .data-hint {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
   margin-top: 12px;
   margin-bottom: 20px;
@@ -100,7 +100,7 @@
 .disclaimer-text {
   display: block;
   margin-bottom: 16px;
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
   line-height: 1.6;
   text-align: center;

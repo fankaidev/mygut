@@ -26,7 +26,7 @@
 }
 
 .calendar-nav {
-  font-size: 32px;
+  font-size: var(--font-size-md);
   color: var(--color-primary);
   padding: 16px;
 }
@@ -36,7 +36,7 @@
 }
 
 .calendar-title {
-  font-size: 32px;
+  font-size: var(--font-size-md);
   color: var(--color-text);
 }
 
@@ -48,7 +48,7 @@
 .calendar-weekday {
   flex: 1;
   text-align: center;
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text-tertiary);
 }
 
@@ -70,7 +70,7 @@
   height: 56px;
   line-height: 56px;
   text-align: center;
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text);
   border-radius: 50%;
 }

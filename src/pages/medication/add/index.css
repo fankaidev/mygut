@@ -14,7 +14,7 @@
   background-color: transparent;
   border-radius: 20px;
   border: 2px solid var(--color-border-dark);
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text-secondary);
   white-space: nowrap;
   flex-shrink: 0;
@@ -39,7 +39,7 @@
   background-color: var(--color-bg);
   border-radius: 4px;
   border: 2px solid transparent;
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-text);
 }
 
@@ -70,14 +70,14 @@
   padding: 20px;
   background-color: var(--color-bg);
   border-radius: 12px;
-  font-size: 28px;
+  font-size: var(--font-size-base);
 }
 
 .manual-add-btn {
   padding: 20px 32px;
   background-color: var(--color-primary);
   color: var(--color-white);
-  font-size: 28px;
+  font-size: var(--font-size-base);
   border-radius: 12px;
   white-space: nowrap;
 }
@@ -99,17 +99,17 @@
 }
 
 .selected-medication-name {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-selected);
 }
 
 .remove-medication-btn {
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   color: var(--color-red);
 }
 
 .no-medication-hint {
-  font-size: 28px;
+  font-size: var(--font-size-base);
   color: var(--color-text-tertiary);
   text-align: center;
   padding: 40px;
