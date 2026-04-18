@@ -75,6 +75,7 @@ export const HBI_QUESTIONS = {
 export const CDAI_QUESTIONS = {
   liquidStools: {
     label: "过去7天腹泻总次数",
+    description: "计分：次数×2",
     type: "number" as const,
     coefficient: 2,
     autoFill: true,
@@ -82,20 +83,21 @@ export const CDAI_QUESTIONS = {
   },
   abdominalPain: {
     label: "过去7天腹痛程度总和",
-    description: "每天评分：0无 1轻 2中 3重，7天相加",
+    description: "计分：(每天评分0无1轻2中3重，7天相加)×5",
     type: "number" as const,
     coefficient: 5,
     placeholder: "0-21",
   },
   generalWellbeing: {
     label: "过去7天一般状况总和",
-    description: "每天评分：0良好 1略差 2较差 3很差 4极差，7天相加",
+    description: "计分：(每天评分0良好1略差2较差3很差4极差，7天相加)×7",
     type: "number" as const,
     coefficient: 7,
     placeholder: "0-28",
   },
   complications: {
     label: "并发症数量",
+    description: "计分：每项并发症×20",
     type: "multiSelect" as const,
     coefficient: 20,
     options: [
@@ -110,6 +112,7 @@ export const CDAI_QUESTIONS = {
   },
   antidiarrheal: {
     label: "使用止泻药",
+    description: "计分：是=1×30，否=0",
     autoFill: true,
     options: [
       { value: 0, label: "否" },
@@ -119,6 +122,7 @@ export const CDAI_QUESTIONS = {
   },
   abdominalMass: {
     label: "腹部包块",
+    description: "计分：选项对应分值×10",
     options: [
       { value: 0, label: "无" },
       { value: 2, label: "可疑" },
@@ -128,18 +132,18 @@ export const CDAI_QUESTIONS = {
   },
   hematocrit: {
     label: "血细胞比容 (Hct)",
+    description: "计分：|标准值-实际值|×6 (男性标准47，女性标准42)",
     type: "number" as const,
     coefficient: 6,
     autoFill: true,
     placeholder: "百分比，如 42",
-    description: "男性标准值47%，女性标准值42%",
   },
   weightChange: {
     label: "体重变化",
+    description: "计分：(1-实际体重/标准体重)×100",
     type: "number" as const,
     coefficient: 1,
     placeholder: "低于标准体重的百分比",
-    description: "如标准体重60kg，现56kg，则填 6.7",
   },
 };
 
