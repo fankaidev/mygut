@@ -269,7 +269,8 @@ export default function AssessmentAdd() {
           newAnswers.antidiarrheal = 0;
           hints.antidiarrheal = `从用药记录获取 (${dateRangeHint}，未使用止泻药)`;
         }
-      } catch {
+      } catch (error) {
+        console.error("获取用药记录失败:", error);
         hints.antidiarrheal = "获取用药记录失败，需手动填写";
       }
 
