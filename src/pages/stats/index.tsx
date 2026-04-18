@@ -1,6 +1,6 @@
 import { View, Text } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { symptomService } from "../../services/symptom";
 import { mealService } from "../../services/meal";
 import { stoolService } from "../../services/stool";
@@ -15,7 +15,14 @@ import { AnyRecord } from "../../components/RecordItem";
 import CalendarPopup from "../../components/CalendarPopup";
 import EventFormPopup from "../../components/EventFormPopup";
 import { LineChartData } from "../../components/LineChart";
-import { RecordType, RECORD_TYPE_OPTIONS, LabTestRecord, ChartEvent } from "../../types";
+import {
+  RecordType,
+  RECORD_TYPE_OPTIONS,
+  LabTestRecord,
+  ExamRecord,
+  ChartEvent,
+} from "../../types";
+import { EXAM_TYPES } from "../../constants/exam";
 import StoolChartView from "./components/StoolChartView";
 import LabtestChartView from "./components/LabtestChartView";
 import WeightChartView from "./components/WeightChartView";
@@ -38,6 +45,7 @@ type StoolViewTab = "score" | "count" | "records";
 type LabtestViewTab = "chart" | "records";
 type SymptomViewTab = "feeling" | "weight" | "symptom" | "records";
 type DateRangePreset = "30" | "90" | "365" | "1095" | "all" | "custom";
+type ExamTypeFilter = "all" | (typeof EXAM_TYPES)[number]["value"];
 
 const PAGE_SIZE = 50;
 
@@ -104,6 +112,9 @@ export default function Stats() {
   // Weight stats state
   const [weightChartData, setWeightChartData] = useState<LineChartData[]>([]);
   const [weightStatsLoading, setWeightStatsLoading] = useState(false);
+
+  // Exam filter state
+  const [examTypeFilter, setExamTypeFilter] = useState<ExamTypeFilter>("all");
 
   // Feeling stats state
   const [feelingData, setFeelingData] = useState<{ date: string; value: number }[]>([]);
@@ -327,6 +338,17 @@ export default function Stats() {
   );
 
   const needsRefreshRef = useRef(true);
+
+  // 根据筛选条件过滤记录
+  const filteredRecords = useMemo(() => {
+    if (selectedType === "exam" && examTypeFilter !== "all") {
+      return records.filter(
+        (r) =>
+          r._type === "exam" && (r as ExamRecord & { _type: "exam" }).examType === examTypeFilter,
+      );
+    }
+    return records;
+  }, [records, selectedType, examTypeFilter]);
 
   useEffect(() => {
     const handleRecordChange = () => {
@@ -711,6 +733,26 @@ export default function Stats() {
         </View>
       )}
 
+      {selectedType === "exam" && (
+        <View className="filter-tabs">
+          <View
+            className={`filter-tab ${examTypeFilter === "all" ? "active" : ""}`}
+            onClick={() => setExamTypeFilter("all")}
+          >
+            <Text>全部</Text>
+          </View>
+          {EXAM_TYPES.map((type) => (
+            <View
+              key={type.value}
+              className={`filter-tab ${examTypeFilter === type.value ? "active" : ""}`}
+              onClick={() => setExamTypeFilter(type.value)}
+            >
+              <Text>{type.label}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+
       {selectedType === "stool" && stoolViewTab === "score" ? (
         <StoolChartView
           title="每日排便得分"
@@ -782,7 +824,7 @@ export default function Stats() {
         />
       ) : (
         <RecordsList
-          records={records}
+          records={filteredRecords}
           loading={loading}
           loadingMore={loadingMore}
           hasMore={hasMore}
