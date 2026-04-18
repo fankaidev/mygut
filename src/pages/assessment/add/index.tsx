@@ -99,12 +99,13 @@ export default function AssessmentAdd() {
     try {
       const symptomRecords = await symptomService.getByDateRange(fromDate, toDate);
       if (symptomRecords.length > 0) {
-        const latestRecord = symptomRecords[0];
+        // 找到第一条有 overallFeeling 的记录
+        const recordWithFeeling = symptomRecords.find((r) => r.overallFeeling !== undefined);
 
         // 一般状况：从 overallFeeling (1-5) 映射到 (4-0)
-        if (latestRecord.overallFeeling) {
-          newAnswers.generalWellbeing = 5 - latestRecord.overallFeeling;
-          hints.generalWellbeing = `从身体状态记录获取 (${latestRecord.date})`;
+        if (recordWithFeeling?.overallFeeling) {
+          newAnswers.generalWellbeing = 5 - recordWithFeeling.overallFeeling;
+          hints.generalWellbeing = `从身体状态记录获取 (${recordWithFeeling.date})`;
         } else {
           hints.generalWellbeing = "近一周记录无整体感受数据";
         }
@@ -118,13 +119,19 @@ export default function AssessmentAdd() {
           }
         }
 
-        // 腹痛映射
-        if (allSymptoms.has("腹痛")) {
-          const latestItems = getSymptomItems(latestRecord);
-          const painItem = latestItems.find((i) => i.name === "腹痛");
-          newAnswers.abdominalPain = painItem?.severity ?? 1;
-          hints.abdominalPain = `从症状记录获取 (${dateRangeHint})`;
-        } else {
+        // 腹痛映射 - 找到最近一条有腹痛的记录
+        let painFound = false;
+        for (const record of symptomRecords) {
+          const items = getSymptomItems(record);
+          const painItem = items.find((i) => i.name === "腹痛");
+          if (painItem) {
+            newAnswers.abdominalPain = painItem.severity;
+            hints.abdominalPain = `从症状记录获取 (${record.date})`;
+            painFound = true;
+            break;
+          }
+        }
+        if (!painFound) {
           hints.abdominalPain = "近一周无腹痛记录";
         }
 
