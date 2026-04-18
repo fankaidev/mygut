@@ -18,9 +18,6 @@
   transition: all 0.2s;
 }
 
-.bristol-item.active {
-  border-color: var(--color-selected);
-}
 
 .bristol-emoji {
   font-size: var(--font-size-title);

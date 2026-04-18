@@ -3,6 +3,7 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { useState, useEffect } from "react";
 import { stoolService } from "../../../services/stool";
 import { BRISTOL_TYPES, STOOL_AMOUNTS, NOTE_SHORTCUTS } from "../../../constants/stool";
+import { COLORS } from "../../../constants/colors";
 import { formatDate, formatTime } from "../../../utils/date";
 import { showError } from "../../../utils/error";
 import BristolIcon from "../../../components/BristolIcon";
@@ -10,6 +11,17 @@ import CalendarPopup from "../../../components/CalendarPopup";
 import TimePicker from "../../../components/TimePicker";
 import type { StoolRecord } from "../../../types";
 import "./index.css";
+
+// Bristol 类型对应的边框颜色: 1黄 2蓝 3绿 4绿 5蓝 6黄 7橙
+const BRISTOL_BORDER_COLORS: Record<number, string> = {
+  1: COLORS.yellow,
+  2: COLORS.lightBlue,
+  3: COLORS.primary,
+  4: COLORS.primary,
+  5: COLORS.lightBlue,
+  6: COLORS.yellow,
+  7: COLORS.orange,
+};
 
 export default function StoolAdd() {
   const router = useRouter();
@@ -137,6 +149,11 @@ export default function StoolAdd() {
             <View
               key={option.value}
               className={`bristol-item ${bristolType === option.value ? "active" : ""}`}
+              style={
+                bristolType === option.value
+                  ? { borderColor: BRISTOL_BORDER_COLORS[option.value] }
+                  : undefined
+              }
               onClick={() => setBristolType(option.value as StoolRecord["type"])}
             >
               <BristolIcon type={option.value} size={48} active={bristolType === option.value} />
