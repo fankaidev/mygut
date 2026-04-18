@@ -8,6 +8,10 @@ Do not create local design/spec files (e.g., `docs/superpowers/specs/`). All des
 
 Always use `pnpm` instead of `npm` or `yarn`.
 
+## Build Verification
+
+Always run `pnpm build` after making code edits to verify compilation succeeds.
+
 ## Git Workflow
 
 Always create a pull request for changes. Never push directly to main.

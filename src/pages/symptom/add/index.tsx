@@ -44,7 +44,8 @@ export default function SymptomAdd() {
   const [customSymptom, setCustomSymptom] = useState("");
   const [savedCustomSymptoms, setSavedCustomSymptoms] = useState<string[]>([]);
   const [severity, setSeverity] = useState<SymptomRecord["severity"]>(undefined);
-  const [overallFeeling, setOverallFeeling] = useState<1 | 2 | 3 | 4 | 5>(3);
+  const [overallFeeling, setOverallFeeling] = useState<1 | 2 | 3 | 4 | 5 | undefined>(undefined);
+  const [weight, setWeight] = useState("");
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(isEdit);
@@ -64,7 +65,8 @@ export default function SymptomAdd() {
         setTime(record.time || formatTime());
         setSymptoms(record.symptoms);
         setSeverity(record.severity);
-        setOverallFeeling(record.overallFeeling);
+        setOverallFeeling(record.overallFeeling ?? undefined);
+        setWeight(record.weight !== undefined ? String(record.weight) : "");
         setNote(record.note || "");
       }
     } catch (error) {
@@ -148,12 +150,14 @@ export default function SymptomAdd() {
 
     setSubmitting(true);
     try {
+      const parsedWeight = weight.trim() ? parseFloat(weight) : undefined;
       const data = {
         date,
         time,
         symptoms,
         severity: symptoms.length > 0 ? severity : undefined,
         overallFeeling,
+        weight: parsedWeight && !isNaN(parsedWeight) ? parsedWeight : undefined,
         note: note.trim() || undefined,
       };
 
@@ -211,7 +215,7 @@ export default function SymptomAdd() {
             <View
               key={option.value}
               className={`feeling-item ${overallFeeling === option.value ? "active" : ""}`}
-              onClick={() => setOverallFeeling(option.value as typeof overallFeeling)}
+              onClick={() => setOverallFeeling(option.value as 1 | 2 | 3 | 4 | 5)}
             >
               <Text className="feeling-emoji">{option.emoji}</Text>
               <Text className="feeling-label">{option.label}</Text>
@@ -256,12 +260,8 @@ export default function SymptomAdd() {
             添加
           </View>
         </View>
-      </View>
-
-      {/* 严重程度 */}
-      {symptoms.length > 0 && (
-        <View className="section">
-          <Text className="section-title">严重程度</Text>
+        {/* 严重程度 - 仅在选择了症状后显示 */}
+        {symptoms.length > 0 && (
           <View className="severity-options">
             {SEVERITY_OPTIONS.map((option) => (
               <View
@@ -278,8 +278,23 @@ export default function SymptomAdd() {
               </View>
             ))}
           </View>
+        )}
+      </View>
+
+      {/* 体重 */}
+      <View className="section">
+        <Text className="section-title">体重（可选）</Text>
+        <View className="weight-row">
+          <Input
+            className="weight-input"
+            type="digit"
+            placeholder="输入体重"
+            value={weight}
+            onInput={(e) => setWeight(e.detail.value)}
+          />
+          <Text className="weight-unit">kg</Text>
         </View>
-      )}
+      </View>
 
       {/* 备注 */}
       <View className="section">
