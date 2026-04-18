@@ -20,8 +20,8 @@ export const SYMPTOM_SHORTCUTS = [
 
 // 严重程度
 export const SEVERITY_OPTIONS = [
-  { value: 1, label: "轻度", color: "#FEF9C2" },
-  { value: 2, label: "中度", color: "#FE9A37" },
+  { value: 1, label: "轻度", color: "#FFD230" },
+  { value: 2, label: "中度", color: "#FF692A" },
   { value: 3, label: "重度", color: "#f5222d" },
 ] as const;
 

@@ -4,10 +4,10 @@ import BarChart from "../../../components/BarChart";
 import SymptomPicker from "../../../components/SymptomPicker";
 import type { ChartEvent } from "../../../types";
 
-// 1: light yellow (轻度), 2: orange (中度), 3: red (重度)
+// 1: yellow (轻度), 2: orange (中度), 3: red (重度)
 const getSeverityColor = (value: number): string => {
-  if (value <= 1) return "#FEF9C2"; // light yellow
-  if (value <= 2) return "#FE9A37"; // orange
+  if (value <= 1) return "#FFD230"; // yellow
+  if (value <= 2) return "#FF692A"; // orange
   return "#f5222d"; // red
 };
 
