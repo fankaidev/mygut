@@ -83,15 +83,22 @@ export default function RecordItem({ record, showTypeIcon = false }: RecordItemP
             )}
             {items.length > 0 && (
               <View className="record-symptoms-list">
-                {items.map((item) => (
-                  <Text
-                    key={item.name}
-                    className="record-symptom-tag"
-                    style={{ backgroundColor: `${getSeverityColor(item.severity)}20` }}
-                  >
-                    {item.name}
-                  </Text>
-                ))}
+                {items.map((item) => {
+                  const color = getSeverityColor(item.severity);
+                  return (
+                    <Text
+                      key={item.name}
+                      className="record-symptom-tag"
+                      style={{
+                        borderColor: color,
+                        backgroundColor: `${color}15`,
+                        color: color,
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                  );
+                })}
               </View>
             )}
             {record.weight && <Text className="record-desc">{record.weight}kg</Text>}

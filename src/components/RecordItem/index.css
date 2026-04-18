@@ -36,9 +36,9 @@
 
 .record-symptom-tag {
   font-size: 24px;
-  color: #333;
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 2px solid;
 }
 
 .record-desc {
