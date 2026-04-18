@@ -86,9 +86,18 @@
   font-size: 28px;
 }
 
-.auto-fill-hint {
+.field-hint {
   font-size: 24px;
+  color: #999;
+  margin-top: 12px;
+}
+
+.field-hint.has-data {
   color: #52c41a;
+}
+
+.field-hint.no-data {
+  color: #999;
 }
 
 /* 多选列表 */

@@ -36,6 +36,7 @@ export default function AssessmentAdd() {
   const [loading, setLoading] = useState(isEdit);
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [result, setResult] = useState<{ score: number; level: AssessmentLevel } | null>(null);
+  const [fieldHints, setFieldHints] = useState<Record<string, string>>({});
   const [autoFilledData, setAutoFilledData] = useState<{
     stoolCount?: { from: string; to: string; count: number };
     hct?: { recordId: string; value: number; date: string };
@@ -69,43 +70,47 @@ export default function AssessmentAdd() {
   const autoFillData = async (type: AssessmentType) => {
     const autoFilled: typeof autoFilledData = {};
     const newAnswers: Record<string, number | string[]> = { ...answers };
+    const hints: Record<string, string> = {};
 
-    // 获取腹泻次数：HBI 取当天，CDAI 取过去7天
+    // 统一使用过去7天
     const today = new Date();
     const toDate = formatDate(today);
-    let fromDate: string;
+    const weekAgo = new Date(today);
+    weekAgo.setDate(today.getDate() - 7);
+    const fromDate = formatDate(weekAgo);
+    const dateRangeHint = `${fromDate} ~ ${toDate}`;
 
-    if (type === "hbi") {
-      fromDate = toDate; // 当天
-    } else {
-      const weekAgo = new Date(today);
-      weekAgo.setDate(today.getDate() - 7);
-      fromDate = formatDate(weekAgo);
-    }
-
+    // 获取排便记录
     try {
       const stoolRecords = await stoolService.getByDateRange(fromDate, toDate);
-      const stoolCount = stoolRecords.length;
-      autoFilled.stoolCount = { from: fromDate, to: toDate, count: stoolCount };
-      newAnswers.liquidStools = stoolCount;
+      if (stoolRecords.length > 0) {
+        const stoolCount = stoolRecords.length;
+        autoFilled.stoolCount = { from: fromDate, to: toDate, count: stoolCount };
+        newAnswers.liquidStools = stoolCount;
+        hints.liquidStools = `从排便记录获取 (${dateRangeHint}，共${stoolCount}次)`;
+      } else {
+        hints.liquidStools = "暂无近一周排便记录";
+      }
     } catch {
-      // 忽略错误
+      hints.liquidStools = "获取排便记录失败";
     }
 
     // 从症状记录获取一般状况、腹痛、并发症
     try {
       const symptomRecords = await symptomService.getByDateRange(fromDate, toDate);
       if (symptomRecords.length > 0) {
-        // 一般状况：从 overallFeeling (1-5) 映射到 (4-0)
         const latestRecord = symptomRecords[0];
+
+        // 一般状况：从 overallFeeling (1-5) 映射到 (4-0)
         if (latestRecord.overallFeeling) {
-          // overallFeeling: 1很差->4, 2较差->3, 3一般->2, 4良好->1, 5很好->0
           newAnswers.generalWellbeing = 5 - latestRecord.overallFeeling;
+          hints.generalWellbeing = `从身体状态记录获取 (${latestRecord.date})`;
+        } else {
+          hints.generalWellbeing = "近一周记录无整体感受数据";
         }
 
         // 收集所有症状
         const allSymptoms = new Set<string>();
-        const complications: string[] = [];
         for (const record of symptomRecords) {
           const items = getSymptomItems(record);
           for (const item of items) {
@@ -115,11 +120,16 @@ export default function AssessmentAdd() {
 
         // 腹痛映射
         if (allSymptoms.has("腹痛")) {
-          // 从最近记录获取严重程度
           const latestItems = getSymptomItems(latestRecord);
           const painItem = latestItems.find((i) => i.name === "腹痛");
           newAnswers.abdominalPain = painItem?.severity ?? 1;
+          hints.abdominalPain = `从症状记录获取 (${dateRangeHint})`;
+        } else {
+          hints.abdominalPain = "近一周无腹痛记录";
         }
+
+        // 腹部包块 - 无法从现有数据获取
+        hints.abdominalMass = "需手动填写";
 
         // 并发症映射
         const complicationMap: Record<string, string> = {
@@ -132,23 +142,39 @@ export default function AssessmentAdd() {
           肛瘘: "fistula",
           肛周脓肿: "abscess",
         };
+        const complications: string[] = [];
+        const foundSymptoms: string[] = [];
         for (const [symptomName, complicationKey] of Object.entries(complicationMap)) {
           if (allSymptoms.has(symptomName)) {
             complications.push(complicationKey);
+            foundSymptoms.push(symptomName);
           }
         }
         if (complications.length > 0) {
           newAnswers.complications = complications;
+          hints.complications = `从症状记录获取: ${foundSymptoms.join("、")}`;
+        } else {
+          hints.complications = "近一周无相关并发症记录";
         }
+      } else {
+        hints.generalWellbeing = "暂无近一周身体状态记录";
+        hints.abdominalPain = "暂无近一周症状记录";
+        hints.abdominalMass = "需手动填写";
+        hints.complications = "暂无近一周症状记录";
       }
     } catch {
-      // 忽略错误
+      hints.generalWellbeing = "获取症状记录失败";
+      hints.abdominalPain = "获取症状记录失败";
+      hints.abdominalMass = "需手动填写";
+      hints.complications = "获取症状记录失败";
     }
 
-    // CDAI 需要 Hct
+    // CDAI 额外字段
     if (type === "cdai") {
+      // Hct
       try {
-        const labtestRecords = await labTestService.getRecent(10);
+        const labtestRecords = await labTestService.getByDateRange(fromDate, toDate);
+        let found = false;
         for (const record of labtestRecords) {
           const hctIndicator = record.indicators.find(
             (i) =>
@@ -161,16 +187,27 @@ export default function AssessmentAdd() {
             if (!isNaN(hctValue)) {
               autoFilled.hct = { recordId: record._id!, value: hctValue, date: record.date };
               newAnswers.hematocrit = hctValue;
+              hints.hematocrit = `从化验记录获取 (${record.date})`;
+              found = true;
               break;
             }
           }
         }
+        if (!found) {
+          hints.hematocrit = "暂无近一周 Hct 化验记录，请手动输入";
+        }
       } catch {
-        // 忽略错误
+        hints.hematocrit = "获取化验记录失败";
       }
+
+      // 止泻药 - 无法从现有数据获取
+      hints.antidiarrheal = "需手动填写";
+      // 体重变化 - 无法从现有数据获取
+      hints.weightChange = "需手动填写";
     }
 
     setAutoFilledData(autoFilled);
+    setFieldHints(hints);
     setAnswers(newAnswers);
   };
 
@@ -349,24 +386,16 @@ export default function AssessmentAdd() {
                 value={answers[key] !== undefined ? String(answers[key]) : ""}
                 onInput={(e) => handleAnswerChange(key, parseFloat(e.detail.value) || 0)}
               />
-              {"autoFill" in question &&
-                question.autoFill &&
-                key === "liquidStools" &&
-                autoFilledData.stoolCount && (
-                  <Text className="auto-fill-hint">
-                    已从记录自动填充 ({autoFilledData.stoolCount.from} ~{" "}
-                    {autoFilledData.stoolCount.to})
-                  </Text>
-                )}
-              {"autoFill" in question &&
-                question.autoFill &&
-                key === "hematocrit" &&
-                autoFilledData.hct && (
-                  <Text className="auto-fill-hint">
-                    已从化验记录自动填充 ({autoFilledData.hct.date})
-                  </Text>
-                )}
             </View>
+          )}
+
+          {/* 数据来源提示 */}
+          {fieldHints[key] && (
+            <Text
+              className={`field-hint ${fieldHints[key].includes("获取") ? "has-data" : "no-data"}`}
+            >
+              {fieldHints[key]}
+            </Text>
           )}
 
           {"type" in question && question.type === "multiSelect" && "options" in question && (
