@@ -252,7 +252,6 @@ export default function ExamAdd() {
     <View className="add-page">
       {/* 时间 */}
       <View className="section">
-        <Text className="section-title">时间</Text>
         <View className="time-row">
           <View className="picker-value" onClick={() => setCalendarVisible(true)}>
             {date}
