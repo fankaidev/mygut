@@ -63,13 +63,12 @@
   border-radius: 12px;
   border: 2px solid transparent;
   font-size: var(--font-size-base);
-  color: var(--color-text);
+  color: var(--color-text-secondary);
 }
 
 .option-item.active {
   background-color: var(--color-selected-bg);
-  border-color: var(--color-selected);
-  color: var(--color-selected);
+  color: var(--color-text);
 }
 
 /* 数字输入 */
@@ -113,13 +112,12 @@
   border-radius: 8px;
   border: 2px solid transparent;
   font-size: var(--font-size-sm);
-  color: var(--color-text);
+  color: var(--color-text-secondary);
 }
 
 .multi-select-item.active {
   background-color: var(--color-selected-bg);
-  border-color: var(--color-selected);
-  color: var(--color-selected);
+  color: var(--color-text);
 }
 
 /* 计算按钮 */
