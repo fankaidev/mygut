@@ -13,9 +13,9 @@
   padding: 12px 24px;
   background-color: transparent;
   border-radius: 20px;
-  border: 2px solid #d9d9d9;
+  border: 2px solid var(--color-border-dark);
   font-size: 28px;
-  color: #666;
+  color: var(--color-text-secondary);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -39,23 +39,23 @@
   align-items: center;
   gap: 6px;
   padding: 10px 14px;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg);
   border-radius: 4px;
   border: 2px solid transparent;
 }
 
 .food-item.selected {
-  background-color: #e6f7ff;
-  border-color: #1890ff;
+  background-color: var(--color-blue-bg);
+  border-color: var(--color-blue);
 }
 
 .food-item.custom {
-  border: 2px dashed #d9d9d9;
+  border: 2px dashed var(--color-border-dark);
 }
 
 .food-item.custom.selected {
   border-style: solid;
-  border-color: #1890ff;
+  border-color: var(--color-blue);
 }
 
 .food-emoji {
@@ -64,11 +64,11 @@
 
 .food-name {
   font-size: 24px;
-  color: #333;
+  color: var(--color-text);
 }
 
 .food-item.selected .food-name {
-  color: #1890ff;
+  color: var(--color-blue);
 }
 
 /* 手动输入 */
@@ -81,7 +81,7 @@
 .manual-input {
   flex: 1;
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: var(--color-bg);
   border-radius: 12px;
   font-size: 28px;
 }
@@ -107,23 +107,23 @@
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background-color: #e6f7ff;
+  background-color: var(--color-blue-bg);
   border-radius: 12px;
 }
 
 .selected-food-name {
   font-size: 28px;
-  color: #1890ff;
+  color: var(--color-blue);
 }
 
 .remove-food-btn {
   font-size: 24px;
-  color: #ff4d4f;
+  color: var(--color-red);
 }
 
 .no-food-hint {
   font-size: 28px;
-  color: #999;
+  color: var(--color-text-tertiary);
   text-align: center;
   padding: 40px;
 }
@@ -144,8 +144,8 @@
 }
 
 .amount-item.active {
-  background-color: #e6f7ff;
-  border-color: #1890ff;
+  background-color: var(--color-blue-bg);
+  border-color: var(--color-blue);
 }
 
 .amount-emoji {
@@ -154,9 +154,9 @@
 
 .amount-label {
   font-size: 24px;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .amount-item.active .amount-label {
-  color: #1890ff;
+  color: var(--color-blue);
 }

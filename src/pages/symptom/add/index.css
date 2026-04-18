@@ -17,8 +17,8 @@
 }
 
 .feeling-item.active {
-  background-color: #e6f7ff;
-  border-color: #1890ff;
+  background-color: var(--color-blue-bg);
+  border-color: var(--color-blue);
 }
 
 .feeling-emoji {
@@ -28,11 +28,11 @@
 
 .feeling-label {
   font-size: 24px;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .feeling-item.active .feeling-label {
-  color: #1890ff;
+  color: var(--color-blue);
 }
 
 /* 症状快捷输入 */
@@ -46,10 +46,10 @@
 .symptom-tag {
   padding: 12px 24px;
   border-radius: 8px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid var(--color-border-light);
   font-size: 26px;
-  color: #666;
-  background-color: #fafafa;
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-light);
   transition: all 0.2s;
 }
 
@@ -67,7 +67,7 @@
   flex: 1;
   height: 72px;
   padding: 0 20px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid var(--color-border-light);
   border-radius: 8px;
   font-size: 28px;
 }
@@ -99,7 +99,7 @@
   flex: 1;
   height: 80px;
   padding: 0 20px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid var(--color-border-light);
   border-radius: 8px;
   font-size: 32px;
   box-sizing: border-box;
@@ -107,5 +107,5 @@
 
 .weight-unit {
   font-size: 28px;
-  color: #666;
+  color: var(--color-text-secondary);
 }
