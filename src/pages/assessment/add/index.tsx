@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { assessmentService } from "../../../services/assessment";
 import { stoolService } from "../../../services/stool";
 import { labTestService } from "../../../services/labtest";
+import { symptomService } from "../../../services/symptom";
+import { getSymptomItems } from "../../../utils/symptom";
 import {
   ASSESSMENT_TYPES,
   ASSESSMENT_LEVELS,
@@ -86,6 +88,59 @@ export default function AssessmentAdd() {
       const stoolCount = stoolRecords.length;
       autoFilled.stoolCount = { from: fromDate, to: toDate, count: stoolCount };
       newAnswers.liquidStools = stoolCount;
+    } catch {
+      // 忽略错误
+    }
+
+    // 从症状记录获取一般状况、腹痛、并发症
+    try {
+      const symptomRecords = await symptomService.getByDateRange(fromDate, toDate);
+      if (symptomRecords.length > 0) {
+        // 一般状况：从 overallFeeling (1-5) 映射到 (4-0)
+        const latestRecord = symptomRecords[0];
+        if (latestRecord.overallFeeling) {
+          // overallFeeling: 1很差->4, 2较差->3, 3一般->2, 4良好->1, 5很好->0
+          newAnswers.generalWellbeing = 5 - latestRecord.overallFeeling;
+        }
+
+        // 收集所有症状
+        const allSymptoms = new Set<string>();
+        const complications: string[] = [];
+        for (const record of symptomRecords) {
+          const items = getSymptomItems(record);
+          for (const item of items) {
+            allSymptoms.add(item.name);
+          }
+        }
+
+        // 腹痛映射
+        if (allSymptoms.has("腹痛")) {
+          // 从最近记录获取严重程度
+          const latestItems = getSymptomItems(latestRecord);
+          const painItem = latestItems.find((i) => i.name === "腹痛");
+          newAnswers.abdominalPain = painItem?.severity ?? 1;
+        }
+
+        // 并发症映射
+        const complicationMap: Record<string, string> = {
+          关节痛: "arthralgia",
+          虹膜炎: "uveitis",
+          结节性红斑: "erythemaNodosum",
+          坏疽性脓皮病: "pyodermaGangrenosum",
+          口腔溃疡: "apthousUlcers",
+          肛裂: "analFissure",
+          肛瘘: "fistula",
+          肛周脓肿: "abscess",
+        };
+        for (const [symptomName, complicationKey] of Object.entries(complicationMap)) {
+          if (allSymptoms.has(symptomName)) {
+            complications.push(complicationKey);
+          }
+        }
+        if (complications.length > 0) {
+          newAnswers.complications = complications;
+        }
+      }
     } catch {
       // 忽略错误
     }
