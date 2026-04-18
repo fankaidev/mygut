@@ -153,23 +153,20 @@ export default function AssessmentAdd() {
         newAnswers.abdominalMass = 0;
         hints.abdominalMass = "默认为无，如有请手动修改";
 
-        // 并发症映射
-        const complicationMap: Record<string, string> = {
-          关节痛: "arthralgia",
-          虹膜炎: "uveitis",
-          结节性红斑: "erythemaNodosum",
-          坏疽性脓皮病: "pyodermaGangrenosum",
-          口腔溃疡: "apthousUlcers",
-          肛裂: "analFissure",
-          肛瘘: "fistula",
-          肛周脓肿: "abscess",
-        };
+        // 并发症映射 - 根据选项 label 文字匹配症状名
+        const currentQuestions = type === "hbi" ? HBI_QUESTIONS : CDAI_QUESTIONS;
+        const complicationOptions = currentQuestions.complications.options;
         const complications: string[] = [];
         const foundSymptoms: string[] = [];
-        for (const [symptomName, complicationKey] of Object.entries(complicationMap)) {
-          if (allSymptoms.has(symptomName)) {
-            complications.push(complicationKey);
-            foundSymptoms.push(symptomName);
+        for (const opt of complicationOptions) {
+          // 检查症状名是否包含在选项 label 中
+          for (const symptomName of allSymptoms) {
+            if (opt.label.includes(symptomName)) {
+              if (!complications.includes(opt.value)) {
+                complications.push(opt.value);
+              }
+              foundSymptoms.push(symptomName);
+            }
           }
         }
         if (complications.length > 0) {
