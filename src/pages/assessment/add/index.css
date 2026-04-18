@@ -224,9 +224,3 @@
   font-weight: bold;
 }
 
-.detail-row.highlight {
-  background-color: var(--color-primary-bg);
-  margin: 0 -16px;
-  padding: 16px;
-  border-radius: 8px;
-}
