@@ -7,6 +7,7 @@ import { stoolService } from "../../services/stool";
 import { medicationService } from "../../services/medication";
 import { labTestService } from "../../services/labtest";
 import { examService } from "../../services/exam";
+import { assessmentService } from "../../services/assessment";
 import { eventService } from "../../services/event";
 import { findStandardIndicator, StandardIndicator } from "../../services/labtest-standards";
 import { formatDate } from "../../utils/date";
@@ -47,6 +48,7 @@ const services = {
   stool: stoolService,
   labtest: labTestService,
   exam: examService,
+  assessment: assessmentService,
 } as const;
 
 function getDateDaysAgo(days: number): string {
