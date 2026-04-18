@@ -18,12 +18,31 @@ import {
   calculateCDAI,
   getAssessmentLevel,
 } from "../../../constants/assessment";
+import { COLORS } from "../../../constants/colors";
 import { formatDate, formatTime } from "../../../utils/date";
 import { showError } from "../../../utils/error";
 import CalendarPopup from "../../../components/CalendarPopup";
 import TimePicker from "../../../components/TimePicker";
 import type { AssessmentType, AssessmentLevel } from "../../../types";
 import "./index.css";
+
+// 选项值对应的边框颜色：0绿 1蓝 2黄 3橙 4红
+const getOptionBorderColor = (value: number): string => {
+  switch (value) {
+    case 0:
+      return COLORS.primary;
+    case 1:
+      return COLORS.lightBlue;
+    case 2:
+      return COLORS.yellow;
+    case 3:
+      return COLORS.orange;
+    case 4:
+      return COLORS.red;
+    default:
+      return COLORS.primary;
+  }
+};
 
 export default function AssessmentAdd() {
   const router = useRouter();
@@ -446,6 +465,11 @@ export default function AssessmentAdd() {
                 <View
                   key={opt.value}
                   className={`option-item ${answers[key] === opt.value ? "active" : ""}`}
+                  style={
+                    answers[key] === opt.value
+                      ? { borderColor: getOptionBorderColor(opt.value) }
+                      : undefined
+                  }
                   onClick={() => handleAnswerChange(key, opt.value)}
                 >
                   {opt.label}
@@ -475,6 +499,7 @@ export default function AssessmentAdd() {
                   <View
                     key={opt.value}
                     className={`multi-select-item ${selected ? "active" : ""}`}
+                    style={selected ? { borderColor: COLORS.orange } : undefined}
                     onClick={() => {
                       const current = (answers[key] as string[]) || [];
                       const newValue = selected
