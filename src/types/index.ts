@@ -40,7 +40,7 @@ export interface BaseRecord {
 export interface SymptomRecord extends BaseRecord {
   symptoms: string[]; // 症状列表
   severity?: 1 | 2 | 3; // 整体严重程度：轻度、中度、重度
-  overallFeeling: 1 | 2 | 3 | 4 | 5; // 整体感受 1很差 - 5很好
+  overallFeeling?: 1 | 2 | 3 | 4 | 5; // 整体感受 1很差 - 5很好
   weight?: number; // 体重（kg），支持一位小数
   note?: string;
 }
