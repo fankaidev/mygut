@@ -95,6 +95,14 @@
 }
 
 /* 严重程度 */
+.section-subtitle {
+  display: block;
+  font-size: 26px;
+  color: #666;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
 .severity-options {
   display: flex;
   gap: 16px;

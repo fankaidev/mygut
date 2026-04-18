@@ -260,30 +260,30 @@ export default function SymptomAdd() {
             添加
           </View>
         </View>
+        {/* 严重程度 - 仅在选择了症状后显示 */}
+        {symptoms.length > 0 && (
+          <>
+            <Text className="section-subtitle">严重程度</Text>
+            <View className="severity-options">
+              {SEVERITY_OPTIONS.map((option) => (
+                <View
+                  key={option.value}
+                  className={`severity-item ${severity === option.value ? "active" : ""}`}
+                  style={{
+                    borderColor: severity === option.value ? option.color : "#f0f0f0",
+                    backgroundColor:
+                      severity === option.value ? `${option.color}15` : "transparent",
+                  }}
+                  onClick={() => setSeverity(option.value as SymptomRecord["severity"])}
+                >
+                  <View className="severity-dot" style={{ backgroundColor: option.color }} />
+                  <Text className="severity-label">{option.label}</Text>
+                </View>
+              ))}
+            </View>
+          </>
+        )}
       </View>
-
-      {/* 严重程度 */}
-      {symptoms.length > 0 && (
-        <View className="section">
-          <Text className="section-title">严重程度</Text>
-          <View className="severity-options">
-            {SEVERITY_OPTIONS.map((option) => (
-              <View
-                key={option.value}
-                className={`severity-item ${severity === option.value ? "active" : ""}`}
-                style={{
-                  borderColor: severity === option.value ? option.color : "#f0f0f0",
-                  backgroundColor: severity === option.value ? `${option.color}15` : "transparent",
-                }}
-                onClick={() => setSeverity(option.value as SymptomRecord["severity"])}
-              >
-                <View className="severity-dot" style={{ backgroundColor: option.color }} />
-                <Text className="severity-label">{option.label}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
-      )}
 
       {/* 体重 */}
       <View className="section">
