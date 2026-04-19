@@ -32,7 +32,6 @@ export const FOOD_CATEGORIES = [
       { name: "牛奶", emoji: "🥛" },
       { name: "酸奶", emoji: "🫗" },
       { name: "豆浆", emoji: "🥛" },
-      { name: "豆腐", emoji: "" },
       { name: "鸡肉", emoji: "🍗" },
       { name: "鸭肉", emoji: "🦆" },
       { name: "猪肉", emoji: "🐷" },
@@ -64,6 +63,7 @@ export const FOOD_CATEGORIES = [
       { name: "蘑菇", emoji: "🍄" },
       { name: "南瓜", emoji: "🎃" },
       { name: "茄子", emoji: "🍆" },
+      { name: "豆腐", emoji: "" },
       // 水果
       { name: "苹果", emoji: "🍎" },
       { name: "香蕉", emoji: "🍌" },
