@@ -17,7 +17,7 @@ export const EXERCISE_CATEGORIES = [
   {
     name: "力量",
     items: [
-      { name: "综合训练", emoji: "🔄" },
+      { name: "综合训练", emoji: "💪" },
       { name: "举重", emoji: "🏋️" },
       { name: "俯卧撑", emoji: "💪" },
       { name: "深蹲", emoji: "🦵" },
