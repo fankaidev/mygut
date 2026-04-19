@@ -37,6 +37,8 @@ export const EXERCISE_CATEGORIES = [
       { name: "网球", emoji: "🎾" },
       { name: "高尔夫", emoji: "⛳" },
       { name: "排球", emoji: "🏐" },
+      { name: "台球", emoji: "🎱" },
+      { name: "保龄球", emoji: "🎳" },
     ],
   },
   {
