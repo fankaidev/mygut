@@ -64,6 +64,7 @@ export const EXERCISE_CATEGORIES = [
 export const DURATION_OPTIONS = [
   { value: 15, label: "15分钟" },
   { value: 30, label: "30分钟" },
+  { value: 45, label: "45分钟" },
   { value: 60, label: "1小时" },
   { value: 90, label: "1.5小时" },
   { value: 120, label: "2小时" },
