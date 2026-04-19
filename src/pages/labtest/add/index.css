@@ -185,20 +185,20 @@
 .indicator-col-value {
   flex: 1.5;
   font-size: var(--font-size-sm);
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
-.abnormal-flag {
+.indicator-col-value .abnormal-flag {
   margin-left: 4px;
   font-size: var(--font-size-xs);
 }
 
-.abnormal-flag.high {
+.indicator-col-value .abnormal-flag.high {
   color: var(--color-red);
 }
 
-.abnormal-flag.low {
-  color: var(--color-primary);
+.indicator-col-value .abnormal-flag.low {
+  color: var(--color-orange);
 }
 
 .indicator-col-ref {
