@@ -90,7 +90,7 @@ export interface MedicationRecord extends BaseRecord {
 // 运动记录
 export interface ExerciseRecord extends BaseRecord {
   type: string; // 运动类型（如"跑步"）
-  duration: 15 | 30 | 45 | 60 | 90 | 120; // 时长（分钟）
+  duration: 15 | 30 | 60 | 90 | 120; // 时长（分钟）
   intensity: 1 | 2 | 3; // 强度：1轻松/2适中/3剧烈
   note?: string;
 }
