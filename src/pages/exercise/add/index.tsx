@@ -302,14 +302,14 @@ export default function ExerciseAdd() {
       {/* 时长 */}
       <View className="section">
         <Text className="section-title">时长</Text>
-        <View className="amount-options">
+        <View className="duration-options">
           {DURATION_OPTIONS.map((option) => (
             <View
               key={option.value}
-              className={`amount-item ${duration === option.value ? "active" : ""}`}
+              className={`duration-item ${duration === option.value ? "active" : ""}`}
               onClick={() => setDuration(option.value as ExerciseRecord["duration"])}
             >
-              <Text className="amount-label">{option.label}</Text>
+              <Text className="duration-label">{option.label}</Text>
             </View>
           ))}
         </View>

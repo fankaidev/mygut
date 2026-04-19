@@ -128,7 +128,36 @@
   padding: 40px;
 }
 
-/* 时长/强度选择 */
+/* 时长选择 */
+.duration-options {
+  display: flex;
+  gap: 16px;
+}
+
+.duration-item {
+  flex: 1;
+  padding: 16px;
+  border-radius: 8px;
+  border: 2px solid var(--color-border-light);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.duration-item.active {
+  background-color: var(--color-primary-bg);
+  border-color: var(--color-primary);
+}
+
+.duration-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text);
+}
+
+.duration-item.active .duration-label {
+  color: var(--color-primary);
+}
+
+/* 强度选择 */
 .amount-options {
   display: flex;
   gap: 16px;
