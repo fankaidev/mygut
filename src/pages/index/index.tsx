@@ -1,5 +1,10 @@
 import { View, Text, Image } from "@tarojs/components";
-import Taro, { useDidShow, usePullDownRefresh } from "@tarojs/taro";
+import Taro, {
+  useDidShow,
+  usePullDownRefresh,
+  useShareAppMessage,
+  useShareTimeline,
+} from "@tarojs/taro";
 import { useState, useCallback, useEffect } from "react";
 import { symptomService } from "../../services/symptom";
 import { mealService } from "../../services/meal";
@@ -129,6 +134,15 @@ export default function Index() {
     await loadData(currentDate);
     Taro.stopPullDownRefresh();
   });
+
+  useShareAppMessage(() => ({
+    title: "MyGut - 记录肠道健康",
+    path: "/pages/index/index",
+  }));
+
+  useShareTimeline(() => ({
+    title: "MyGut - 记录肠道健康",
+  }));
 
   const handlePrevDate = () => {
     const newDate = getPrevDate(currentDate);
